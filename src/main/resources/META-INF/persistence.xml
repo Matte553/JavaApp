@@ -5,5 +5,29 @@
              version="3.0">
     <persistence-unit name="default">
 
+        <class>entity.ReparationsEntity</class>
+        <class>entity.ChatEntity</class>
+        <class>entity.ChatMemberEntity</class>
+        <class>entity.InstrumentEntity</class>
+        <class>entity.MessageEntity</class>
+        <class>entity.PersonEntity</class>
+        <properties>
+            <property name="toplink.jdbc.url" value="jdbc:derby://localhost:1527/DEFAULT; create=true;"/>
+            <property name="toplink.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="toplink.jdbc.user" value="admin"/>
+            <property name="toplink.jdbc.password" value="123"/>
+            <property name="hibernate.connection.url" value="jdbc:derby://localhost:1527/DEFAULT; create=true;"/>
+            <property name="hibernate.connection.driver_class" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="hibernate.connection.username" value="admin"/>
+            <property name="hibernate.connection.password" value="123"/>
+            <property name="openjpa.ConnectionURL" value="jdbc:derby://localhost:1527/DEFAULT; create=true;"/>
+            <property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="openjpa.ConnectionUserName" value="admin"/>
+            <property name="openjpa.ConnectionPassword" value="123"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:derby://localhost:1527/DEFAULT; create=true;"/>
+            <property name="eclipselink.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="eclipselink.jdbc.user" value="admin"/>
+            <property name="eclipselink.jdbc.password" value="123"/>
+        </properties>
     </persistence-unit>
 </persistence>
