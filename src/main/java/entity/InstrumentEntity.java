@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Instrument", schema = "APP", catalog = "")
+@Table(name = "Instrument", schema = "APP")
 public class InstrumentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private int id;
     @Basic
     @Column(name = "Name")

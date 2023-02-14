@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Person", schema = "APP", catalog = "")
+@Table(name = "Person", schema = "APP")
 public class PersonEntity {
     @Basic
     @Column(name = "FIRSTNAME")
@@ -21,7 +21,7 @@ public class PersonEntity {
     private String mail;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private int id;
 
     public String getFirstname() {

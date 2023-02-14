@@ -7,17 +7,17 @@ import java.sql.Time;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Message", schema = "APP", catalog = "")
+@Table(name = "Message", schema = "APP")
 public class MessageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private int id;
     @Basic
-    @Column(name = "personID")
+    @Column(name = "personID", nullable = false)
     private Integer personId;
     @Basic
-    @Column(name = "chatID")
+    @Column(name = "chatID", nullable = false)
     private Integer chatId;
     @Basic
     @Column(name = "TEXT")

@@ -5,17 +5,17 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ChatMember", schema = "APP", catalog = "")
+@Table(name = "ChatMember", schema = "APP")
 public class ChatMemberEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private int id;
     @Basic
-    @Column(name = "chatID")
+    @Column(name = "chatID", nullable = false)
     private Integer chatId;
     @Basic
-    @Column(name = "personID")
+    @Column(name = "personID", nullable = false)
     private Integer personId;
 
     public int getId() {
