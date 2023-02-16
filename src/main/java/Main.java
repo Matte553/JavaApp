@@ -18,8 +18,6 @@ public class Main {
         session.beginTransaction();                                         // Starta någonting som behövs
 
 
-        // List<PersonEntity> persons = session.createQuery("select p.firstname from PersonEntity p", PersonEntity.class).list(); // SQL sats mot DB
-        // persons.forEach(System.out::println);   // Skriv ut alla object.
         Query query=session.createQuery("from PersonEntity ");
         List list=query.list();
         list.forEach(System.out::println);

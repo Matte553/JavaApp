@@ -43,4 +43,9 @@ public class PersonEntity {
     public int hashCode() {
         return Objects.hash(id, firstname);
     }
+
+    @Override
+    public String toString(){
+        return "ID: " + id + " FIRSTNAME: " + firstname;
+    }
 }
