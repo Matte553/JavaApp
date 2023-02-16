@@ -1,0 +1,74 @@
+Versioner: 
+	Java 9: 		För att starta derby server
+	Java coretto 11.0.18:	För projektet
+	Apache Derby		10.15.2.0
+	Hibernate		6.1.2
+	Query Språk		HQL
+
+
+pom.xml
+___________________________________
+        <!-- This dependency was added manually to download the Derby database JAR file and driver -->
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.15.2.0</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- This dependency was added manually to download Hibernate Framework and drivers -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.1.2.Final</version>
+        </dependency>
+___________________________________
+
+
+
+
+Hibernates.cfg.xml
+_____________________________________
+
+       	<!-- Database connection settings -->
+        <property name="connection.driver_class"> org.apache.derby.jdbc.ClientDriver</property>
+        <property name="connection.url"> jdbc:derby://localhost:1527/DerbyDB </property>
+        <property name="connection.username">APP</property>
+        <property name="connection.password">APP</property>
+
+	<!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.DerbyDialect</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+
+        <!-- Names the annotated entity class -->
+        <mapping class="Entities.PersonEntity"/>
+	
+_____________________________________
+
+1 Lägg till dessa i classpath, dom finns i db-derby-10.15.2.0-bin\lib
+	1.1 	Klicka på projektet i projektstrukturen
+	1.2	klicka f4
+	1.3	Välj dependencies
+	1.4	Add jar/directory
+	1.5	Välj alla bibliotek nedan
+	derbyclient.jar
+	derbytools.jar
+	derbynet.jar
+
+2. Starta Server:
+	CD C:\Users\Matti\IdeaProjects\DatabaseApacheDerby\db-derby-10.15.2.0-bin\bin
+	Networkserver.bat
+
+3. Skapa Database i intellij
+	Apache Derby (remote)
+	Användarnamn:	-
+	lösen:		-
+	URL:		jdbc:derby://localhost:1527/DerbyDB;create=true
+
+4. Skapa tabell i databastabben under APP 
+
+5. Klicka på tabell och generera Persistance Mapping
+
+6. Ta bort "CATALOG" i entity klassen.
