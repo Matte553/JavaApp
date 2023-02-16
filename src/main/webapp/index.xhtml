@@ -4,18 +4,42 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
 
+<!-- LÄNKAR:
+ https://www.w3schools.com/howto/howto_css_profile_card.asp // CARDS
+ https://www.w3schools.com/howto/howto_css_calendar.asp // CALENDAR LAYOUT
+ -->
+<h:head>
+<title>Frontpage</title>
 </h:head>
 <h:body>
+    <ui:include src="header.xhtml"/>
+    <br/>
     <h3>Test</h3>
     <h:form>
-        <h:link value="chatpage" outcome="chat"></h:link><br/>
         <br/> <br/>
         <h:link value="chat-login" outcome="chat-login"></h:link>
     </h:form>
 
+   <!-- <p:menu type="tiered" style="width:180px">
+        <p:submenu label="Ajax Menuitems" icon="ui-icon ui-icon-refresh">
+            <p:menuitem value="Save" icon="ui-icon ui-icon-disk" />
+            <p:menuitem value="Update" icon="ui-icon ui-icon-arrowrefresh-1-w" />
+        </p:submenu>
+        <p:submenu label="Non-Ajax Menuitem" icon="ui-icon ui-icon-newwin">
+            <p:menuitem value="Delete" ajax="false" icon="ui-icon ui-icon-close"/>
+        </p:submenu>
+        <p:submenu label="Navigations" icon="ui-icon ui-icon-extlink">
+            <p:submenu label="Prime Links">
+                <p:menuitem value="Prime" url="http://www.prime.com.tr" />
+                <p:menuitem value="PrimeFaces" url="http://www.primefaces.org" />
+            </p:submenu>
+            <p:menuitem value="TouchFaces" url="#{request.contextPath}/touch" />
+        </p:submenu>
+    </p:menu> -->
 
 </h:body>
 </html>
