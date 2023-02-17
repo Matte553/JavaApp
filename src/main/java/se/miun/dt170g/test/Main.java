@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import java.util.List;
 import java.sql.Timestamp;
 
+// Helloj
 
 public class Main {
     public static void main(String[] args) throws Exception {
