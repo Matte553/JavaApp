@@ -1,9 +1,8 @@
-package service;
+package example.service;
 
-import api.model.Person;
+import example.api.model.Person;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;

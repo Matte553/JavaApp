@@ -1,4 +1,4 @@
-package api;
+package example;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;

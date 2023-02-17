@@ -1,13 +1,11 @@
-package api.controller;
+package example.api.controller;
 
+import example.api.model.Person;
+import example.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-//Importing the user Model and Service
-import api.model.Person;
-import service.PersonService;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package api.model;
+package example.api.model;
 
 
 public class Person {
