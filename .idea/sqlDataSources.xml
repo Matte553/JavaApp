@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="282387af-8183-4ab0-86e7-c3242a91cef9" name="DerbyDB@localhost Mapping">
+      <data-sources db="d12b4eb0-c48d-47d7-a50d-f90d2fb5551f" ddl="4994e2bd-5329-4726-99b6-cd68633c501d" />
+      <scope>
+        <node kind="schema" qname="APP" />
+      </scope>
+    </mapping>
+  </component>
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="4994e2bd-5329-4726-99b6-cd68633c501d" />
+          <option name="name" value="DerbyDB@localhost (DDL)" />
+          <option name="dbmsName" value="DERBY" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/src/db" />
+            </array>
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+          <option name="scriptOptions">
+            <map>
+              <entry key="ConstraintContext" value="CONSTRAINT_IN_TABLE" />
+            </map>
+          </option>
+          <option name="scopes">
+            <map>
+              <entry key="$PROJECT_DIR$/src/db" value="APP" />
+            </map>
+          </option>
+        </State>
+      </list>
+    </option>
+  </component>
+</project>
