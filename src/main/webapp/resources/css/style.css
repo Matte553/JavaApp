@@ -79,7 +79,6 @@ a:link:hover, a:visited:hover  {
 }
 
 .header {
-    position: absolute;
     padding: 10px;
     height: 100px;
     width: 100%;
