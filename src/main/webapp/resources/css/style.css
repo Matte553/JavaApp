@@ -209,3 +209,19 @@ a:link:hover, a:visited:hover  {
     border-radius: 5px;
 }
 
+.img-message{
+    display: block;
+    max-width:100px;
+    margin-top: 10px;
+}
+
+#file-upload{
+    float: right;
+}
+
+#file-upload>input{
+    display: none;
+}
+#file-upload> label img{
+    cursor: pointer;
+}

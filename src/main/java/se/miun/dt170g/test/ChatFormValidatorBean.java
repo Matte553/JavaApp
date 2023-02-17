@@ -20,14 +20,14 @@ public class ChatFormValidatorBean implements Serializable {
     private static final String CHAT_LOGIN_URL="chat-login";
     boolean isCustomerIdSet;
     private Matcher matcher;
-    // Matches valid email-adderss's format
+    // Matches valid email-adder's format
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)");
 
-    // Maches X number of digits
+    // Matches X number of digits
     private static final Pattern CUSTOMERID_PATTERN = Pattern.compile("^\\d{6}$");
 
-    // Maches {min,max} number of digits
+    // Matches {min,max} number of digits
     private static final Pattern TELEPHONE_PATTERN = Pattern.compile("^[0-9]{1,10}$");
 
     private static final String EMPTY_ERRRO_MSG = "Fyll i fälten";

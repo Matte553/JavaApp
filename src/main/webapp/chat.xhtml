@@ -10,7 +10,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       >
     <h:head>
-        <title>TODO supply a title</title>
+        <title>title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="style.css"/>
         <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
@@ -18,6 +18,8 @@
     </h:head>
     <h:body>
         <div class="main-chat-container">
+
+
             <div class="message-container">
                 <div>
                     <div class="message-user-name float-left">
@@ -31,27 +33,35 @@
                     </div>
                 </div>
 
-                <div>
-                    <div class="message-user-name float-right">
-                        <h:panelGroup>Adnan</h:panelGroup>
-                    </div>
-                    <div class="user-message message-darker ">
-                        <h:panelGroup>Meddelande</h:panelGroup>
-                    </div>
-                    <div class="message-time" >
-                        <h:panelGroup>sent 2023-01-2 22:22</h:panelGroup>
-                    </div>
-                </div>
+
+
+
 
             </div>
 
-            
+
             <h:form id="chat-form" enctype="multipart/form-data">
                 <div class="message-input">
-                    <h:inputTextarea a:placeholder="Skriv Meddelande..."></h:inputTextarea>
-<!--                    <h:inputFile id="file" value="#{null}" />-->
+                    <h:inputTextarea
+                            id="input-message-area"
+                            a:placeholder="Skriv meddelande..."
+                            value="#{test.name}" />
                 </div>
-                <h:commandButton value="Skicka" styleClass="btn success"></h:commandButton>
+                <div id="file-upload">
+                    <h:outputText id="userFileName" value="#{fileUpload.userFileName}"/>
+                    <h:outputLabel for="fileToUpload">
+                        <h:graphicImage library="images" name="upload-icon.png" />
+                    </h:outputLabel>
+                    <h:inputFile id="fileToUpload" value="#{fileUpload.fileToUpload}" >
+                        <f:ajax listener="#{fileUpload.onFileUpload}" render="userFileName"/>
+                    </h:inputFile>
+                </div>
+                <div>
+                    <h:commandButton
+                            value="Skicka"
+                            styleClass="btn success" action="#{test.submit}">
+                    </h:commandButton>
+                </div>
             </h:form>
 
         </div>
