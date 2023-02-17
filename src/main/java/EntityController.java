@@ -59,6 +59,7 @@ public class EntityController {
         ArrayList arrayList = (ArrayList) list;
         return arrayList;
     }
+    //Changes Har Hänt
 
     // Returns an arraylist with all ChatMembers from db
     public ArrayList<ChatmemberEntity> getChatMembersFromDB() throws Exception {
