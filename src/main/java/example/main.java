@@ -2,6 +2,7 @@ package example;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
+import example.api.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -23,8 +24,12 @@ public class main {
         session.beginTransaction();
 
         Query query = session.createQuery(("from PersonEntity "));
-        List list=query.list();
+        List<PersonEntity> list=query.list();
         list.forEach(System.out::println);
+
+        for(PersonEntity person: list ) {
+            person.getId();//Loadsa stuff
+        };
 
 
     }
