@@ -1,5 +1,7 @@
 package example.service;
 
+import Entities.*;
+
 import example.api.model.Person;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class PersonService {
         Person person1 = new Person(1, "Anton", "Holm", "anton1@gmail.com");
         Person person2 = new Person(2, "Anton", "Nor", "anton2@gmail.com");
         Person person3 = new Person(3, "Anton", "Eng", "anton3@gmail.com");
+        //Person person4 = new Person(x,x,x,x)
 
         personList.addAll(Arrays.asList(person1, person2, person3));
     }
