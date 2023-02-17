@@ -19,6 +19,9 @@
 
         <!-- Names the annotated entity class -->
         <mapping class="Entities.PersonEntity"/>
+        <mapping class="Entities.ChatEntity"/>
+        <mapping class="Entities.ChatmemberEntity"/>
+        <mapping class="Entities.MessageEntity"/>
 
     </session-factory>
 </hibernate-configuration>
