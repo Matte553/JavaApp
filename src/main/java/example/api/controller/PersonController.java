@@ -20,9 +20,9 @@ public class PersonController {
 
     @GetMapping("/person")
     public Person getPerson(@RequestParam Integer id){
-        Optional person = personService.getPerson(id);
-        if(person.isPresent()){
-            return (Person) person.get();
+        Optional persOpt = personService.getPerson(id);
+        if(persOpt.isPresent()){
+            return (Person) persOpt.get();
         }
         return personService.defaultAnswr();
     }

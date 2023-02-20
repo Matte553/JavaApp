@@ -49,9 +49,9 @@ public class PersonService {
 
     public Optional<Person> getPerson(Integer id){
         Optional optional = Optional.empty();
-        for (Person person: personList){
-            if(id==person.getId()){
-                optional = Optional.of(person);
+        for (Person pers: personList){
+            if(id==pers.getId()){
+                optional = Optional.of(pers);
                 return optional;
             }
 
