@@ -1,4 +1,4 @@
-package example.api.model;
+package api.model;
 
 import java.sql.Timestamp;
 

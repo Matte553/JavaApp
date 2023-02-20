@@ -2,7 +2,6 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
-import example.api.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

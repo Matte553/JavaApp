@@ -1,7 +1,7 @@
-package example.api.controller;
+package api.controller;
 
-import example.api.model.Person;
-import example.service.PersonService;
+import api.model.Person;
+import api.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -1,13 +1,12 @@
-package example.service;
+package api.service;
 
 import Entities.*;
-import example.api.model.Person;
+import api.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
