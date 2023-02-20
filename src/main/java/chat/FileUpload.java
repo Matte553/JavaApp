@@ -1,34 +1,32 @@
-package se.miun.dt170g.test;
+package chat;
 
-import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
+import Entities.MessageEntity;
 import jakarta.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-@Named
-@ViewScoped
-public class FileUpload implements Serializable {
+public class FileUpload{
 
-    // Change the path to your uploads absolute path
-    private static final String UPLOADS_DIR_PATH = "/home/adde/Desktop/apppro/src/main/webapp/resources/uploads/";
-    private String userFileName;
+    // Change PROJECT_PATH to your project absolute path
+    private static final String PROJECT_PATH = "/home/adde/Desktop/apppro";
+    private static final String UPLOADS_DIR_PATH = PROJECT_PATH + "/src/main/webapp/resources/uploads/";
+    private static final String SNAPSHOT_UPLOADS = PROJECT_PATH + "/target/test-1.0-SNAPSHOT/resources/uploads/";
+    private String originalFileName;
     private Part fileToUpload;
 
     /**
-     * Creates unique image's name and save images inside uploads directory on server.
+     * Creates unique image name and save images inside uploads directory on server.
+     * Set image name in message reference
      *
+     * @param message object
      */
-    public void onFileUpload() {
+    public void onFileUpload(MessageEntity message) {
         if (this.fileToUpload != null) {
             String filename = fileToUpload.getSubmittedFileName();
-            userFileName = filename;
+            originalFileName = filename;
             String extension = ".png"; // default extension
             // Split filename and extension
             int index = filename.lastIndexOf('.');
@@ -41,7 +39,11 @@ public class FileUpload implements Serializable {
                 // Create unique filename
                 Path filePath = Files.createTempFile(dir, filename, extension);
                 Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
-                //Here should save filename in database
+                // Start, Used in tests only delete it later
+                Path copied = Path.of(SNAPSHOT_UPLOADS + filePath.getFileName().toString());
+                Files.copy(filePath, copied, StandardCopyOption.REPLACE_EXISTING);
+                // End
+                message.setImage(filePath.getFileName().toString());
             } catch (IOException e) {
                 System.out.println("===Error While uploading the file");
             }
@@ -58,9 +60,10 @@ public class FileUpload implements Serializable {
 
     /**
      * Get original file name to be displayed in chat page before submit.
-     * @return filename
+     *
+     * @return originalFileName
      */
-    public String getUserFileName() {
-        return userFileName;
+    public String getOriginalFileName() {
+        return originalFileName;
     }
 }

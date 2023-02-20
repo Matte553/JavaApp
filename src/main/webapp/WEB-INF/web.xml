@@ -23,6 +23,13 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <error-page>
+        <exception-type>
+            jakarta.faces.application.ViewExpiredException
+        </exception-type>
+        <location>/faces/logout.xhtml</location>
+    </error-page>
+
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>

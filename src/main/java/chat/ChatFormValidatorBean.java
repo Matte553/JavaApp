@@ -1,7 +1,6 @@
-package se.miun.dt170g.test;
+package chat;
 
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
@@ -9,15 +8,12 @@ import jakarta.faces.validator.ValidatorException;
 import jakarta.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Named
 @RequestScoped
-public class ChatFormValidatorBean implements Serializable {
-
-    private static final String CHAT_LOGIN_URL="chat-login";
+public class ChatFormValidatorBean implements Serializable{
     boolean isCustomerIdSet;
     private Matcher matcher;
     // Matches valid email-adder's format
@@ -40,7 +36,7 @@ public class ChatFormValidatorBean implements Serializable {
     }
 
     public void validateCustomerId(FacesContext context, UIComponent component, Object value)
-            throws ValidatorException {
+            throws ValidatorException, IOException {
         String customer_id_tmp = value.toString();
         matcher = CUSTOMERID_PATTERN.matcher(customer_id_tmp);
         if (customer_id_tmp.isEmpty()) {
@@ -90,10 +86,6 @@ public class ChatFormValidatorBean implements Serializable {
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
         }
-    }
-
-    public void submit() throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect("test.xhtml");
     }
 
 }

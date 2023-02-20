@@ -16,7 +16,7 @@
     <body>
         <div>
 
-            <h:form id="form">
+            <h:form id="form" styleClass="chat-form">
                 <div>
                     <h3>Rubrik</h3>
                 </div>
@@ -26,11 +26,11 @@
                     </h:outputLabel>
                     <h:inputText 
                         id="customerId" 
-                        value="#{test.name}"  
+                        value="#{personManager.person.customerNumber}"
                         a:placeholder="Skriv in Kund id" 
                         validator="#{chatFormValidatorBean.validateCustomerId}">
                     </h:inputText>
-                    <h:message for="customerId" id="m_customerId" errorClass="error"></h:message>
+                    <h:message for="customerId" id="m_customerId" errorClass="error" style="color: #D20005; display: block"/>
                 </div>
 
                 <div>
@@ -39,66 +39,66 @@
                 </div>
 
                 <div>
-                    <h:outputLabel for="firstName" styleClass="input-lables">
+                    <h:outputLabel for="firstname" styleClass="input-lables">
                         Förnamn:
                     </h:outputLabel>
                     <h:inputText 
-                        id="firstName"
-                        value="#{test.name}" 
+                        id="firstname"
+                        value="#{personManager.person.firstname}" 
                         a:placeholder="Skriv in förnamn" 
                         validator="#{chatFormValidatorBean.validateEmptyField}">
                     </h:inputText>
-                    <h:message for="firstName" id="m_firstName" errorClass="error"></h:message>
+                    <h:message for="firstname" id="m_firstname" errorClass="error" />
                 </div>
 
                 <div>
-                    <h:outputLabel for="lastName" styleClass="input-lables">
+                    <h:outputLabel for="lastname" styleClass="input-lables">
                         Efternamn:
                     </h:outputLabel>
                     <h:inputText 
-                        id="lastName"
-                        value="#{test.name}" 
+                        id="lastname"
+                        value="#{personManager.person.lastname}"
                         a:placeholder="Skriv in efternamn" 
                         validator="#{chatFormValidatorBean.validateEmptyField}">
                     </h:inputText>
-                    <h:message for="lastName" id="m_lastName" errorClass="error"></h:message>
+                    <h:message for="lastname" id="m_lastname" errorClass="error" />
                 </div>
 
                 <div>
-                    <h:outputLabel for="emailAddress" styleClass="input-lables">
+                    <h:outputLabel for="mail" styleClass="input-lables">
                         E-postadress:
                     </h:outputLabel>
                     <h:inputText 
-                        id="emailAddress"
-                        value="#{test.name}" 
+                        id="mail"
+                        value="#{personManager.person.mail}"
                         a:placeholder="Skriv in e-postadress" 
                         validator="#{chatFormValidatorBean.validateEmail}">
                     </h:inputText>
-                    <h:message for="emailAddress" id="m_emailAddress" errorClass="error"></h:message>
+                    <h:message for="mail" id="m_mail" errorClass="error" />
                 </div>
 
                 <div>
-                    <h:outputLabel for="telephone" styleClass="input-lables">
+                    <h:outputLabel for="phone" styleClass="input-lables">
                         Telefonnummer:
                     </h:outputLabel>
                     <h:inputText 
-                        id="telephone"
-                        value="#{test.name}" 
+                        id="phone"
+                        value="#{personManager.person.phone}"
                         a:placeholder="Skriv in telefonnummer" 
                         validator="#{chatFormValidatorBean.validateTelephone}">
                     </h:inputText>
-                    <h:message for="telephone" id="m_telephone" errorClass="error"></h:message>
+                    <h:message for="phone" id="m_phone" errorClass="error" />
                 </div>
 
                 <div>
                     <h:commandButton 
                         id="submit" 
                         value="Start chatt" 
-                        action="#{chatFormValidatorBean.submit}"
+                        action="#{personManager.submit}"
                         styleClass="btn success">
                         <f:ajax 
                             execute="@form" 
-                            render="m_customerId m_firstName m_lastName m_emailAddress m_telephone" />
+                            render="m_customerId m_firstname m_lastname m_mail m_phone" />
                     </h:commandButton>
                 </div>
             </h:form>
