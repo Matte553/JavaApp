@@ -29,7 +29,7 @@ INSTRUKTIONER FÖR ATT FÅ DATABAS ATT FUNGERA.
 
 4. I IntelliJ, högerklicka på databasen DerbyDB@localhost -> Properties -> test connection.
 
-5. Main.java i src/main/java/ borde nu kunna köras för att hämta alla person från DB.
+5. EntityController.Main.java i src/main/java/ borde nu kunna köras för att hämta alla person från DB.
   
   Resultatet ska se ut såhär: 
     

@@ -1,3 +1,5 @@
+package EntityController;
+
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
 import example.api.model.Person;
