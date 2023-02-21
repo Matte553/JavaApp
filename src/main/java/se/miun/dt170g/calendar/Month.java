@@ -1,31 +1,38 @@
 package se.miun.dt170g.calendar;
 
-import jakarta.annotation.ManagedBean;
-import jakarta.ejb.Stateful;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jdk.jfr.Name;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 @Named
-@RequestScoped
-@ManagedBean
 public class Month implements Serializable {
-    int number;
-    String name;
-    ArrayList<Day> days;
+    private int number;
+    private String name;
+    private ArrayList<Day> days;
+    private int year;
+    private int firstWeekday;
 
     public Month() {
-        this.number = 1;
-        this.name   = enumToString(intToEnum(number));
-        this.days   = createArrayList();
+        this.number         = 1;
+        this.name           = enumToString(intToEnum(number));
+        this.days           = createArrayList();
+        this.year           = 2023;
+        this.firstWeekday   = 1;
     }
-    public Month(int number) {
-        this.number = number;
-        this.name   = enumToString(intToEnum(number));
-        this.days   = createArrayList();
+    public Month(int number, int year, int firstWeekday) {
+        this.number         = number;
+        this.name           = enumToString(intToEnum(number));
+        this.firstWeekday   = firstWeekday;
+        this.year           = year;
+        this.days           = createArrayList();
+
+
     }
 
     public int getNumber() {
@@ -35,6 +42,7 @@ public class Month implements Serializable {
     public void setNumber(int number) {
         this.number = number;
         this.name   = enumToString(intToEnum(number));
+        this.days   = createArrayList();
     }
 
     public String getName() {
@@ -53,22 +61,34 @@ public class Month implements Serializable {
         this.days = days;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getFirstWeekday() {
+        return firstWeekday;
+    }
+
+    public void setFirstWeekday(int firstWeekday) {
+        this.firstWeekday = firstWeekday;
+    }
+
     private ArrayList<Day> createArrayList() {
         ArrayList<Day> result = new ArrayList<>();
         /*  FEB = 28
         *   JAN, MAR, MAY, JUL, AUG, OKT, DEC = 31
         *   APR, JUN, SEP, NOV = 30
          */
-        int maxDays = number == 2 ? 28 : number % 2 == 0 && number < 7 || number % 2 == 1 && number > 8 ? 30 : 31 ;
+        int maxDays = number == 2 ? 28 : number % 2 == 0 && number < 7 || number % 2 == 1 && number > 8 ? 30 : 31;
+        int weekday = firstWeekday;
         for (int i = 1; i <= maxDays; i++) {
-            /* OBSERVERA!!!!!!!
-            *  Använd kalender objektet så att jag kan få reda på vilken veckodag första dagen i månaden är
-            *  BYGG LOGIK SÅ ATT DayNames.MONDAY kan bli utbytt så att det fortsätter rotera så att alla dagar
-            *  i månaden får rätt namn!!!
-            *
-            *
-             */
-            Day temp = new Day(i, DayNames.MONDAY);
+            Day temp = new Day(i, weekday);
+            weekday++;
+            weekday = weekday % 8 == 0 ? 1 : weekday;
             result.add(temp);
         }
         return result;

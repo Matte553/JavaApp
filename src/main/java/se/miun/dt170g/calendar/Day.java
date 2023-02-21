@@ -5,17 +5,22 @@ import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 @Named
-@RequestScoped
 public class Day implements Serializable {
     int number;
+    int weekday;
     String name;
     ArrayList<Service> services;
 
     public Day() {
+        this.number = 1;
+        this.weekday= 1;
+        this.name = enumToString(intToEnum(weekday));
+        this.services = createArrayList();
     }
-    public Day(int number, DayNames name) {
+    public Day(int number, int weekday) {
         this.number = number;
-        this.name = enumToString(name);
+        this.weekday= weekday;
+        this.name = enumToString(intToEnum(weekday));
         this.services = createArrayList();
     }
 
@@ -43,6 +48,40 @@ public class Day implements Serializable {
         this.services = services;
     }
 
+    public int getWeekday() {
+        return weekday;
+    }
+
+    public void setWeekday(int weekday) {
+        this.weekday = weekday;
+    }
+
+    private DayNames intToEnum(int dayNumber) {
+        DayNames result = DayNames.MONDAY;
+        switch (dayNumber) {
+            case 1:
+                break;
+            case 2:
+                result = DayNames.TUESDAY;
+                break;
+            case 3:
+                result = DayNames.WEDNESDAY;
+                break;
+            case 4:
+                result = DayNames.THURSDAY;
+                break;
+            case 5:
+                result = DayNames.FRIDAY;
+                break;
+            case 6:
+                result = DayNames.SATURDAY;
+                break;
+            case 7:
+                result = DayNames.SUNDAY;
+                break;
+        }
+        return result;
+    }
     private String enumToString(DayNames dn) {
         String result = "";
         switch (dn) {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<!-- LÄNKAR:
+ https://www.w3schools.com/howto/howto_css_calendar.asp // CALENDAR LAYOUT
+ https://stackoverflow.com/questions/6377798/what-can-fmetadata-fviewparam-and-fviewaction-be-used-for/6377957#6377957 // BEAN
+ -->
+<h:head>
+<title>Calendar</title>
+    <h:outputStylesheet library="css" name="calendar.css"/>
+</h:head>
+<h:body>
+    <ui:include src="header.xhtml"/>
+
+        <div class="overview">
+            <div class="row">
+                <ui:param name="currentMonth" value="#{calendarHandler.currentMonth}" />
+                <ui:param name="nextMonth" value="#{calendarHandler.currentMonth+1}" />
+                <ui:param name="nextNextMonth" value="#{calendarHandler.currentMonth+2}" />
+                <div class="column">
+                    <a href="calendar_month.xhtml?monthID=#{currentMonth}">#{calendarHandler.months[currentMonth-1].name}</a>
+                    <ul class="days">
+                    <ui:repeat value="#{calendarHandler.months[currentMonth-1].days}" var="day">
+                        <li><a href="?monthID=#{currentMonth}day=#{day.number}">#{day.number}</a></li>
+                    </ui:repeat>
+                    </ul>
+                </div>
+
+                <div class="column">
+                    <a href="calendar_month.xhtml?monthID=#{nextMonth}">#{calendarHandler.months[nextMonth-1].name}</a>
+                    <ul class="days">
+                        <ui:repeat value="#{calendarHandler.months[nextMonth-1].days}" var="day">
+                            <li><a href="?monthID=#{nextMonth}day=#{day.number}">#{day.number}</a></li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+
+                <div class="column">
+                    <a href="calendar_month.xhtml?monthID=#{nextNextMonth}">#{calendarHandler.months[nextNextMonth-1].name}</a>
+                    <ul class="days">
+                        <ui:repeat value="#{calendarHandler.months[nextNextMonth-1].days}" var="day">
+                            <li><a href="?monthID=#{nextNextMonth}day=#{day.number}">#{day.number}</a></li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+</h:body>
+</html>
