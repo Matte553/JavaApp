@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 @Named
 @SessionScoped
-public class PersonManager implements Serializable {
+public class CustomerManager implements Serializable {
 
     private PersonEntity person = new PersonEntity();
 

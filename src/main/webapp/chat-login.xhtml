@@ -27,7 +27,7 @@
                     </h:outputLabel>
                     <h:inputText 
                         id="customerId" 
-                        value="#{personManager.person.customerNumber}"
+                        value="#{customerManager.person.customerNumber}"
                         a:placeholder="Skriv in Kund id" 
                         validator="#{chatFormValidatorBean.validateCustomerId}">
                     </h:inputText>
@@ -45,7 +45,7 @@
                     </h:outputLabel>
                     <h:inputText 
                         id="firstname"
-                        value="#{personManager.person.firstname}" 
+                        value="#{customerManager.person.firstname}"
                         a:placeholder="Skriv in förnamn" 
                         validator="#{chatFormValidatorBean.validateEmptyField}">
                     </h:inputText>
@@ -58,7 +58,7 @@
                     </h:outputLabel>
                     <h:inputText 
                         id="lastname"
-                        value="#{personManager.person.lastname}"
+                        value="#{customerManager.person.lastname}"
                         a:placeholder="Skriv in efternamn" 
                         validator="#{chatFormValidatorBean.validateEmptyField}">
                     </h:inputText>
@@ -71,7 +71,7 @@
                     </h:outputLabel>
                     <h:inputText 
                         id="mail"
-                        value="#{personManager.person.mail}"
+                        value="#{customerManager.person.mail}"
                         a:placeholder="Skriv in e-postadress" 
                         validator="#{chatFormValidatorBean.validateEmail}">
                     </h:inputText>
@@ -84,7 +84,7 @@
                     </h:outputLabel>
                     <h:inputText 
                         id="phone"
-                        value="#{personManager.person.phone}"
+                        value="#{customerManager.person.phone}"
                         a:placeholder="Skriv in telefonnummer" 
                         validator="#{chatFormValidatorBean.validateTelephone}">
                     </h:inputText>
@@ -95,7 +95,7 @@
                     <h:commandButton 
                         id="submit" 
                         value="Start chatt" 
-                        action="#{personManager.submit}"
+                        action="#{customerManager.submit}"
                         styleClass="btn success">
                         <f:ajax 
                             execute="@form" 

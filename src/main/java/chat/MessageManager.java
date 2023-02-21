@@ -17,7 +17,6 @@ import java.util.Date;
 public class MessageManager implements Serializable {
     private MessageEntity message = new MessageEntity();
 
-    private FileUpload fileUpload = new FileUpload();
     @Inject
     private MessageService messageService;
 
@@ -32,9 +31,6 @@ public class MessageManager implements Serializable {
         return message;
     }
 
-    public FileUpload getFileUpload() {
-        return fileUpload;
-    }
 
     public ArrayList<MessageEntity> getMessages() {
         return messages;
@@ -52,6 +48,5 @@ public class MessageManager implements Serializable {
         messageService.addMessage(message,"");
         // reset values
         message = new MessageEntity();
-        fileUpload = new FileUpload();
     }
 }

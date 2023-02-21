@@ -1,5 +1,6 @@
 package chat;
 
+import jakarta.faces.application.ResourceHandler;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +19,11 @@ public class ChatWebFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        response.setHeader("Cache-Control", "no-store, must-revalidate");
+        String resourcePath = request.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER;
+        //Exclude resources
+        if (!request.getRequestURI().startsWith(resourcePath)) {
+            response.setHeader("Cache-Control", "no-store, must-revalidate");
+        }
         if (request.getRequestURI().endsWith("chat.xhtml")) {
             try {
                 String customerNumber = (String) request.getSession().getAttribute("customerNumber");

@@ -55,7 +55,7 @@
 
 
         <h:form id="chat-form" styleClass="chat-form" enctype="multipart/form-data">
-            <div class="message-input">
+            <div class="message-input" jsf:id="message-input">
                 <h:message for="messageText" id="m_messageText" errorClass="error"/>
                 <h:inputTextarea
                         id="messageText"
@@ -67,12 +67,12 @@
                 </h:inputTextarea>
             </div>
             <div id="file-upload">
-                <h:outputText id="originalFileName" value="#{messageManager.fileUpload.originalFileName}"/>
+                <h:outputText id="originalFileName" value="#{fileUpload.originalFileName}"/>
                 <h:outputLabel for="fileToUpload">
                     <h:graphicImage library="images" name="upload-icon.png"/>
                 </h:outputLabel>
-                <h:inputFile id="fileToUpload" value="#{messageManager.fileUpload.fileToUpload}">
-                    <f:ajax listener="#{messageManager.fileUpload.onFileUpload(messageManager.message)}"
+                <h:inputFile id="fileToUpload" value="#{fileUpload.fileToUpload}">
+                    <f:ajax listener="#{fileUpload.onFileUpload(messageManager.message)}"
                             render="originalFileName"/>
                 </h:inputFile>
             </div>
@@ -81,7 +81,7 @@
                         id="messageSubmit"
                         value="Skicka"
                         styleClass="btn success" action="#{messageManager.submit}">
-                    <f:ajax execute="@form" render="chat-form :message-container" resetValues="true"/>
+                    <f:ajax execute="@form" render="message-input originalFileName :message-container" resetValues="true"/>
                 </h:commandButton>
             </div>
         </h:form>
