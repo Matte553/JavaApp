@@ -1,7 +1,10 @@
 package api;
 
 import Entities.HibernateSetup;
+import Entities.MessageEntity;
 import Entities.PersonEntity;
+import EntityController.EntityController;
+import api.model.Message;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -10,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -29,8 +33,11 @@ public class main {
         for(PersonEntity person: list ) {
             person.getId();//Loadsa stuff
         };
-
-
+        EntityController ec = new EntityController();
+        ArrayList<MessageEntity> testList = ec.getMessagesFromChatID(1,2);
+        for(MessageEntity message: testList ) {
+            System.out.println(message); //Loadsa stuff
+        };
     }
 
 
