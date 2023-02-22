@@ -1,0 +1,42 @@
+_____________________________________________
+ALLMÄN INFO
+
+Java 9: 		För att starta derby server
+Java coretto 11.0.18:	För projektet
+Apache Derby		10.15.2.0
+Hibernate		6.1.2
+Query Språk		HQL
+_____________________________________________
+
+INSTRUKTIONER FÖR ATT FÅ DATABAS ATT FUNGERA.
+
+1.  Ladda ner Apache Derby 10.15.2.0
+
+2.  navigera till db-derby-10.15.2.0-bin\lib
+
+  Det finns 3 jarfiler som måste inkluderas i "ClassPath" i IntelliJ projektet. JAR filerna hittas i db-derby-10.15.2.0-bin\lib
+    derbyclient.jar
+    derbytools.jar
+    derbynet.jar
+  
+  I IntelliJ gå till File->Projectstructure->Modules->Dependencies.
+  Klicka + för "Add", välj JARs or Directories.
+  Välj de 3 Jarfilerna.
+  Exempel på path: C:\Users\Matti\Documents\Kurser\Java_ApplikationsUtveckling\db-derby-10.15.2.0-bin\lib\derby.jar.
+  Efter att alla 3 JAR är tillagda. Scrolla längst ner i Dependencies taben och bocka i de 3. Klicka Apply och Exit.
+
+3. Starta Databasen genom att navigera till db-derby-10.15.2.0-bin\bin och kör kommandot StartNetWorkServer.bat
+
+4. I IntelliJ, högerklicka på databasen DerbyDB@localhost -> Properties -> test connection.
+
+5. EntityController.Main.java i src/main/java/ borde nu kunna köras för att hämta alla person från DB.
+  
+  Resultatet ska se ut såhär: 
+    
+    [MASSA RÖD HIBERNATE TEXT]
+    Hibernate: select p1_0.ID,p1_0.FIRSTNAME from APP.PERSON p1_0
+    ID: 1 Name: Mattias
+    ID: 2 Name: Lisa
+    ID: 3 Name: Kalle
+  
+________________________________________________________________________________________________________________________
