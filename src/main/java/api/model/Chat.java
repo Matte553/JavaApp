@@ -1,4 +1,4 @@
-package example.api.model;
+package api.model;
 
 public class Chat {
     private int id;

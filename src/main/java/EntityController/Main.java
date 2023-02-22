@@ -3,7 +3,7 @@ package EntityController;
 import Entities.*;
 
 import java.util.ArrayList;
-
+//Irrelevant to the API-team
 public class Main {
     public static void main(String[] args) throws Exception {
 
