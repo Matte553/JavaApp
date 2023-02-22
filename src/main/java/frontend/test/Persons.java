@@ -1,6 +1,6 @@
 package frontend.test;
-import Entities.PersonEntity;
-import EntityController.*;
+//import Entities.PersonEntity;
+//import EntityController.*;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 @Named
 @RequestScoped
 public class Persons implements Serializable {
-    EntityController ec;
-    ArrayList<Person> persons;
+    //private EntityController ec;
+    private ArrayList<Person> persons;
 
     public Persons() throws Exception {
         /*ec      = new EntityController();

@@ -9,7 +9,7 @@
         <version>3.0.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>se.miun.dt170g</groupId>
+    <groupId>frontend</groupId>
     <artifactId>test</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>test</name>
@@ -49,7 +49,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
@@ -60,7 +60,7 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- This depedency was added manually to download the Derby database JAR file and drivers -->
         <dependency>

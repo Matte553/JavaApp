@@ -17,7 +17,7 @@ public class main {
 
     public static void main(String[] args) throws Exception {
 
-        SpringApplication.run(main.class, args);
+        /*SpringApplication.run(main.class, args);
         SessionFactory sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
         Session session = sessionFactory.openSession();                     // Skapa en session för koppling.
         session.beginTransaction();
@@ -28,16 +28,17 @@ public class main {
 
         for(PersonEntity person: list ) {
             person.getId();//Loadsa stuff
-        };
+        };*/
 
 
     }
 
-
+/*
     @Bean
     ApplicationRunner applicationRunner(){
         return args -> {
             System.out.println("Hello world!");
         };
     }
+    */
 }

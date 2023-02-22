@@ -8,12 +8,12 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         // New Controller
-        EntityController ec = new EntityController();
+        //EntityController ec = new EntityController();
         //ec.insertTestData();
 
         // Read from all database tables
 
-        ArrayList<PersonEntity> persons         = ec.getPersons();
+        //ArrayList<PersonEntity> persons         = ec.getPersons();
 
         /*
         ArrayList<ChatEntity> chats             = ec.getChats();
@@ -24,9 +24,9 @@ public class Main {
         //ArrayList<MessageEntity> messages = ec.getMessagesFromChatID(1,2);
 
         // Iterate through list
-        for (PersonEntity m: persons) {
+        /*for (PersonEntity m: persons) {
             System.out.println(m);
-        }
+        }*/
 
 
 
