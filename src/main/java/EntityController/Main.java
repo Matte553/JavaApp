@@ -9,24 +9,23 @@ public class Main {
 
         // New Controller
         EntityController ec = new EntityController();
-        ec.createChat();
-
+        //ec.insertTestData();
 
         // Read from all database tables
 
         ArrayList<PersonEntity> persons         = ec.getPersons();
+
         /*
         ArrayList<ChatEntity> chats             = ec.getChats();
         ArrayList<ChatmemberEntity> chatMembers = ec.getChatMembers();
         ArrayList<MessageEntity> messages       = ec.getMessages();
         */
 
-        /*ArrayList<MessageEntity> messages = ec.getMessagesFromChatID(1,2);
-        */
+        //ArrayList<MessageEntity> messages = ec.getMessagesFromChatID(1,2);
+
         // Iterate through list
-        System.out.println("Skriver ut listan här: ");
-        for (PersonEntity p: persons) {
-            System.out.println(p);
+        for (PersonEntity m: persons) {
+            System.out.println(m);
         }
 
 

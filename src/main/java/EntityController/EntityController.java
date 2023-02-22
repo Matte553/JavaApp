@@ -25,30 +25,26 @@ public class EntityController {
         session.beginTransaction();
     }
 
-    public void createChat() throws Exception {
-
-        SessionFactory sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
-        Session session = sessionFactory.openSession();                     // Skapa en session för koppling.
-        session.beginTransaction();
+    public void insertTestData(){
 
         PersonEntity p1 = new PersonEntity();
-        p1.setFirstname("Anders");
-        p1.setLastname("Andersson");
-        p1.setMail("anders.andersson@gmail.com");
-        p1.setPhone("070-0547602");
-        p1.setCustomerNumber("0");
+        p1.setFirstname("Kalle");
+        p1.setLastname("Karlsson");
+        p1.setMail("kalle.Karlsson@gmail.com");
+        p1.setPhone("070-99999999");
+        p1.setCustomerNumber("2");
         session.persist(p1);
 
         PersonEntity p2 = new PersonEntity();
-        p2.setFirstname("Göran");
-        p2.setLastname("Person");
-        p2.setMail("goren.persson@gmail.com");
-        p2.setPhone("070-8206830");
-        p2.setCustomerNumber("000001");
+        p2.setFirstname("Niklas");
+        p2.setLastname("Larsson");
+        p2.setMail("NiklasLarsson@gmail.com");
+        p2.setPhone("070-8888888");
+        p2.setCustomerNumber("3");
         session.persist(p2);
 
         ChatEntity chat = new ChatEntity();
-        chat.setSubject("Reparation");
+        chat.setSubject("Reservation");
         session.persist(chat);
 
         ChatmemberEntity chat_member1 = new ChatmemberEntity();
@@ -64,11 +60,14 @@ public class EntityController {
         MessageEntity mess = new MessageEntity();
         mess.setChatId(chat.getId());
         mess.setPersonId(p1.getId());
-        mess.setText("Hallåjsan! Din gitarr är klar!");
+        mess.setText("Hej där din rackare. Hur är läget?");
+
         long now = System.currentTimeMillis();
         Timestamp sqlTimestamp = new Timestamp(now);
         mess.setMessageTimestamp(sqlTimestamp);
         session.persist(mess);
+
+        session.getTransaction().commit();
     }
 
 
@@ -119,7 +118,7 @@ public class EntityController {
     // Returns an arraylist with all Persons from database
     public ArrayList<PersonEntity> getPersons() throws Exception {
         Query query = session.createQuery(("from PersonEntity "));
-        List<ChatEntity> list=query.list();
+        List<PersonEntity> list=query.list();
         list.forEach(System.out::println);
 
         ArrayList arrayList = (ArrayList) list;
@@ -149,7 +148,7 @@ public class EntityController {
     // Returns an arraylist with all ChatMembers from database
     public ArrayList<ChatmemberEntity> getChatMembers() throws Exception {
         Query query = session.createQuery(("from ChatmemberEntity "));
-        List<ChatEntity> list=query.list();
+        List<ChatmemberEntity> list=query.list();
         list.forEach(System.out::println);
 
         ArrayList arrayList = (ArrayList) list;
