@@ -11,15 +11,23 @@ public class Main {
         EntityController ec = new EntityController();
 
         // Read from all database tables
+        /*
         ArrayList<PersonEntity> persons         = ec.getPersons();
         ArrayList<ChatEntity> chats             = ec.getChats();
         ArrayList<ChatmemberEntity> chatMembers = ec.getChatMembers();
         ArrayList<MessageEntity> messages       = ec.getMessages();
+        */
+
+        ArrayList<MessageEntity> messages = ec.getMessagesFromChatID(1,2);
 
         // Iterate through list
-        for (PersonEntity p: persons) {
-            System.out.println(p);
+        for (MessageEntity m: messages) {
+            System.out.println(m);
         }
+
+
+
+
 
 
     }
