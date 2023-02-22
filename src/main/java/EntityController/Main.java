@@ -3,38 +3,42 @@ package EntityController;
 import Entities.*;
 
 import java.util.ArrayList;
+
 //Irrelevant to the API-team
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        // New Controller
+    // New Controller
         EntityController ec = new EntityController();
         //ec.insertTestData();
 
-        // Read from all database tables
+    // Read from all database tables
+        //ArrayList<PersonEntity> persons         = ec.getPersons();
+        //ArrayList<ChatEntity> chats             = ec.getChats();
+        //ArrayList<ChatmemberEntity> chatMembers = ec.getChatMembers();
+        //ArrayList<MessageEntity> messages       = ec.getMessages();
 
-        ArrayList<PersonEntity> persons         = ec.getPersons();
-
-        /*
-        ArrayList<ChatEntity> chats             = ec.getChats();
-        ArrayList<ChatmemberEntity> chatMembers = ec.getChatMembers();
-        ArrayList<MessageEntity> messages       = ec.getMessages();
-        */
 
         //ArrayList<MessageEntity> messages = ec.getMessagesFromChatID(1,2);
 
-        //ec.initiateContact(7, "Kerstin", "Svensson", "070-7189503", "kerstin.svensson@gmail.com", "Reparation");
+    // Create Conversation
+        //ec.initiateContact(1, "Kerstin", "Svensson", "070-7189503", "kerstin.svensson@gmail.com", "Reparation");
 
-        //ec.addMessage(102, 102, "Hej, jag undrar om min gitarr är klar än?", "");
+    // Create Message
+        //ec.addMessage(107, 104, "Hej, jag undrar om min gitarr är klar än?", "");
 
-        Integer i = ec.getIdFromCustomerNumber("660890");
-        System.out.println("Kerstin's ID: " + i);
-
+    // Get Messages from persons
+        //ArrayList<MessageEntity> message = ec.getMessagesFromPersonID(1,107);
         // Iterate through list
-        /*for (PersonEntity m: persons) {
+
+        /*
+        for (MessageEntity m: message) {
             System.out.println(m);
         }
-*/
+        */
+
+
+
 
 
 

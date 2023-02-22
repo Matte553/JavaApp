@@ -1,13 +1,11 @@
 create table CHATMEMBER
 (
-    ID        INTEGER default AUTOINCREMENT: start 1 increment 1 generated always as identity,
+    ID        INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     CHAT_ID   INTEGER not null,
     PERSON_ID INTEGER not null,
-    constraint "CHATMEMBER_pk"
-        primary key (ID),
     constraint "CHATMEMBER_CHAT_ID_fk"
-        foreign key (CHAT_ID) references CHAT,
+        foreign key (CHAT_ID) references CHAT(ID),
     constraint "CHATMEMBER_PERSON_ID_fk"
-        foreign key (PERSON_ID) references PERSON
+        foreign key (PERSON_ID) references PERSON(ID)
 );
 

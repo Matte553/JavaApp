@@ -1,8 +1,6 @@
 create table CHAT
 (
-    ID      INTEGER default AUTOINCREMENT: start 1 increment 1 generated always as identity,
-    SUBJECT VARCHAR(255),
-    constraint "CHAT_pk"
-        primary key (ID)
+    ID      INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
+    SUBJECT VARCHAR(255)
 );
 

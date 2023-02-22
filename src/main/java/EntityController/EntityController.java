@@ -184,7 +184,7 @@ public class EntityController {
     }
 
     // Returns arraylist with all messages from a chat ID
-    public ArrayList<MessageEntity> getMessagesFromChatID(int person_A_ID, int person_B_ID){
+    public ArrayList<MessageEntity> getMessagesFromPersonID(int person_A_ID, int person_B_ID){
         int chatID = getChatID(person_A_ID, person_B_ID);
         if(chatID == -1){
             System.err.println("There is no chat between these two persons");

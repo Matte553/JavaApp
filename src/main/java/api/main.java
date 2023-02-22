@@ -34,7 +34,7 @@ public class main {
             person.getId();//Loadsa stuff
         };
         EntityController ec = new EntityController();
-        ArrayList<MessageEntity> testList = ec.getMessagesFromChatID(1,2);
+        ArrayList<MessageEntity> testList = ec.getMessagesFromPersonID(1,2);
         for(MessageEntity message: testList ) {
             System.out.println(message); //Loadsa stuff
         };
