@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 
 <!-- LÄNKAR:
@@ -19,34 +20,61 @@
     <ui:include src="header.xhtml"/>
 
         <div class="overview">
+            <h1 align="center">Boka</h1>
             <div class="row">
+                <ui:param name="currentYear" value="#{calendarHandler.currentYear}" />
+                <ui:param name="currentDay" value="#{calendarHandler.currentDay}"/>
                 <ui:param name="currentMonth" value="#{calendarHandler.currentMonth}" />
                 <ui:param name="nextMonth" value="#{calendarHandler.currentMonth+1}" />
                 <ui:param name="nextNextMonth" value="#{calendarHandler.currentMonth+2}" />
+
                 <div class="column">
-                    <a href="calendar_month.xhtml?monthID=#{currentMonth}">#{calendarHandler.months[currentMonth-1].name}</a>
+                    <a href="calendar_month.xhtml?monthID=#{currentMonth}">#{calendarHandler.months[currentMonth-1].name} #{currentYear}</a> <br />
                     <ul class="days">
-                    <ui:repeat value="#{calendarHandler.months[currentMonth-1].days}" var="day">
-                        <li><a href="?monthID=#{currentMonth}day=#{day.number}">#{day.number}</a></li>
-                    </ui:repeat>
+                        <c:forEach items="#{calendarHandler.months[currentMonth-1].days}" var="day">
+                            <c:choose>
+                                <c:when test="#{currentMonth eq currentMonth and currentDay eq day.number}">
+                                    <li><span class="active"><a href="calendar_week.xhtml?monthID=#{currentMonth}day=#{day.number}">#{day.number}</a></span></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="calendar_week.xhtml/monthID=#{currentMonth}/?day=#{day.number}">#{day.number}</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
                     </ul>
                 </div>
 
                 <div class="column">
-                    <a href="calendar_month.xhtml?monthID=#{nextMonth}">#{calendarHandler.months[nextMonth-1].name}</a>
+                    <div id="nav" >
+                    <a href="calendar_month.xhtml?monthID=#{nextMonth}">#{calendarHandler.months[nextMonth-1].name} #{currentYear}</a> <br />
+                    </div>
                     <ul class="days">
-                        <ui:repeat value="#{calendarHandler.months[nextMonth-1].days}" var="day">
-                            <li><a href="?monthID=#{nextMonth}day=#{day.number}">#{day.number}</a></li>
-                        </ui:repeat>
+                        <c:forEach items="#{calendarHandler.months[nextMonth-1].days}" var="day">
+                            <c:choose>
+                                <c:when test="#{currentMonth eq nextMonth and currentDay eq day.number}">
+                                    <li><span class="active"><a href="calendar_week.xhtml?monthID=#{nextMonth}day=#{day.number}">#{day.number}</a></span></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="calendar_week.xhtml/monthID=#{nextMonth}/?day=#{day.number}">#{day.number}</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
                     </ul>
                 </div>
 
                 <div class="column">
-                    <a href="calendar_month.xhtml?monthID=#{nextNextMonth}">#{calendarHandler.months[nextNextMonth-1].name}</a>
+                    <a href="calendar_month.xhtml?monthID=#{nextNextMonth}">#{calendarHandler.months[nextNextMonth-1].name} #{currentYear}</a> <br />
                     <ul class="days">
-                        <ui:repeat value="#{calendarHandler.months[nextNextMonth-1].days}" var="day">
-                            <li><a href="?monthID=#{nextNextMonth}day=#{day.number}">#{day.number}</a></li>
-                        </ui:repeat>
+                        <c:forEach items="#{calendarHandler.months[nextNextMonth-1].days}" var="day">
+                            <c:choose>
+                                <c:when test="#{currentMonth eq nextNextMonth and currentDay eq day.number}">
+                                    <li><span class="active"><a href="calendar_week.xhtml?monthID=#{nextNextMonth}day=#{day.number}">#{day.number}</a></span></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="calendar_week.xhtml/monthID=#{nextNextMonth}/?day=#{day.number}">#{day.number}</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>

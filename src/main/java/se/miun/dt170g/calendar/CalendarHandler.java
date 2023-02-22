@@ -15,6 +15,7 @@ public class CalendarHandler implements Serializable {
     private ArrayList<Integer> firstDaysEachMonth;
     private int currentYear;
     private int currentMonth;
+    private int currentWeek;
     private int currentDay;
     private ArrayList<Month> months;
 
@@ -22,6 +23,7 @@ public class CalendarHandler implements Serializable {
         this.calendar           = Calendar.getInstance();
         this.currentYear        = getYear();
         this.currentMonth       = getMonth();
+        this.currentWeek        = getWeek();
         this.currentDay         = getDay();
         this.firstDaysEachMonth = fillWithFirstDays();
         this.months             = createArrayList();
@@ -82,6 +84,14 @@ public class CalendarHandler implements Serializable {
         this.currentDay = currentDay;
     }
 
+    public int getCurrentWeek() {
+        return currentWeek;
+    }
+
+    public void setCurrentWeek(int currentWeek) {
+        this.currentWeek = currentWeek;
+    }
+
     private int dateToInt(Date date) {
         String day = date.toString().substring(0,3);
 
@@ -114,5 +124,5 @@ public class CalendarHandler implements Serializable {
     private int getDay() {
         return calendar.get(Calendar.DATE);
     }
-
+    private int getWeek() {return calendar.get(Calendar.WEEK_OF_YEAR);}
 }

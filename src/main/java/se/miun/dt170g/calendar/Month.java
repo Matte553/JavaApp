@@ -1,14 +1,9 @@
 package se.miun.dt170g.calendar;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
+
 import jakarta.inject.Named;
-
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 @Named
 public class Month implements Serializable {
