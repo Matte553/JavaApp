@@ -30,6 +30,14 @@ public class MessageEntity {
     public MessageEntity() {
     }
 
+    public MessageEntity(Integer personID, Integer chatID, String text, Timestamp timestamp, String imageURL) {
+        setPersonId(personID);
+        setChatId(chatID);
+        setText(text);
+        setMessageTimestamp(timestamp);
+        setImage(imageURL);
+    }
+
     public int getId() {
         return id;
     }

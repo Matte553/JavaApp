@@ -16,6 +16,10 @@ public class ChatEntity {
     public ChatEntity() {
     }
 
+    public ChatEntity(String subject) {
+        setSubject(subject);
+    }
+
     public int getId() {
         return id;
     }

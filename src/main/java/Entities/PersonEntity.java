@@ -28,6 +28,14 @@ public class PersonEntity {
     public PersonEntity() {
     }
 
+    public PersonEntity(String firstname, String lastname, String phone, String mail, String customerNumber) {
+        setFirstname(firstname);
+        setLastname(lastname);
+        setPhone(phone);
+        setMail(mail);
+        setCustomerNumber(customerNumber);
+    }
+
     public int getId() {
         return id;
     }

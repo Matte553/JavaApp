@@ -2,6 +2,7 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
+import org.hibernate.Internal;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -9,6 +10,7 @@ import org.hibernate.query.Query;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Entities.*;
 
@@ -25,6 +27,77 @@ public class EntityController {
         session.beginTransaction();
     }
 
+    // Method to create a person and prepare it to be sent to database. Returns the personID
+    private Integer createPerson(String firstname, String lastname, String phone, String mail) throws Exception {
+        String customerNumber = generateCustomerNumber();
+        PersonEntity person = new PersonEntity(firstname, lastname, phone, mail, customerNumber);
+        session.persist(person);
+        return person.getId();
+    }
+
+    // Method to generate a random customer number with 6 digits.
+    // Controls that there are no duplicates
+    private String generateCustomerNumber() throws Exception {
+        ArrayList<PersonEntity> persons = this.getPersons();
+        ArrayList<String> customerNumbers = new ArrayList<>();
+        for(PersonEntity p: persons) {
+            customerNumbers.add(p.getCustomerNumber());
+        }
+        Random rand = new Random();
+        Integer number;
+        String numberString = null;
+        while(true) {
+            number = rand.nextInt(999999);
+            numberString = String.format("%06d", number);
+            if(!customerNumbers.contains(numberString)) {
+                break;
+            }
+        }
+        return numberString;
+    }
+
+    // Method to create a chat and prepares it to be sent to database
+    private Integer createChat(String subject) {
+        ChatEntity chat = new ChatEntity(subject);
+        session.persist(chat);
+        return chat.getId();
+    }
+
+    // Method to create chat member and prepares it to be sent to the database
+    private void createChatMember(Integer chatID, Integer personID) {
+        ChatmemberEntity chatMember = new ChatmemberEntity(chatID, personID);
+        session.persist(chatMember);
+    }
+
+    // Method to create chat message and prepares it to be sent to the database
+    // Adds current time and date to timestamp
+    private void createMessage(Integer personID, Integer chatID, String text, String imageURL) {
+        long now = System.currentTimeMillis();
+        Timestamp sqlTimestamp = new Timestamp(now);
+        MessageEntity message = new MessageEntity(personID, chatID, text, sqlTimestamp, imageURL);
+        session.persist(message);
+    }
+
+    // Public method to add new messages to database
+    // Actually commits the entry
+    public void addMessage(Integer personID, Integer chatID, String text, String imageURL) {
+        createMessage(personID, chatID, text, imageURL);
+        session.getTransaction().commit();
+    }
+
+    // Public method to start conversation. Is to be used when a new customer is added on the frontend.
+    // A new chat is created with Anders, and a welcome message is sent from Anders to the new customer to
+    // initiate contact. Everything is then committed to the database.
+    public void initiateContact(Integer AndersID, String firstname, String lastname, String phone, String mail, String subject) throws Exception {
+        Integer personID = createPerson(firstname, lastname, phone, mail);
+        Integer chatID = createChat(subject);
+        createChatMember(chatID, personID);
+        createChatMember(chatID, AndersID);
+        createMessage(AndersID, chatID, "Hej och välkommen! Här kan du skriva med mig, whoho", null);
+        session.getTransaction().commit();
+    }
+
+    // Method to test things
     public void insertTestData(){
 
         PersonEntity p1 = new PersonEntity();

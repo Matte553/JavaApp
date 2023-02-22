@@ -19,6 +19,11 @@ public class ChatmemberEntity {
     public ChatmemberEntity() {
     }
 
+    public ChatmemberEntity(Integer chatID, Integer personID) {
+        setChatId(chatID);
+        setPersonId(personID);
+    }
+
     public int getId() {
         return id;
     }

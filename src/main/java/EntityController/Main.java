@@ -23,6 +23,10 @@ public class Main {
 
         //ArrayList<MessageEntity> messages = ec.getMessagesFromChatID(1,2);
 
+        //ec.initiateContact(7, "Kerstin", "Svensson", "070-7189503", "kerstin.svensson@gmail.com", "Reparation");
+
+        ec.addMessage(102, 102, "Hej, jag undrar om min gitarr är klar än?", "");
+
         // Iterate through list
         for (PersonEntity m: persons) {
             System.out.println(m);
