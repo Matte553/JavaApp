@@ -25,13 +25,16 @@ public class Main {
 
         //ec.initiateContact(7, "Kerstin", "Svensson", "070-7189503", "kerstin.svensson@gmail.com", "Reparation");
 
-        ec.addMessage(102, 102, "Hej, jag undrar om min gitarr är klar än?", "");
+        //ec.addMessage(102, 102, "Hej, jag undrar om min gitarr är klar än?", "");
+
+        Integer i = ec.getIdFromCustomerNumber("660890");
+        System.out.println("Kerstin's ID: " + i);
 
         // Iterate through list
-        for (PersonEntity m: persons) {
+        /*for (PersonEntity m: persons) {
             System.out.println(m);
         }
-
+*/
 
 
 

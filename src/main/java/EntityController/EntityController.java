@@ -97,6 +97,15 @@ public class EntityController {
         session.getTransaction().commit();
     }
 
+    // Public method to fetch a customer's ID based on their customer number
+    public Integer getIdFromCustomerNumber(String customerNumber) {
+        String hql = "SELECT E.id FROM PersonEntity E WHERE E.customerNumber = :customerNumber";
+        Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
+        List results = query.list();
+        Integer personID = (Integer) results.get(0);
+        return personID;
+    }
+
     // Method to test things
     public void insertTestData(){
 
