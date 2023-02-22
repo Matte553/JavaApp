@@ -1,6 +1,5 @@
-package se.miun.dt170g.calendar;
+package frontend.calendar;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;

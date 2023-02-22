@@ -1,4 +1,4 @@
-package se.miun.dt170g.calendar;
+package frontend.calendar;
 
 
 import jakarta.inject.Named;

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DdlMappings">
     <mapping uuid="282387af-8183-4ab0-86e7-c3242a91cef9" name="DerbyDB@localhost Mapping">
-      <data-sources db="d12b4eb0-c48d-47d7-a50d-f90d2fb5551f" ddl="522ccabb-674b-4238-b1e7-2fbdf0a46c88" />
+      <data-sources db="d12b4eb0-c48d-47d7-a50d-f90d2fb5551f" ddl="d338b379-f251-4db4-8313-62f9b0056e6d" />
       <scope>
         <node kind="schema" qname="APP" />
       </scope>
@@ -34,6 +34,17 @@
         </State>
         <State>
           <option name="id" value="522ccabb-674b-4238-b1e7-2fbdf0a46c88" />
+          <option name="name" value="DerbyDB@localhost (DDL)" />
+          <option name="dbmsName" value="DERBY" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/src/db" />
+            </array>
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+        </State>
+        <State>
+          <option name="id" value="d338b379-f251-4db4-8313-62f9b0056e6d" />
           <option name="name" value="DerbyDB@localhost (DDL)" />
           <option name="dbmsName" value="DERBY" />
           <option name="urls">

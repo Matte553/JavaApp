@@ -1,8 +1,9 @@
-package se.miun.dt170g.calendar;
+package frontend.calendar;
 
+import frontend.test.Person;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
-import se.miun.dt170g.test.Person;
+
 import java.io.Serializable;
 
 @Named

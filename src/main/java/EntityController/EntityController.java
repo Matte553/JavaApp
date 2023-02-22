@@ -2,8 +2,6 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
-import example.api.model.Person;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -27,7 +25,11 @@ public class EntityController {
         session.beginTransaction();
     }
 
-    public void createChat(){
+    public void createChat() throws Exception {
+
+        SessionFactory sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
+        Session session = sessionFactory.openSession();                     // Skapa en session för koppling.
+        session.beginTransaction();
 
         PersonEntity p1 = new PersonEntity();
         p1.setFirstname("Anders");

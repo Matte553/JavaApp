@@ -1,4 +1,4 @@
-package se.miun.dt170g.calendar;
+package frontend.calendar;
 
 public enum DayNames {
     MONDAY,

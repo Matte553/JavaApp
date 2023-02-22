@@ -1,4 +1,4 @@
-package se.miun.dt170g.test;
+package frontend.test;
 
 public class Person {
     String firstName;
