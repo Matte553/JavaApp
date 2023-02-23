@@ -1,6 +1,6 @@
 package frontend.calendar;
 
-import jakarta.inject.Named;
+/*import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -32,4 +32,4 @@ public class Week implements Serializable {
 
         return result;
     }
-}
+}*/

@@ -1,6 +1,5 @@
 package frontend.calendar;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,8 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+
 @Named
-@RequestScoped
 public class CalendarHandler implements Serializable {
     private Calendar calendar;
     private ArrayList<Integer> firstDaysEachMonth;

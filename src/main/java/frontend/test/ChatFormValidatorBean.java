@@ -1,6 +1,6 @@
 package frontend.test;
 
-import jakarta.enterprise.context.RequestScoped;
+/*import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIComponent;
@@ -96,4 +96,4 @@ public class ChatFormValidatorBean implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("test.xhtml");
     }
 
-}
+}*/

@@ -1,13 +1,10 @@
 package frontend.calendar;
 
 import frontend.test.Person;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
-
 import java.io.Serializable;
 
 @Named
-@RequestScoped
 public class Service implements Serializable {
     String startTime;
     String endTime;

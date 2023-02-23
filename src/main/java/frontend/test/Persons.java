@@ -1,25 +1,31 @@
 package frontend.test;
-//import Entities.PersonEntity;
-//import EntityController.*;
-import jakarta.enterprise.context.RequestScoped;
+
+import Entities.PersonEntity;
+import EntityController.*;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 @Named
-@RequestScoped
 public class Persons implements Serializable {
-    //private EntityController ec;
+    private final EntityController ec;
     private ArrayList<Person> persons;
 
     public Persons() throws Exception {
-        /*ec      = new EntityController();
-        persons = createArrayList();*/
+        ec      = new EntityController();
+        persons = createArrayList();
     }
 
+    public ArrayList<Person> getPersons() {
+        return persons;
+    }
 
-   /* private ArrayList<Person> createArrayList() throws Exception {
+    public void setPersons(ArrayList<Person> persons) {
+        this.persons = persons;
+    }
+
+    private ArrayList<Person> createArrayList() throws Exception {
         ArrayList<PersonEntity> privateList = ec.getPersons();
         ArrayList<Person> result = new ArrayList<>();
         for (PersonEntity pe : privateList) {
@@ -33,5 +39,5 @@ public class Persons implements Serializable {
 
         }
         return result;
-    }*/
+    }
 }

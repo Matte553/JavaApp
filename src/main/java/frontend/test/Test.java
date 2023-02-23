@@ -1,7 +1,7 @@
 package frontend.test;
 
 
-import jakarta.enterprise.context.SessionScoped;
+/*import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
@@ -18,4 +18,4 @@ public class Test implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-}
+}*/

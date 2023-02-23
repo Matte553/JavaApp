@@ -1,12 +1,11 @@
 package frontend.test;
 
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
-import jdk.jfr.Name;
+import java.io.Serializable;
 
 @Named
-public class Person {
+public class Person implements Serializable {
     int id;
     String firstName;
     String lastName;

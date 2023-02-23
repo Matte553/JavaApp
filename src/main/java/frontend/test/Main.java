@@ -1,18 +1,18 @@
 package frontend.test;
 
-import Entities.*;
+/*import Entities.*;
 import jakarta.persistence.*;
-import jakarta.persistence.spi.PersistenceProvider;
-import org.hibernate.Session;
+import jakarta.persistence.spi.PersistenceProvider;*/
+/*import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
+import org.hibernate.query.Query;*/
 
 import java.util.List;
 import java.sql.Timestamp;
 
 // Helloj
 
-public class Main {
+/*public class Main {
     public static void main(String[] args) throws Exception {
         SessionFactory sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
         Session session = sessionFactory.openSession();                     // Skapa en session för koppling.
@@ -63,4 +63,4 @@ public class Main {
 
         session.getTransaction().commit();
     }
-}
+}*/

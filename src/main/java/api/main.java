@@ -1,11 +1,11 @@
 package api;
 
-import Entities.HibernateSetup;
+/*import Entities.HibernateSetup;
 import Entities.PersonEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.springframework.boot.ApplicationRunner;
+import org.hibernate.query.Query;*/
+/*import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +28,10 @@ public class main {
 
         for(PersonEntity person: list ) {
             person.getId();//Loadsa stuff
-        };*/
+        };
 
 
-    }
+    }*/
 
 /*
     @Bean
@@ -40,5 +40,5 @@ public class main {
             System.out.println("Hello world!");
         };
     }
-    */
 }
+*/

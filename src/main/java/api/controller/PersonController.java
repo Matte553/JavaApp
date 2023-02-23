@@ -2,7 +2,7 @@ package api.controller;
 
 import api.model.Person;
 import api.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
+/*import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,4 +26,4 @@ public class PersonController {
         }
         return personService.defaultAnswr();
     }
-}
+}*/

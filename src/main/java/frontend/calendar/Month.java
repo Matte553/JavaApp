@@ -77,7 +77,8 @@ public class Month implements Serializable {
         /*  FEB = 28
         *   JAN, MAR, MAY, JUL, AUG, OKT, DEC = 31
         *   APR, JUN, SEP, NOV = 30
-         */
+        */
+
         int maxDays = number == 2 ? 28 : number % 2 == 0 && number < 7 || number % 2 == 1 && number > 8 ? 30 : 31;
         int weekday = firstWeekday;
         for (int i = 1; i <= maxDays; i++) {

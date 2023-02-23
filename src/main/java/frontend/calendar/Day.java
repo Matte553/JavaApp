@@ -3,6 +3,7 @@ package frontend.calendar;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+
 @Named
 public class Day implements Serializable {
     int number;

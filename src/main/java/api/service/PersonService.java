@@ -1,17 +1,17 @@
 package api.service;
 
-import Entities.*;
+//import Entities.*;
 import api.model.Person;
-import org.hibernate.Session;
+/*import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.springframework.stereotype.Service;
+import org.hibernate.query.Query;*/
+//import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@Service
+//@Service
 public class PersonService {
     private ArrayList<Person> personList;
 
@@ -25,11 +25,11 @@ public class PersonService {
 
         personList.addAll(Arrays.asList(person1, person2, person3));
         */
-        this.retrievePersonsFromDB();
+        //this.retrievePersonsFromDB();
 
     }
 
-    public void retrievePersonsFromDB() throws Exception {
+    /*public void retrievePersonsFromDB() throws Exception {
         SessionFactory sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
         Session session = sessionFactory.openSession();                     // Skapa en session för koppling.
         session.beginTransaction();
@@ -44,7 +44,7 @@ public class PersonService {
             Person person = new Person(p.getId(), p.getFirstname(), p.getLastname(), p.getMail());
             personList.add(person);
         };
-    }
+    }*/
 
     public Optional<Person> getPerson(Integer id){
         Optional optional = Optional.empty();
