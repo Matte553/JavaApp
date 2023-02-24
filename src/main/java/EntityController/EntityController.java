@@ -27,7 +27,7 @@ public class EntityController {
         session.beginTransaction();
     }
 
-    // Method to create a person and prepare it to be sent to database. Returns the personID
+    // Creates a person and prepare it to be sent to database. Returns the personID
     private Integer createPerson(String firstname, String lastname, String phone, String mail) throws Exception {
         String customerNumber = generateCustomerNumber();
         PersonEntity person = new PersonEntity(firstname, lastname, phone, mail, customerNumber);
@@ -35,7 +35,7 @@ public class EntityController {
         return person.getId();
     }
 
-    // Method to generate a random customer number with 6 digits.
+    // Generates a random customer number with 6 digits.
     // Controls that there are no duplicates
     private String generateCustomerNumber() throws Exception {
         ArrayList<PersonEntity> persons = this.getPersons();
@@ -56,27 +56,54 @@ public class EntityController {
         return numberString;
     }
 
-    // Method to create a chat and prepares it to be sent to database
+    // Creates a chat and prepares it to be sent to database
     private Integer createChat(String subject) {
         ChatEntity chat = new ChatEntity(subject);
         session.persist(chat);
         return chat.getId();
     }
 
-    // Method to create chat member and prepares it to be sent to the database
+    // Creates chat member and prepares it to be sent to the database
     private void createChatMember(Integer chatID, Integer personID) {
         ChatmemberEntity chatMember = new ChatmemberEntity(chatID, personID);
         session.persist(chatMember);
     }
 
-    // Method to create chat message and prepares it to be sent to the database
-    // Adds current time and date to timestamp
+    // Creates chat message and prepares it to be sent to the database
+    // Adds current time and date to timestamp, in format YYYY-MM-DD HH:MM:SS,MS
     private void createMessage(Integer personID, Integer chatID, String text, String imageURL) {
         long now = System.currentTimeMillis();
         Timestamp sqlTimestamp = new Timestamp(now);
         MessageEntity message = new MessageEntity(personID, chatID, text, sqlTimestamp, imageURL);
         session.persist(message);
     }
+
+    // Creates new instrument and prepares it to be sent to the database
+    private void createInstrument(String type, String name, Double price, String description) {
+        InstrumentEntity instrument = new InstrumentEntity(type, name, price, description);
+        session.persist(instrument);
+    }
+
+    // Creates new instrument pictures and prepares it to be sent to the database
+    private void createInstrumentPicture(String imageURL, Integer instrumentId) {
+        InstrumentPicturesEntity instrumentPicture = new InstrumentPicturesEntity(imageURL, instrumentId);
+        session.persist(instrumentPicture);
+    }
+
+    // Creates new reparation and prepares it to be sent to the database
+    private void createReparation(Integer personId, String description, String type) {
+        ReparationsEntity reparation = new ReparationsEntity(personId, description, type);
+        session.persist(reparation);
+    }
+
+    // Creates new reservation and prepares it to be sent to the database
+    private void createReservation(Integer instrumentId, Integer personId) {
+        ReservationEntity reservation = new ReservationEntity(instrumentId, personId);
+        session.persist(reservation);
+    }
+
+
+
 
     // Public method to add new messages to database
     // Actually commits the entry
@@ -85,15 +112,30 @@ public class EntityController {
         session.getTransaction().commit();
     }
 
+    public void addInstrument(String type, String name, Double price, String description) {
+        createInstrument(type, name, price, description);
+        session.getTransaction().commit();
+    }
+
+    public void addReparation(Integer personId, String description, String type) {
+        createReparation(personId, description, type);
+        session.getTransaction().commit();
+    }
+
+    public void addReservation(Integer instrumentId, Integer personId) {
+        createReservation(instrumentId, personId);
+        session.getTransaction().commit();
+    }
+
     // Public method to start conversation. Is to be used when a new customer is added on the frontend.
     // A new chat is created with Anders, and a welcome message is sent from Anders to the new customer to
-    // initiate contact. Everything is then committed to the database.
-    public void initiateContact(Integer AndersID, String firstname, String lastname, String phone, String mail, String subject) throws Exception {
+    // initiate contact. Everything is then committed to the database. A chat is always created for new customers.
+    public void initiateContact(Integer employeeID, String firstname, String lastname, String phone, String mail, String subject) throws Exception {
         Integer personID = createPerson(firstname, lastname, phone, mail);
         Integer chatID = createChat(subject);
         createChatMember(chatID, personID);
-        createChatMember(chatID, AndersID);
-        createMessage(AndersID, chatID, "Hej och välkommen! Här kan du skriva med mig, whoho", null);
+        createChatMember(chatID, employeeID);
+        createMessage(employeeID, chatID, "Hej och välkommen! Här kan du skriva med mig, whoho", null);
         session.getTransaction().commit();
     }
 

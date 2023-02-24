@@ -23,6 +23,10 @@
         <mapping class="Entities.ChatEntity"/>
         <mapping class="Entities.ChatmemberEntity"/>
         <mapping class="Entities.MessageEntity"/>
+        <mapping class="Entities.ReservationEntity"/>
+        <mapping class="Entities.ReparationsEntity"/>
+        <mapping class="Entities.InstrumentEntity"/>
+        <mapping class="Entities.InstrumentPicturesEntity"/>
 
     </session-factory>
 </hibernate-configuration>
