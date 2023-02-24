@@ -38,7 +38,7 @@
                     <h:message for="selectedSubject" id="m_selectedSubject" errorClass="error"/>
                     <h:selectOneMenu
                             id="selectedSubject"
-                            value="#{test.subject}"
+                            value="#{customerManager.subject}"
                             validator="#{chatFormValidatorBean.validateSubjectSelection}"
                             onfocus="clearErrorMessages('#form\\:selectedSubject','change')">
                         <f:selectItem itemValue="reparation" itemLabel="Reparation"/>

@@ -25,7 +25,7 @@
                 <div>
                     <h:selectOneMenu
                             id="selectedSubject"
-                            value="#{test.subject}"
+                            value="#{customerManager.subject}"
                             validator="#{chatFormValidatorBean.validateSubjectSelection}"
                             onfocus="clearErrorMessages('#form\\:selectedSubject','change')">
                         <f:selectItem itemValue="#{null}" itemLabel="-- select subject --"/>

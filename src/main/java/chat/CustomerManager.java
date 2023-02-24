@@ -18,6 +18,8 @@ public class CustomerManager implements Serializable {
 
     private PersonEntity person = new PersonEntity();
 
+    private String subject;
+
     @Inject
     private PersonService personService;
 
@@ -27,6 +29,14 @@ public class CustomerManager implements Serializable {
 
     public void setPerson(PersonEntity person) {
         this.person = person;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public void submit() throws IOException {
