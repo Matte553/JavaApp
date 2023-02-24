@@ -363,6 +363,12 @@ a:link:hover, a:visited:hover {
     padding: 10px;
 }
 
+#log-container #main-chat-container{
+    display: inline-block;
+    width: 68%;
+
+}
+
 #log-container #subject-container{
     width: 30%;
     margin: 10px;
@@ -370,11 +376,7 @@ a:link:hover, a:visited:hover {
     border-radius: 5px;
     display: inline-block;
 }
-#log-container #message-container{
-    display: inline-block;
-    width: 68%;
 
-}
 #subject-container #form{
     margin: unset;
     padding: 7px;

@@ -16,7 +16,6 @@
     <h:body>
     <ui:include src="header.xhtml"/>
         <div>
-
             <h:form id="form" styleClass="chat-form">
                 <div>
                     <h3>Rubrik</h3>
@@ -29,9 +28,9 @@
                             validator="#{chatFormValidatorBean.validateSubjectSelection}"
                             onfocus="clearErrorMessages('#form\\:selectedSubject','change')">
                         <f:selectItem itemValue="#{null}" itemLabel="-- select subject --"/>
-                        <f:selectItem itemValue="reparation" itemLabel="Reparation"/>
-                        <f:selectItem itemValue="bookning" itemLabel="Bookning"/>
-                        <f:selectItem itemValue="reservation" itemLabel="Reservation"/>
+                        <f:selectItem itemValue="Reparation" itemLabel="Reparation"/>
+                        <f:selectItem itemValue="Bookning" itemLabel="Bookning"/>
+                        <f:selectItem itemValue="Reservation" itemLabel="Reservation"/>
                     </h:selectOneMenu>
                     <h:message for="selectedSubject" id="m_selectedSubject" errorClass="error" />
                 </div>

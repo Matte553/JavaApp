@@ -1,15 +1,19 @@
 package chat;
 
 import Entities.PersonEntity;
+import EntityController.EntityController;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import services.EntityControllerInterface;
 import services.PersonService;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 @Named
@@ -17,11 +21,9 @@ import java.io.Serializable;
 public class CustomerManager implements Serializable {
 
     private PersonEntity person = new PersonEntity();
-
     private String subject;
-
     @Inject
-    private PersonService personService;
+    private EntityControllerInterface entityController;
 
     public PersonEntity getPerson() {
         return person;
@@ -41,23 +43,27 @@ public class CustomerManager implements Serializable {
 
     public void submit() throws IOException {
         String customerNum = person.getCustomerNumber();
-        if (!customerNum.isEmpty()) {
-            if (!personService.isAuthorized(customerNum)) {
+        if (!customerNum.isEmpty()) { // if try to log in by customer number
+            // Check if customer is authorised
+            if (!entityController.isAuthorized(customerNum)) {
                 FacesContext context = FacesContext.getCurrentInstance();
                 FacesMessage message = new FacesMessage("Kund nummer hittas ej");
                 context.addMessage("form:customerId", message);
                 return;
             } else {
-                person = personService.getPerson(customerNum);
+                // get customer data
+                person = entityController.getCustomer(customerNum);
             }
-        } else {
-            customerNum = personService.generateCustomerNum();
-            person.setCustomerNumber(customerNum);
-            personService.addPerson(person);
+        } else { // create new customer
+            try {
+                customerNum = entityController.addCustomer(person);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
         SessionManager.setAttribute("customerNumber", customerNum);
         SessionManager.setAttribute("username", person.getFirstname());
-
+        SessionManager.setAttribute("subject", subject);
         FacesContext.getCurrentInstance().getExternalContext().redirect("chat.xhtml?faces-redirect=true");
     }
 };
