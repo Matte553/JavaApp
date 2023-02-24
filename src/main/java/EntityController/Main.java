@@ -30,11 +30,14 @@ public class Main {
         // INSERT
         //ec.initiateContact(38,"Adam", "Gustavsson","070-2222222", "AdamGustavsson@gmail.com","Reperation");
         //ec.addMessage(107, 104, "Hej, jag undrar om min gitarr är klar än?", "");
-        //ec.insertTestData();
+        ec.insertTestData();
 
         // PRINT
+        /*
         for (PersonEntity p: persons) {
             System.out.println(p.getFirstname() + " " + p.getLastname());
         }
+        */
+
     }
 }
