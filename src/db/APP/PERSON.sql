@@ -1,6 +1,7 @@
 create table PERSON
 (
-    ID              INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
+    ID              INTEGER GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1)
+        primary key,
     FIRSTNAME       VARCHAR(255),
     LASTNAME        VARCHAR(255),
     MAIL            VARCHAR(255),

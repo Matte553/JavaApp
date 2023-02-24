@@ -1,6 +1,7 @@
 create table CHAT
 (
-    ID      INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
+    ID      INTEGER GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1)
+        primary key,
     SUBJECT VARCHAR(255)
 );
 

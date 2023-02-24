@@ -110,11 +110,11 @@ public class EntityController {
     public void insertTestData(){
 
         PersonEntity p1 = new PersonEntity();
-        p1.setFirstname("Kalle");
-        p1.setLastname("Karlsson");
-        p1.setMail("kalle.Karlsson@gmail.com");
-        p1.setPhone("070-99999999");
-        p1.setCustomerNumber("2");
+        p1.setFirstname("Anders");
+        p1.setLastname("Andersson");
+        p1.setMail("Anders.Andersson@gmail.com");
+        p1.setPhone("070-0000000");
+        p1.setCustomerNumber("0");
         session.persist(p1);
 
         PersonEntity p2 = new PersonEntity();
@@ -149,6 +149,17 @@ public class EntityController {
         mess.setMessageTimestamp(sqlTimestamp);
         session.persist(mess);
 
+        session.getTransaction().commit();
+    }
+
+    public void insertAnders(){
+        PersonEntity p1 = new PersonEntity();
+        p1.setFirstname("Anders");
+        p1.setLastname("Andersson");
+        p1.setMail("Anders.Andersson@gmail.com");
+        p1.setPhone("070-00000000");
+        p1.setCustomerNumber("0");
+        session.persist(p1);
         session.getTransaction().commit();
     }
 

@@ -12,6 +12,9 @@ public class Main {
         EntityController ec = new EntityController();
         //ec.insertTestData();
 
+        //ec.insertAnders();
+        //ec.initiateContact(0,"Anders", "Andersson","070-00000000","AndersAndersson@gmail.com","Questions");
+
     // Read from all database tables
         //ArrayList<PersonEntity> persons         = ec.getPersons();
         //ArrayList<ChatEntity> chats             = ec.getChats();
