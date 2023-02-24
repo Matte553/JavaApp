@@ -1,7 +1,6 @@
 create table MESSAGE
 (
-    ID                INTEGER GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1)
-        primary key,
+    ID                INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     CHAT_ID           INTEGER not null
         constraint "MESSAGE_CHAT_ID_fk"
             references CHAT,

@@ -23,7 +23,6 @@ public class EntityController {
     public EntityController() throws Exception {
         sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
         session = sessionFactory.openSession();                     // Skapa en session för koppling.
-        session.beginTransaction();
     }
 
     // Creates a person and prepare it to be sent to database. Returns the personID
@@ -101,9 +100,6 @@ public class EntityController {
         session.persist(reservation);
     }
 
-
-
-
     // Public method to add new messages to database
     // Actually commits the entry
     public void addMessage(Integer personID, Integer chatID, String text, String imageURL) {
@@ -134,6 +130,7 @@ public class EntityController {
     // A new chat is created with Anders, and a welcome message is sent from Anders to the new customer to
     // initiate contact. Everything is then committed to the database. A chat is always created for new customers.
     public void initiateContact(Integer employeeID, String firstname, String lastname, String phone, String mail, String subject) throws Exception {
+        session.beginTransaction();
         Integer personID = createPerson(firstname, lastname, phone, mail);
         Integer chatID = createChat(subject);
         createChatMember(chatID, personID);
@@ -154,12 +151,14 @@ public class EntityController {
     // Method to test things
     public void insertTestData(){
 
+        session.beginTransaction();
+
         PersonEntity p1 = new PersonEntity();
         p1.setFirstname("Anders");
         p1.setLastname("Andersson");
         p1.setMail("Anders.Andersson@gmail.com");
         p1.setPhone("070-0000000");
-        p1.setCustomerNumber("0");
+        p1.setCustomerNumber("000000");
         session.persist(p1);
 
         PersonEntity p2 = new PersonEntity();
@@ -167,7 +166,7 @@ public class EntityController {
         p2.setLastname("Larsson");
         p2.setMail("NiklasLarsson@gmail.com");
         p2.setPhone("070-8888888");
-        p2.setCustomerNumber("3");
+        p2.setCustomerNumber("111111");
         session.persist(p2);
 
         ChatEntity chat = new ChatEntity();
@@ -196,18 +195,6 @@ public class EntityController {
 
         session.getTransaction().commit();
     }
-
-    public void insertAnders(){
-        PersonEntity p1 = new PersonEntity();
-        p1.setFirstname("Anders");
-        p1.setLastname("Andersson");
-        p1.setMail("Anders.Andersson@gmail.com");
-        p1.setPhone("070-00000000");
-        p1.setCustomerNumber("0");
-        session.persist(p1);
-        session.getTransaction().commit();
-    }
-
 
     // Returns chatID for a chat between two persons;
     public Integer getChatID(int person_A_ID, int person_B_ID){
@@ -257,8 +244,6 @@ public class EntityController {
     public ArrayList<PersonEntity> getPersons() throws Exception {
         Query query = session.createQuery(("from PersonEntity "));
         List<PersonEntity> list=query.list();
-        list.forEach(System.out::println);
-
         ArrayList arrayList = (ArrayList) list;
         return arrayList;
     }
@@ -267,8 +252,6 @@ public class EntityController {
     public ArrayList<ChatEntity> getChats() throws Exception {
         Query query = session.createQuery(("from ChatEntity "));
         List<ChatEntity> list=query.list();
-        list.forEach(System.out::println);
-
         ArrayList arrayList = (ArrayList) list;
         return arrayList;
     }
@@ -277,8 +260,6 @@ public class EntityController {
     public ArrayList<MessageEntity> getMessages() throws Exception {
         Query query = session.createQuery(("from MessageEntity "));
         List<MessageEntity> list=query.list();
-        list.forEach(System.out::println);
-
         ArrayList arrayList = (ArrayList) list;
         return arrayList;
     }
@@ -287,8 +268,6 @@ public class EntityController {
     public ArrayList<ChatmemberEntity> getChatMembers() throws Exception {
         Query query = session.createQuery(("from ChatmemberEntity "));
         List<ChatmemberEntity> list=query.list();
-        list.forEach(System.out::println);
-
         ArrayList arrayList = (ArrayList) list;
         return arrayList;
     }

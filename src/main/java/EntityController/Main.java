@@ -1,51 +1,40 @@
 package EntityController;
 
 import Entities.*;
-
 import java.util.ArrayList;
 
-//Irrelevant to the API-team
+/*
+    Att implementera:
+        1. Hämta om person finns eller inte med customer number     public void personExist(customerNumber);
+        1. returnera person istället? getIdFromCustomerNumber();
+        2. addMessage() ange customerID instället för personID
+        2. Hämta en person från customer number                     public void getPerson(customerNumber);
+        3. GetMessages ska bytas till GetMessages(customerNumber);
+
+*/
+
 public class Main {
     public static void main(String[] args) throws Exception {
 
-    // New Controller
+        // New Controller
         EntityController ec = new EntityController();
-        //ec.insertTestData();
 
-        //ec.insertAnders();
-        //ec.initiateContact(0,"Anders", "Andersson","070-00000000","AndersAndersson@gmail.com","Questions");
-
-    // Read from all database tables
-        //ArrayList<PersonEntity> persons         = ec.getPersons();
+        // READ
+        ArrayList<PersonEntity> persons           = ec.getPersons();
         //ArrayList<ChatEntity> chats             = ec.getChats();
         //ArrayList<ChatmemberEntity> chatMembers = ec.getChatMembers();
         //ArrayList<MessageEntity> messages       = ec.getMessages();
-
-
         //ArrayList<MessageEntity> messages = ec.getMessagesFromChatID(1,2);
-
-    // Create Conversation
-        //ec.initiateContact(1, "Kerstin", "Svensson", "070-7189503", "kerstin.svensson@gmail.com", "Reparation");
-
-    // Create Message
-        //ec.addMessage(107, 104, "Hej, jag undrar om min gitarr är klar än?", "");
-
-    // Get Messages from persons
         //ArrayList<MessageEntity> message = ec.getMessagesFromPersonID(1,107);
-        // Iterate through list
 
-        /*
-        for (MessageEntity m: message) {
-            System.out.println(m);
+        // INSERT
+        //ec.initiateContact(38,"Adam", "Gustavsson","070-2222222", "AdamGustavsson@gmail.com","Reperation");
+        //ec.addMessage(107, 104, "Hej, jag undrar om min gitarr är klar än?", "");
+        //ec.insertTestData();
+
+        // PRINT
+        for (PersonEntity p: persons) {
+            System.out.println(p.getFirstname() + " " + p.getLastname());
         }
-        */
-
-
-
-
-
-
-
-
     }
 }

@@ -1,11 +1,11 @@
 create table INSTRUMENT
 (
+    ID          INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1)
+        constraint "INSTRUMENT_pk"
+            primary key,
     TYPE        VARCHAR(255),
     NAME        VARCHAR(255),
     PRICE       DOUBLE,
-    DESCRIPTION VARCHAR(3600),
-    ID          INTEGER not null
-        constraint "INSTRUMENT_pk"
-            primary key
+    DESCRIPTION VARCHAR(3600)
 );
 
