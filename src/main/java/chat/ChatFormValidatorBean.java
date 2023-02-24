@@ -31,6 +31,8 @@ public class ChatFormValidatorBean implements Serializable{
     private static final String TELEPHONE_ERRRO_MSG = "Ogiltig telefonnummer";
     private static final String CUSTOMERID_ERRRO_MSG = "Ogiltig Kund id";
 
+    private static final String SELECT_SUBJECT_ERRRO_MSG = "Välj subject";
+
     public ChatFormValidatorBean() {
         this.isCustomerIdSet = true;
     }
@@ -83,6 +85,15 @@ public class ChatFormValidatorBean implements Serializable{
         matcher = TELEPHONE_PATTERN.matcher(value.toString());
         if (!matcher.matches()) {
             FacesMessage msg = new FacesMessage(TELEPHONE_ERRRO_MSG);
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(msg);
+        }
+    }
+
+    public void validateSubjectSelection(FacesContext context, UIComponent component, Object value)
+            throws ValidatorException {
+        if (value==null) {
+            FacesMessage msg = new FacesMessage(SELECT_SUBJECT_ERRRO_MSG);
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
         }

@@ -233,11 +233,21 @@ a:link:hover, a:visited:hover {
     font-size: 1em;
 }
 
-#form input[type='text'] {
+#form input[type='text']{
     width: 90%;
     height: 40px;
     padding: 5px;
 }
+
+#form select{
+    width: 90%;
+    height: 40px;
+    padding: 5px;
+    text-align: center;
+    font-size: 1em;
+    background: white;
+}
+
 
 #form div h3 {
     font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
@@ -273,8 +283,7 @@ a:link:hover, a:visited:hover {
     border: 2px solid #dedede;
     background-color: #f1f1f1;
     border-radius: 5px;
-    padding: 10px 10px 0px 10px;
-    padding-bottom: 10px;
+    padding: 10px;
     clear: both;
 }
 
@@ -345,3 +354,54 @@ a:link:hover, a:visited:hover {
 #file-upload > label img {
     cursor: pointer;
 }
+
+/*=================Start chat admin style====================*/
+#select-btn-group select{
+    width: 70%;
+}
+#select-btn-group .btn{
+    padding: 10px;
+}
+
+#log-container #subject-container{
+    width: 30%;
+    margin: 10px;
+    border: 2px solid #dedede;
+    border-radius: 5px;
+    display: inline-block;
+}
+#log-container #message-container{
+    display: inline-block;
+    width: 68%;
+
+}
+#subject-container #form{
+    margin: unset;
+    padding: 7px;
+}
+
+#subject-container #subject-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#subject-container #subject-list li a {
+    border: 1px solid #ddd;
+    margin-top: -1px;
+    background-color: #f6f6f6;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+}
+
+/*#subject-container #subject-list li a:hover {
+    background-color: #eee; !* Add a hover effect to all links, except for headers *!
+}*/
+
+#subject-container #subject-list li .actived{
+    background-color:  #2196F3;
+}
+/*=================End chat admin style====================*/
