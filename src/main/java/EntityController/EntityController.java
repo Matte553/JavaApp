@@ -2,7 +2,6 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
-import org.hibernate.Internal;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -112,11 +111,15 @@ public class EntityController {
         session.getTransaction().commit();
     }
 
+    // Public method to add new instruments to the database
+    // Commits the entry
     public void addInstrument(String type, String name, Double price, String description) {
         createInstrument(type, name, price, description);
         session.getTransaction().commit();
     }
 
+    // Public method to add new reparations
+    // Commits the entry
     public void addReparation(Integer personId, String description, String type) {
         createReparation(personId, description, type);
         session.getTransaction().commit();

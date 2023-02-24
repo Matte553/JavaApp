@@ -1,28 +1,21 @@
 package Entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-@Entity
-@Table(name = "CHATMEMBER", schema = "APP")
-@IdClass(ChatmemberEntityPK.class)
-public class ChatmemberEntity {
+import java.io.Serializable;
+
+public class ChatmemberEntityPK implements Serializable {
+    @Column(name = "CHAT_ID", nullable = false)
     @Id
     private int chatId;
+
+    @Column(name = "PERSON_ID", nullable = false)
     @Id
     private int personId;
 
-    public ChatmemberEntity() {
-    }
-
-    public ChatmemberEntity(Integer chatID, Integer personID) {
-        setChatId(chatID);
-        setPersonId(personID);
-    }
-
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "CHAT_ID", nullable = false)
     public int getChatId() {
         return chatId;
     }
@@ -31,10 +24,6 @@ public class ChatmemberEntity {
         this.chatId = chatId;
     }
 
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "PERSON_ID", nullable = false)
     public int getPersonId() {
         return personId;
     }
@@ -48,7 +37,7 @@ public class ChatmemberEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ChatmemberEntity that = (ChatmemberEntity) o;
+        ChatmemberEntityPK that = (ChatmemberEntityPK) o;
 
         if (chatId != that.chatId) return false;
         if (personId != that.personId) return false;
@@ -61,10 +50,5 @@ public class ChatmemberEntity {
         int result = chatId;
         result = 31 * result + personId;
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "CHAT_ID: " + chatId + " PERSON_ID: " + personId;
     }
 }

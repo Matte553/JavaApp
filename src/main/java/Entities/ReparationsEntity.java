@@ -4,14 +4,12 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "REPARATIONS", schema = "APP")
+@IdClass(ReparationsEntityPK.class)
 public class ReparationsEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ERRAND_NUMBER", nullable = false)
     private int errandNumber;
 
-    @Basic
-    @Column(name = "PERSON_ID", nullable = false)
+    @Id
     private int personId;
 
     @Basic
@@ -30,6 +28,9 @@ public class ReparationsEntity {
         setType(type);
     }
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "ERRAND_NUMBER", nullable = false)
     public int getErrandNumber() {
         return errandNumber;
     }
@@ -38,6 +39,9 @@ public class ReparationsEntity {
         this.errandNumber = errandNumber;
     }
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "PERSON_ID", nullable = false)
     public int getPersonId() {
         return personId;
     }
@@ -46,6 +50,8 @@ public class ReparationsEntity {
         this.personId = personId;
     }
 
+    @Basic
+    @Column(name = "DESCRIPTION", nullable = true, length = 3600)
     public String getDescription() {
         return description;
     }
@@ -54,6 +60,8 @@ public class ReparationsEntity {
         this.description = description;
     }
 
+    @Basic
+    @Column(name = "TYPE", nullable = true, length = 255)
     public String getType() {
         return type;
     }
