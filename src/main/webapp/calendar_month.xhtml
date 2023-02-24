@@ -53,8 +53,9 @@
         <ul class="days">
             <ui:param name="currentDay" value="#{calendarHandler.currentDay}"/>
             <ui:param name="currentMonth" value="#{calendarHandler.currentMonth}"/>
-            CurrentWeek = #{calendarHandler.currentWeek}
-            <c:forEach items="#{calendarHandler.months[monthID-1].days}" var="day">
+            <ui:param name="currentWeek" value="#{calendarHandler.currentWeek}" />
+
+            <!--<c:forEach items="#{calendarHandler.months[monthID-1].days}" var="day">
                 <c:choose>
                     <c:when test="#{monthID eq currentMonth and currentDay eq day.number}">
                         <li><span class="active"><a href="calendar_week.xhtml?monthID=#{monthID}day=#{day.number}">#{day.number}</a></span></li>
@@ -63,6 +64,9 @@
                         <li><a href="calendar_week.xhtml?monthID=#{monthID}day=#{day.number}">#{day.number}</a></li>
                     </c:otherwise>
                 </c:choose>
+            </c:forEach>-->
+            <c:forEach items="#{persons.list}" var="pers">
+                <li>#{pers.id}: #{pers.firstName} #{pers.lastName} #{pers.phoneNumber} </li>
             </c:forEach>
         </ul>
 

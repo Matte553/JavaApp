@@ -1,5 +1,6 @@
 package frontend.calendar;
 
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;

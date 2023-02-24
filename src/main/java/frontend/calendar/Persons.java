@@ -1,4 +1,4 @@
-package frontend.test;
+package frontend.calendar;
 
 import Entities.PersonEntity;
 import EntityController.*;
@@ -10,21 +10,30 @@ import java.util.ArrayList;
 @Named
 public class Persons implements Serializable {
     private final EntityController ec;
-    private ArrayList<Person> persons;
+    private ArrayList<Person> list;
+    private int size;
 
     public Persons() throws Exception {
-        ec      = new EntityController();
-        persons = createArrayList();
+        this.ec      = new EntityController();
+        this.list = createArrayList();
+        this.size    = this.list.isEmpty() ? 0 : this.list.size();
     }
 
-    public ArrayList<Person> getPersons() {
-        return persons;
+    public ArrayList<Person> getList() {
+        return this.list;
     }
 
-    public void setPersons(ArrayList<Person> persons) {
-        this.persons = persons;
+    public void setList(ArrayList<Person> list) {
+        this.list = list;
     }
 
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getSize() {
+        return this.size;
+    }
     private ArrayList<Person> createArrayList() throws Exception {
         ArrayList<PersonEntity> privateList = ec.getPersons();
         ArrayList<Person> result = new ArrayList<>();
@@ -40,4 +49,5 @@ public class Persons implements Serializable {
         }
         return result;
     }
+
 }

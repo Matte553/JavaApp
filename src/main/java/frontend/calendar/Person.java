@@ -1,4 +1,4 @@
-package frontend.test;
+package frontend.calendar;
 
 
 import jakarta.inject.Named;

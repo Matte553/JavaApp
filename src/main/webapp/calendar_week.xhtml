@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 
 <!-- LÄNKAR:
@@ -47,11 +48,11 @@
             <li>Sa</li>
             <li>Su</li>
         </ul> -->
-
         <ul class="days">
-            <ui:repeat value="#{calendarHandler.months[4].days}" var="day">
-                <li><a href="=#{monthID}day=#{day.number}">#{day.number}</a></li>
-            </ui:repeat>
+            Test: #{person.firstName}
+            <c:forEach items="#{persons.list}" var="pers">
+                <li>#{pers.id}: #{pers.firstName} #{pers.lastName} #{pers.phoneNumber} </li>
+            </c:forEach>
         </ul>
 
 </h:body>

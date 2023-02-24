@@ -1,6 +1,5 @@
 package frontend.calendar;
 
-import frontend.test.Person;
 import jakarta.inject.Named;
 import java.io.Serializable;
 
