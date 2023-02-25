@@ -1,14 +1,14 @@
 'use strict';
 $(document).ready(function () {
     clearErrorMessages(".chat-form div input[type='text']");
-    $('#subject-list li a').on('click', function (){
-        $('#subject-list li a').each(function (){
-            if($(this).hasClass('actived')){
-                $(this).removeClass('actived');
-            }
+        $('#subject-list-container #subject-list li a').on('click', function (){
+            $('#subject-list-container #subject-list li a').each(function (){
+                if($(this).hasClass('actived')){
+                    $(this).removeClass('actived');
+                }
+            })
+            $(this).addClass('actived');
         })
-        $(this).addClass('actived');
-    })
 
 });
 

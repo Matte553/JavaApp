@@ -18,25 +18,13 @@
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"/>
-    <div id="log-container" class="main-container">
+    <div jsf:id="log-container" class="main-container">
         <div class="main-chat-container" id="main-chat-container">
             <div class="message-container" jsf:id="message-container">
-                <div>
-                    <div class="message-user-name float-left">
-                        <h:panelGroup>Anders</h:panelGroup>
-                    </div>
-                    <div class="user-message">
-                        <h:panelGroup>Meddelande</h:panelGroup>
-                    </div>
-                    <div class="message-time">
-                        <h:panelGroup>sent 2023-01-2 22:22</h:panelGroup>
-                    </div>
-                </div>
-
                 <ui:repeat value="#{messageManager.messages}" var="messageItem">
                     <div>
                         <div class="message-user-name float-right">
-                            <h:panelGroup>#{sessionManager.getValue('username')}</h:panelGroup>
+                            <h:panelGroup>Fix it later</h:panelGroup>
                         </div>
                         <div class="user-message message-darker">
                             <h:panelGroup>#{messageItem.text}</h:panelGroup>
@@ -52,7 +40,6 @@
                     </div>
                 </ui:repeat>
             </div>
-
 
             <h:form id="chat-form" styleClass="chat-form" enctype="multipart/form-data">
                 <div class="message-input" jsf:id="message-input">
@@ -81,58 +68,48 @@
                             id="messageSubmit"
                             value="Skicka"
                             styleClass="btn success" action="#{messageManager.submit}">
-                        <f:ajax execute="@form" render="message-input originalFileName :message-container"
+                        <f:ajax execute="chat-form" render="message-input originalFileName :message-container"
                                 resetValues="true"/>
                     </h:commandButton>
                 </div>
             </h:form>
         </div>
 
-
-        <div id="subject-container">
+        <div jsf:id="subject-container">
             <h:form id="form">
                 <div id="select-btn-group">
+                    <strong><h:outputLabel for="selectedSubject"
+                                           id="l_selectedSubject">Subject </h:outputLabel></strong>
                     <h:message for="selectedSubject" id="m_selectedSubject" errorClass="error"/>
                     <h:selectOneMenu
                             id="selectedSubject"
-                            value="#{customerManager.subject}"
+                            value="#{messageManager.subject}"
                             validator="#{chatFormValidatorBean.validateSubjectSelection}"
                             onfocus="clearErrorMessages('#form\\:selectedSubject','change')">
-                        <f:selectItem itemValue="reparation" itemLabel="Reparation"/>
-                        <f:selectItem itemValue="bookning" itemLabel="Bookning"/>
-                        <f:selectItem itemValue="reservation" itemLabel="Reservation"/>
-                    </h:selectOneMenu>
-                    <h:commandButton
-                            id="submit"
-                            value="Submit"
-                            action="#{customerManager.submit}"
-                            styleClass="btn success">
+                        <f:selectItem itemValue="Reparation" itemLabel="Reparation"/>
+                        <f:selectItem itemValue="Bookning" itemLabel="Bookning"/>
+                        <f:selectItem itemValue="Reservation" itemLabel="Reservation"/>
                         <f:ajax
-                                execute="@form"
-                                render="m_selectedSubject"/>
-                    </h:commandButton>
+                                listener="#{logManager.getCustomersBySubject}"
+                                render="m_selectedSubject :subject-list-container"/>
+                    </h:selectOneMenu>
                 </div>
+
             </h:form>
+
             <h:form id="subject-list-container">
                 <ul id="subject-list">
-                    <li>
-                        <h:commandLink>
-                            <f:param value="" name=""/>
-                        </h:commandLink>
-                    </li>
-
-                    <li><a href="#">Adele</a></li>
-                    <li><a href="#">Agnes</a></li>
-                    <li><a href="#">Adele</a></li>
-                    <li><a href="#">Agnes</a></li>
-                    <li><a href="#">Adele</a></li>
-                    <li><a href="#">Agnes</a></li>
-                    <li><a href="#">Adele</a></li>
+                    <ui:repeat value="#{logManager.customers}" var="customer">
+                        <li>
+                            <h:commandLink value="#{customer.firstname} #{customer.lastname}">
+                                <f:ajax render=":message-container"
+                                        listener="#{logManager.setReceiver(customer.customerNumber)}"/>
+                            </h:commandLink>
+                        </li>
+                    </ui:repeat>
                 </ul>
             </h:form>
-
         </div>
-
     </div>
 
 </h:body>
