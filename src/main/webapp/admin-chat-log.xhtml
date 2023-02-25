@@ -18,7 +18,7 @@
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"/>
-    <div id="log-container">
+    <div id="log-container" class="main-container">
         <div class="main-chat-container" id="main-chat-container">
             <div class="message-container" jsf:id="message-container">
                 <div>
@@ -28,7 +28,7 @@
                     <div class="user-message">
                         <h:panelGroup>Meddelande</h:panelGroup>
                     </div>
-                    <div class="message-time" >
+                    <div class="message-time">
                         <h:panelGroup>sent 2023-01-2 22:22</h:panelGroup>
                     </div>
                 </div>
@@ -81,12 +81,12 @@
                             id="messageSubmit"
                             value="Skicka"
                             styleClass="btn success" action="#{messageManager.submit}">
-                        <f:ajax execute="@form" render="message-input originalFileName :message-container" resetValues="true"/>
+                        <f:ajax execute="@form" render="message-input originalFileName :message-container"
+                                resetValues="true"/>
                     </h:commandButton>
                 </div>
             </h:form>
         </div>
-
 
 
         <div id="subject-container">
@@ -113,15 +113,23 @@
                     </h:commandButton>
                 </div>
             </h:form>
+            <h:form id="subject-list-container">
+                <ul id="subject-list">
+                    <li>
+                        <h:commandLink>
+                            <f:param value="" name=""/>
+                        </h:commandLink>
+                    </li>
 
-            <ul id="subject-list">
-                <li><a href="#">Adele</a></li>
-                <li><a href="#">Agnes</a></li>
-                <li><a href="#">Adele</a></li>
-                <li><a href="#">Agnes</a></li>
-                <li><a href="#">Adele</a></li>
-                <li><a href="#">Agnes</a></li>
-            </ul>
+                    <li><a href="#">Adele</a></li>
+                    <li><a href="#">Agnes</a></li>
+                    <li><a href="#">Adele</a></li>
+                    <li><a href="#">Agnes</a></li>
+                    <li><a href="#">Adele</a></li>
+                    <li><a href="#">Agnes</a></li>
+                    <li><a href="#">Adele</a></li>
+                </ul>
+            </h:form>
 
         </div>
 
