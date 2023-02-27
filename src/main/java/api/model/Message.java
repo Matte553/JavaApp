@@ -5,15 +5,15 @@ import java.sql.Timestamp;
 public class Message {
     private int id;
     private int chat_id;
-    private int pereson_id;
+    private int person_id;
     private String text;
     private String image;
     private Timestamp timestamp;
 
-    public Message(int id, int chat_id, int pereson_id, String text, String image, Timestamp timestamp) {
+    public Message(int id, int chat_id, int person_id, String text, String image, Timestamp timestamp) {
         this.id = id;
         this.chat_id = chat_id;
-        this.pereson_id = pereson_id;
+        this.person_id = person_id;
         this.text = text;
         this.image = image;
         this.timestamp = timestamp;
@@ -35,12 +35,12 @@ public class Message {
         this.chat_id = chat_id;
     }
 
-    public int getPereson_id() {
-        return pereson_id;
+    public int getPerson_id() {
+        return person_id;
     }
 
-    public void setPereson_id(int pereson_id) {
-        this.pereson_id = pereson_id;
+    public void setPerson_id(int person_id) {
+        this.person_id = person_id;
     }
 
     public String getText() {
