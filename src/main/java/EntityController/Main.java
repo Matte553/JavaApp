@@ -21,7 +21,13 @@ public class Main {
         //System.out.println(p.getFirstname());
         //System.out.println(ec.getAdmin().getFirstname());
 
-        System.out.println("is Auterized?: " + ec.isAuthorized("000000"));
+        System.out.println("is Authorized?: " + ec.isAuthorized("000000"));
+
+        // Test getImagesFromInstrumentId
+        //ArrayList<String> images = ec.getImagesFromInstrumentId(4);
+        //for(String e: images) {
+        //    System.out.println(e);
+        //}
 
         // READ
         //ArrayList<PersonEntity> persons           = ec.getPersons();
