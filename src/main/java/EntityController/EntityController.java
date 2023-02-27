@@ -2,6 +2,7 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
+import api.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,6 +19,8 @@ public class EntityController {
 
     SessionFactory sessionFactory;
     Session session;
+
+    Integer AdminID = 1;
 
     // Constructor that initiates a connection to DB.
     public EntityController() throws Exception {
@@ -56,7 +59,6 @@ public class EntityController {
 
     // Creates a chat and prepares it to be sent to database
     private Integer createChat(String subject) {
-        session.beginTransaction();
         ChatEntity chat = new ChatEntity(subject);
         session.persist(chat);
         return chat.getId();
@@ -64,7 +66,6 @@ public class EntityController {
 
     // Creates chat member and prepares it to be sent to the database
     private void createChatMember(Integer chatID, Integer personID) {
-        session.beginTransaction();
         ChatmemberEntity chatMember = new ChatmemberEntity(chatID, personID);
         session.persist(chatMember);
     }
@@ -133,16 +134,40 @@ public class EntityController {
         session.getTransaction().commit();
     }
 
+    // Returns the customer with the exact customer number.
+    public PersonEntity getCustomer(String customerNumber){
+        String hql = "SELECT E FROM PersonEntity E WHERE E.customerNumber = :customerNumber";
+        Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
+        return (PersonEntity) query.getSingleResult();
+    }
+
+    /*
+    // Adds Customer to database and initiates a chat with Admin, Returns the customer;
+    public PersonEntity addCustomer(PersonEntity person, String subject) throws Exception {
+        session.beginTransaction();
+
+        Integer personID = createPerson(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail());
+        Integer chatID = createChat(subject);
+        createChatMember(chatID, personID);
+        createChatMember(chatID, AdminID);
+
+        session.persist(person);
+        session.getTransaction().commit();
+        return person;
+    }
+    */
+
+
     // Public method to start conversation. Is to be used when a new customer is added on the frontend.
     // A new chat is created with Anders, and a welcome message is sent from Anders to the new customer to
     // initiate contact. Everything is then committed to the database. A chat is always created for new customers.
-    public void initiateContact(Integer employeeID, String firstname, String lastname, String phone, String mail, String subject) throws Exception {
+    public void addCustomer(String firstname, String lastname, String phone, String mail, String subject) throws Exception {
         session.beginTransaction();
         Integer personID = createPerson(firstname, lastname, phone, mail);
         Integer chatID = createChat(subject);
         createChatMember(chatID, personID);
-        createChatMember(chatID, employeeID);
-        createMessage(employeeID, chatID, "Hej och välkommen! Här kan du skriva med mig, whoho", null);
+        createChatMember(chatID, AdminID);
+        createMessage(AdminID, chatID, "Hej och välkommen! Här kan du skriva med mig, whoho", null);
         session.getTransaction().commit();
     }
 
@@ -230,4 +255,32 @@ public class EntityController {
         ArrayList arrayList = (ArrayList) list;
         return arrayList;
     }
+
+
+
+
+
+    // TO IMPLEMENT
+
+    public Boolean isAuthorized(){
+        return true;
+    }
+
+    public PersonEntity getAdmin(){
+
+        PersonEntity p = new PersonEntity();
+        return p;
+    }
+
+    public ArrayList<MessageEntity> getMessages(int cumstomerID, String subject){
+
+        ArrayList<MessageEntity> list = new ArrayList<MessageEntity>();
+        return list;
+    }
+
+    // from - to
+    public void addMessage(int from, int to, String subject, String text, String image){
+
+    }
+
 }
