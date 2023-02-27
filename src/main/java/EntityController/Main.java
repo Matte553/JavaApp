@@ -20,7 +20,7 @@ public class Main {
         //PersonEntity p = ec.getCustomer("111111");
         //System.out.println(p.getFirstname());
         //System.out.println(ec.getAdmin().getFirstname());
-
+        //
         System.out.println("is Authorized?: " + ec.isAuthorized("000000"));
 
         // Test getImagesFromInstrumentId

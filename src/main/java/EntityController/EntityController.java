@@ -193,7 +193,7 @@ public class EntityController {
         Integer personID = (Integer) results.get(0);
         return personID;
     }
-
+    //
     // Returns chatID for a chat between two persons;
     // Inner join
     public Integer getChatID(int customerID, String subject){
