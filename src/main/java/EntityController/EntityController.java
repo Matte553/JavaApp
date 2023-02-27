@@ -25,15 +25,15 @@ public class EntityController {
     // Constructor that initiates a connection to DB.
     public EntityController() throws Exception {
         sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
-        session = sessionFactory.openSession();              // Skapa en session för koppling.
+        session = sessionFactory.openSession();             // Skapa en session för koppling.
     }
 
-    // Creates a person and prepare it to be sent to database. Returns the personID
-    private PersonEntity createPerson(String firstname, String lastname, String phone, String mail) throws Exception {
+    // Creates a person and prepares it to be sent to database. Returns the personID
+    private Integer createPerson(String firstname, String lastname, String phone, String mail) throws Exception {
         String customerNumber = generateCustomerNumber();
         PersonEntity person = new PersonEntity(firstname, lastname, phone, mail, customerNumber);
         session.persist(person);
-        return person;
+        return person.getId();
     }
 
     // Generates a random customer number with 6 digits.
@@ -47,17 +47,14 @@ public class EntityController {
         Random rand = new Random();
         Integer number;
         String numberString = null;
-        while(true) {
+        do {
             number = rand.nextInt(999999);
             numberString = String.format("%06d", number);
-            if(!customerNumbers.contains(numberString)) {
-                break;
-            }
-        }
+        } while (customerNumbers.contains(numberString));
         return numberString;
     }
 
-    // Creates a chat and prepares it to be sent to database
+    // Creates a chat and prepares it to be sent to database. Returns the chatId
     private Integer createChat(String subject) {
         ChatEntity chat = new ChatEntity(subject);
         session.persist(chat);
@@ -120,6 +117,14 @@ public class EntityController {
         session.getTransaction().commit();
     }
 
+    // Public method to add new instrument images to the database
+    // Commits the entry
+    public void addInstrumentPicture(String imageURL, Integer instrumentId) {
+        session.beginTransaction();
+        createInstrumentPicture(imageURL, instrumentId);
+        session.getTransaction().commit();
+    }
+
     // Public method to add new reparations
     // Commits the entry
     public void addReparation(Integer personId, String description, String type) {
@@ -142,24 +147,51 @@ public class EntityController {
     }
 
 
+    // Public method to fetch all imageURLs for one instrument
+    public ArrayList<String> getImagesFromInstrumentId(Integer instrumentId) {
+        String hql = "SELECT E.imageUrl FROM InstrumentPicturesEntity E WHERE E.instrumentId = :instrumentId";
+        Query query = session.createQuery(hql).setParameter("instrumentId", instrumentId);
+        List results = query.list();
+        return (ArrayList<String>) results;
+    }
+
+    /*
     // Adds Customer to database and initiates a chat with Admin, Returns the customer;
     public PersonEntity addCustomer(PersonEntity person, String subject) throws Exception {
-        PersonEntity p = addCustomer(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail(), subject);
-        return p;
+        session.beginTransaction();
+
+        Integer personID = createPerson(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail());
+        Integer chatID = createChat(subject);
+        createChatMember(chatID, personID);
+        createChatMember(chatID, AdminID);
+
+        session.persist(person);
+        session.getTransaction().commit();
+        return person;
     }
+    */
+
 
     // Public method to start conversation. Is to be used when a new customer is added on the frontend.
     // A new chat is created with Anders, and a welcome message is sent from Anders to the new customer to
     // initiate contact. Everything is then committed to the database. A chat is always created for new customers.
-    public PersonEntity addCustomer(String firstname, String lastname, String phone, String mail, String subject) throws Exception {
+    public void addCustomer(String firstname, String lastname, String phone, String mail, String subject) throws Exception {
         session.beginTransaction();
-        PersonEntity person = createPerson(firstname, lastname, phone, mail);
+        Integer personID = createPerson(firstname, lastname, phone, mail);
         Integer chatID = createChat(subject);
-        createChatMember(chatID, person.getId());
+        createChatMember(chatID, personID);
         createChatMember(chatID, AdminID);
         createMessage(AdminID, chatID, "Hej och välkommen! Här kan du skriva med mig, whoho", null);
         session.getTransaction().commit();
-        return person;
+    }
+
+    // Public method to fetch a customer's ID based on their customer number
+    public Integer getIdFromCustomerNumber(String customerNumber) {
+        String hql = "SELECT E.id FROM PersonEntity E WHERE E.customerNumber = :customerNumber";
+        Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
+        List results = query.list();
+        Integer personID = (Integer) results.get(0);
+        return personID;
     }
 
     // Returns chatID for a chat between two persons;
@@ -207,41 +239,36 @@ public class EntityController {
         }
         String hql = "SELECT E FROM MessageEntity E WHERE E.chatId = :chatID";
         Query query = session.createQuery(hql).setParameter("chatID", chatID);
-        List<MessageEntity> list = query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list = query.list();
+        return (ArrayList) list;
     }
 
     // Returns an arraylist with all Persons from database
     public ArrayList<PersonEntity> getPersons() throws Exception {
         Query query = session.createQuery(("from PersonEntity "));
-        List<PersonEntity> list=query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list=query.list();
+        return (ArrayList) list;
     }
 
     // Returns an arraylist with all Chats from database
     public ArrayList<ChatEntity> getChats() throws Exception {
         Query query = session.createQuery(("from ChatEntity "));
-        List<ChatEntity> list=query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list=query.list();
+        return (ArrayList) list;
     }
 
     // Returns an arraylist with all Messages from database
     public ArrayList<MessageEntity> getMessages() throws Exception {
         Query query = session.createQuery(("from MessageEntity "));
-        List<MessageEntity> list=query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list=query.list();
+        return (ArrayList) list;
     }
 
     // Returns an arraylist with all ChatMembers from database
     public ArrayList<ChatmemberEntity> getChatMembers() throws Exception {
         Query query = session.createQuery(("from ChatmemberEntity "));
-        List<ChatmemberEntity> list=query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list=query.list();
+        return (ArrayList) list;
     }
 
     // Returns true if the person is Admin, else returns false

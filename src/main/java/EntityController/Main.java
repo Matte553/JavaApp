@@ -7,9 +7,8 @@ import java.util.ArrayList;
     Att implementera:
         1. Hämta om person finns eller inte med customer number     public void personExist(customerNumber);
         1. returnera person istället? getIdFromCustomerNumber();
-
         2. addMessage() ange customerID instället för personID
-
+        2. Hämta en person från customer number                     public void getPerson(customerNumber);
         3. GetMessages ska bytas till GetMessages(customerNumber);
 */
 
@@ -22,6 +21,13 @@ public class Main {
         //System.out.println(p.getFirstname());
         //System.out.println(ec.getAdmin().getFirstname());
 
+        System.out.println("is Authorized?: " + ec.isAuthorized("000000"));
+
+        // Test getImagesFromInstrumentId
+        //ArrayList<String> images = ec.getImagesFromInstrumentId(4);
+        //for(String e: images) {
+        //    System.out.println(e);
+        //}
         ArrayList<MessageEntity> m = ec.getMessages(2, "Reservation");
 
         /*
