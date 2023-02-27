@@ -11,12 +11,12 @@ INSERT INTO CHATMEMBER (CHAT_ID, PERSON_ID) VALUES (1, 2);
 INSERT INTO CHATMEMBER (CHAT_ID, PERSON_ID) VALUES (2, 1);
 INSERT INTO CHATMEMBER (CHAT_ID, PERSON_ID) VALUES (2, 3);
 
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (0, 1, 'Hejsan kund Anton. Du har reserverat gitarr "Cort".', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (0, 2, 'Tjena Anders. Tackar. ', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (0, 1, 'Hej kund, nu är gitarren redo att hämtas.', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (0, 2, 'Toppen Anders. Jag kommer imorgon. ', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 1, 'Hejsan kund Anton. Du har reserverat gitarr "Cort".', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 2, 'Tjena Anders. Tackar. ', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 1, 'Hej kund, nu är gitarren redo att hämtas.', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 2, 'Toppen Anders. Jag kommer imorgon. ', null, null);
 
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 1, 'Hejsan kund Lisa. Du har reserverat gitarr "Fender".', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 3, 'Hej Anders. Vad bra att det funkade. ', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 1, 'Hej Lisa, det tar någon dag till innan gitarren är klar', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 3, 'Ingen fara Anders!', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (2, 1, 'Hejsan kund Lisa. Du har reserverat gitarr "Fender".', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (2, 3, 'Hej Anders. Vad bra att det funkade. ', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (2, 1, 'Hej Lisa, det tar någon dag till innan gitarren är klar', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (2, 3, 'Ingen fara Anders!', null, null);
