@@ -26,7 +26,7 @@ public class ChatWebFilter implements Filter {
         }
         if (request.getRequestURI().endsWith("chat.xhtml")) {
             try {
-                if (request.getSession().getAttribute("sender") == null) {
+                if (request.getSession().getAttribute("customer") == null) {
                     response.sendRedirect(request.getContextPath() + "/chat-login.xhtml");
                 }
             } catch (IllegalStateException e) {

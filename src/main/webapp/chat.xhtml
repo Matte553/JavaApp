@@ -84,6 +84,7 @@
                     <f:ajax execute="@form" render="message-input originalFileName :message-container" resetValues="true"/>
                 </h:commandButton>
             </div>
+            <f:websocket channel="chat_channel" onmessage="sendMessage" />
         </h:form>
     </div>
 </h:body>

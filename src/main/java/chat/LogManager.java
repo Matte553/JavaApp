@@ -30,9 +30,10 @@ public class LogManager implements Serializable {
 
     @PostConstruct
     public void init() {
-        customers = new ArrayList<>();
+        //customers = new ArrayList<>();
         messageManager.setSender(entityController.getAdmin());
         messageManager.setSubject("Reparation"); //default
+        customers = entityController.getCustomersBySubject(messageManager.getSubject());
     }
 
     public void setReceiver(String customerNum){

@@ -51,7 +51,7 @@ public class CustomerManager implements Serializable {
                 System.out.println(e.toString());
             }
         }
-        SessionManager.setObjectAttribute("sender", person);
+        SessionManager.setObjectAttribute("customer", person);
         messageManager.setSender(person);
         messageManager.setReceiver(entityController.getAdmin());
         FacesContext.getCurrentInstance().getExternalContext().redirect("chat.xhtml?faces-redirect=true");
