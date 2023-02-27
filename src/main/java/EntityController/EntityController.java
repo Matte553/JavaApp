@@ -262,8 +262,16 @@ public class EntityController {
 
     // TO IMPLEMENT
 
-    public Boolean isAuthorized(){
-        return true;
+    public Boolean isAuthorized(String customerNumber){
+        String hql = "SELECT P FROM PersonEntity P WHERE P.customerNumber = :customerNumber";
+        Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
+        PersonEntity person = (PersonEntity) query.getSingleResult();
+        if(person.getId() == getAdmin().getId()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     // Returns the admin as a PersonEntity object. This object can be used to retrieve the admins details.
@@ -280,7 +288,7 @@ public class EntityController {
         }
     }
 
-    public ArrayList<MessageEntity> getMessages(int cumstomerID, String subject){
+    public ArrayList<MessageEntity> getMessages(int customerID, String subject){
 
         ArrayList<MessageEntity> list = new ArrayList<MessageEntity>();
         return list;

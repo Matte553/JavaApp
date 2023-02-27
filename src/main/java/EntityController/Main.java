@@ -19,7 +19,9 @@ public class Main {
         EntityController ec = new EntityController();
         //PersonEntity p = ec.getCustomer("111111");
         //System.out.println(p.getFirstname());
-        System.out.println(ec.getAdmin().getFirstname());
+        //System.out.println(ec.getAdmin().getFirstname());
+
+        System.out.println("is Auterized?: " + ec.isAuthorized("000000"));
 
         // READ
         //ArrayList<PersonEntity> persons           = ec.getPersons();
