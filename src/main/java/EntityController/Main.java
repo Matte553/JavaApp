@@ -17,8 +17,9 @@ public class Main {
 
         // New Controller
         EntityController ec = new EntityController();
-        PersonEntity p = ec.getCustomer("111111");
-        System.out.println(p.getFirstname());
+        //PersonEntity p = ec.getCustomer("111111");
+        //System.out.println(p.getFirstname());
+        System.out.println(ec.getAdmin().getFirstname());
 
         // READ
         //ArrayList<PersonEntity> persons           = ec.getPersons();

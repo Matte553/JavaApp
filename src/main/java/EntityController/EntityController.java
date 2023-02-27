@@ -266,10 +266,18 @@ public class EntityController {
         return true;
     }
 
+    // Returns the admin as a PersonEntity object. This object can be used to retrieve the admins details.
     public PersonEntity getAdmin(){
-
-        PersonEntity p = new PersonEntity();
-        return p;
+        int adminID = AdminID;
+        String hql = "SELECT P FROM PersonEntity P WHERE P.id = :adminID";
+        Query query = session.createQuery(hql).setParameter("adminID", adminID);
+        List<MessageEntity> list = query.list();
+        if(list.isEmpty()){
+            System.err.println("Admin could not be found, is admins ID not 0?");
+            return null;
+        }else {
+            return (PersonEntity) query.getSingleResult();
+        }
     }
 
     public ArrayList<MessageEntity> getMessages(int cumstomerID, String subject){
