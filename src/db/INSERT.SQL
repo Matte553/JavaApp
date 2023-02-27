@@ -11,12 +11,36 @@ INSERT INTO CHATMEMBER (CHAT_ID, PERSON_ID) VALUES (1, 2);
 INSERT INTO CHATMEMBER (CHAT_ID, PERSON_ID) VALUES (2, 1);
 INSERT INTO CHATMEMBER (CHAT_ID, PERSON_ID) VALUES (2, 3);
 
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (0, 1, 'Hejsan kund Anton. Du har reserverat gitarr "Cort".', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (0, 2, 'Tjena Anders. Tackar. ', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (0, 1, 'Hej kund, nu är gitarren redo att hämtas.', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (0, 2, 'Toppen Anders. Jag kommer imorgon. ', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 1, 'Hejsan kund Anton. Du har reserverat gitarr "Cort".', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 2, 'Tjena Anders. Tackar. ', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 1, 'Hej kund, nu är gitarren redo att hämtas.', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 2, 'Toppen Anders. Jag kommer imorgon. ', null, null);
 
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 1, 'Hejsan kund Lisa. Du har reserverat gitarr "Fender".', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 3, 'Hej Anders. Vad bra att det funkade. ', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 1, 'Hej Lisa, det tar någon dag till innan gitarren är klar', null, null);
-INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (1, 3, 'Ingen fara Anders!', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (2, 1, 'Hejsan kund Lisa. Du har reserverat gitarr "Fender".', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (2, 3, 'Hej Anders. Vad bra att det funkade. ', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (2, 1, 'Hej Lisa, det tar någon dag till innan gitarren är klar', null, null);
+INSERT INTO MESSAGE (CHAT_ID, PERSON_ID, TEXT, IMAGE, MESSAGE_TIMESTAMP) VALUES (2, 3, 'Ingen fara Anders!', null, null);
+
+INSERT INTO INSTRUMENT (TYPE, NAME, PRICE, DESCRIPTION) VALUES ('Gitarr', 'Yamaha C40', 1000, 'En fin begagnad gitarr med nya strängar.');
+INSERT INTO INSTRUMENT (TYPE, NAME, PRICE, DESCRIPTION) VALUES ('Ukulele', 'Cascha Premium Mahagoni Tenor', 600, 'Bästa modellen på marknaden. Som ny!');
+INSERT INTO INSTRUMENT (TYPE, NAME, PRICE, DESCRIPTION) VALUES ('Elgitarr', 'Mooer GTRS Guitars Wing 900 Int APU', 13500, 'Låtsas vara Jimi Hendrix med den här värstingen!');
+INSERT INTO INSTRUMENT (TYPE, NAME, PRICE, DESCRIPTION) VALUES ('Keyboard', 'Yamaha', 3500, 'Världens bästa keyboard, köp den här och ge mig pengar.');
+INSERT INTO INSTRUMENT (TYPE, NAME, PRICE, DESCRIPTION) VALUES ('Gitarr', 'Cort', 1700, 'En fantastiskt ful gitarr.');
+INSERT INTO INSTRUMENT (TYPE, NAME, PRICE, DESCRIPTION) VALUES ('Elgitarr', 'Fender', 2900, 'Bästa jag någonsin har varit med om.');
+
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('classic_guitar_yamaha_c40.jpg', 1);
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('classic_guitar_yamaha_c40_2.jpg', 1);
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('cascha_premium_1.jpg', 2);
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('cascha_premium_2.jpg', 2);
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('mooer_1.jpg', 3);
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('mooer_2.jpg', 3);
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('keyboard_yamaha_1.jpg', 4);
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('keyboard_yamaha_2.jpg', 4);
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('classic_guitar_cort.jpg', 5);
+INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('fender.jpg', 6);
+
+INSERT INTO RESERVATION (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID) VALUES (1, 5, 2);
+INSERT INTO RESERVATION (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID) VALUES (2, 6, 3);
+
+INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (1, 2, 'Min ukulele saknar flera strängar och har spruckit lite.', 'Ukulele');
+INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (2, 3, 'En tangent på mitt keyboard funkar inte alls.', 'Keyboard');

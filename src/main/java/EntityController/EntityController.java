@@ -2,6 +2,7 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
+import api.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -19,13 +20,15 @@ public class EntityController {
     SessionFactory sessionFactory;
     Session session;
 
+    Integer AdminID = 1;
+
     // Constructor that initiates a connection to DB.
     public EntityController() throws Exception {
         sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
-        session = sessionFactory.openSession();                     // Skapa en session för koppling.
+        session = sessionFactory.openSession();             // Skapa en session för koppling.
     }
 
-    // Creates a person and prepare it to be sent to database. Returns the personID
+    // Creates a person and prepares it to be sent to database. Returns the personID
     private Integer createPerson(String firstname, String lastname, String phone, String mail) throws Exception {
         String customerNumber = generateCustomerNumber();
         PersonEntity person = new PersonEntity(firstname, lastname, phone, mail, customerNumber);
@@ -44,19 +47,15 @@ public class EntityController {
         Random rand = new Random();
         Integer number;
         String numberString = null;
-        while(true) {
+        do {
             number = rand.nextInt(999999);
             numberString = String.format("%06d", number);
-            if(!customerNumbers.contains(numberString)) {
-                break;
-            }
-        }
+        } while (customerNumbers.contains(numberString));
         return numberString;
     }
 
-    // Creates a chat and prepares it to be sent to database
+    // Creates a chat and prepares it to be sent to database. Returns the chatId
     private Integer createChat(String subject) {
-        session.beginTransaction();
         ChatEntity chat = new ChatEntity(subject);
         session.persist(chat);
         return chat.getId();
@@ -64,7 +63,6 @@ public class EntityController {
 
     // Creates chat member and prepares it to be sent to the database
     private void createChatMember(Integer chatID, Integer personID) {
-        session.beginTransaction();
         ChatmemberEntity chatMember = new ChatmemberEntity(chatID, personID);
         session.persist(chatMember);
     }
@@ -119,6 +117,14 @@ public class EntityController {
         session.getTransaction().commit();
     }
 
+    // Public method to add new instrument images to the database
+    // Commits the entry
+    public void addInstrumentPicture(String imageURL, Integer instrumentId) {
+        session.beginTransaction();
+        createInstrumentPicture(imageURL, instrumentId);
+        session.getTransaction().commit();
+    }
+
     // Public method to add new reparations
     // Commits the entry
     public void addReparation(Integer personId, String description, String type) {
@@ -133,16 +139,49 @@ public class EntityController {
         session.getTransaction().commit();
     }
 
+    // Returns the customer with the exact customer number.
+    public PersonEntity getCustomer(String customerNumber){
+        String hql = "SELECT E FROM PersonEntity E WHERE E.customerNumber = :customerNumber";
+        Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
+        return (PersonEntity) query.getSingleResult();
+    }
+
+
+    // Public method to fetch all imageURLs for one instrument
+    public ArrayList<String> getImagesFromInstrumentId(Integer instrumentId) {
+        String hql = "SELECT E.imageUrl FROM InstrumentPicturesEntity E WHERE E.instrumentId = :instrumentId";
+        Query query = session.createQuery(hql).setParameter("instrumentId", instrumentId);
+        List results = query.list();
+        return (ArrayList<String>) results;
+    }
+
+    /*
+    // Adds Customer to database and initiates a chat with Admin, Returns the customer;
+    public PersonEntity addCustomer(PersonEntity person, String subject) throws Exception {
+        session.beginTransaction();
+
+        Integer personID = createPerson(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail());
+        Integer chatID = createChat(subject);
+        createChatMember(chatID, personID);
+        createChatMember(chatID, AdminID);
+
+        session.persist(person);
+        session.getTransaction().commit();
+        return person;
+    }
+    */
+
+
     // Public method to start conversation. Is to be used when a new customer is added on the frontend.
     // A new chat is created with Anders, and a welcome message is sent from Anders to the new customer to
     // initiate contact. Everything is then committed to the database. A chat is always created for new customers.
-    public void initiateContact(Integer employeeID, String firstname, String lastname, String phone, String mail, String subject) throws Exception {
+    public void addCustomer(String firstname, String lastname, String phone, String mail, String subject) throws Exception {
         session.beginTransaction();
         Integer personID = createPerson(firstname, lastname, phone, mail);
         Integer chatID = createChat(subject);
         createChatMember(chatID, personID);
-        createChatMember(chatID, employeeID);
-        createMessage(employeeID, chatID, "Hej och välkommen! Här kan du skriva med mig, whoho", null);
+        createChatMember(chatID, AdminID);
+        createMessage(AdminID, chatID, "Hej och välkommen! Här kan du skriva med mig, whoho", null);
         session.getTransaction().commit();
     }
 
@@ -154,80 +193,109 @@ public class EntityController {
         Integer personID = (Integer) results.get(0);
         return personID;
     }
-
+    //
     // Returns chatID for a chat between two persons;
-    public Integer getChatID(int person_A_ID, int person_B_ID){
-
+    // Inner join
+    public Integer getChatID(int customerID, String subject){
         String hql;
         Query query;
         List results;
 
-        hql = "SELECT E.chatId FROM ChatmemberEntity E WHERE E.personId = :person_A_ID";
-        query = session.createQuery(hql).setParameter("person_A_ID", person_A_ID);
-        results = query.list();
-        ArrayList<Integer> person_A_Chatlist = (ArrayList) results;
+        // Working SQL row. Needs to be converted to HQL to be placed in hql variable.
+        // Select * FROM Chatmember INNER JOIN CHAT C on CHATMEMBER.CHAT_ID = C.ID WHERE PERSON_ID=2 AND SUBJECT='Övrigt';
+        hql = "";
+        query = session.createQuery(hql)
+                .setParameter("customerID", customerID)
+                .setParameter("subject", subject);
 
-        hql = "SELECT E.chatId FROM ChatmemberEntity E WHERE E.personId = :person_B_ID";
-        query = session.createQuery(hql).setParameter("person_B_ID", person_B_ID);
-        results = query.list();
-        ArrayList<Integer> person_B_Chatlist = (ArrayList) results;
+        System.out.println("SQL-result" + query.getSingleResult().toString());
+        //Integer chatID = (Integer) query.getSingleResult();
+/*
+        hql = "SELECT chat.chatId FROM ChatEntity chat WHERE chat.subject = :subject";
+        query = session.createQuery(hql).setParameter("subject", subject);
 
-        ArrayList<Integer> compareList = new ArrayList<Integer>(person_A_Chatlist);
 
-        compareList.retainAll(person_B_Chatlist);
 
-        if(compareList.isEmpty()){
+        if(chatID == null){
+            System.err.println("There is no chat for this customer: " + customerID);
             return -1;
         }
         else {
-            Integer chatID = compareList.get(0);
             return chatID;
         }
+
+         */
+        return -1;
+
     }
 
     // Returns arraylist with all messages from a chat ID
-    public ArrayList<MessageEntity> getMessagesFromPersonID(int person_A_ID, int person_B_ID){
-        int chatID = getChatID(person_A_ID, person_B_ID);
+    public ArrayList<MessageEntity> getMessages(int customerID, String subject){
+
+        int chatID = getChatID(customerID, subject);
         if(chatID == -1){
             System.err.println("There is no chat between these two persons");
             return null;
         }
         String hql = "SELECT E FROM MessageEntity E WHERE E.chatId = :chatID";
         Query query = session.createQuery(hql).setParameter("chatID", chatID);
-        List<MessageEntity> list = query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list = query.list();
+        return (ArrayList) list;
     }
 
     // Returns an arraylist with all Persons from database
     public ArrayList<PersonEntity> getPersons() throws Exception {
         Query query = session.createQuery(("from PersonEntity "));
-        List<PersonEntity> list=query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list=query.list();
+        return (ArrayList) list;
     }
 
     // Returns an arraylist with all Chats from database
     public ArrayList<ChatEntity> getChats() throws Exception {
         Query query = session.createQuery(("from ChatEntity "));
-        List<ChatEntity> list=query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list=query.list();
+        return (ArrayList) list;
     }
 
     // Returns an arraylist with all Messages from database
     public ArrayList<MessageEntity> getMessages() throws Exception {
         Query query = session.createQuery(("from MessageEntity "));
-        List<MessageEntity> list=query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list=query.list();
+        return (ArrayList) list;
     }
 
     // Returns an arraylist with all ChatMembers from database
     public ArrayList<ChatmemberEntity> getChatMembers() throws Exception {
         Query query = session.createQuery(("from ChatmemberEntity "));
-        List<ChatmemberEntity> list=query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
+        List list=query.list();
+        return (ArrayList) list;
     }
+
+    // Returns true if the person is Admin, else returns false
+    public Boolean isAuthorized(String customerNumber){
+        String hql = "SELECT P FROM PersonEntity P WHERE P.customerNumber = :customerNumber";
+        Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
+        PersonEntity person = (PersonEntity) query.getSingleResult();
+        if(person.getId() == getAdmin().getId()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    // Returns the admin as a PersonEntity object. This object can be used to retrieve the admins details.
+    public PersonEntity getAdmin(){
+        int adminID = AdminID;
+        String hql = "SELECT P FROM PersonEntity P WHERE P.id = :adminID";
+        Query query = session.createQuery(hql).setParameter("adminID", adminID);
+        List<MessageEntity> list = query.list();
+        if(list.isEmpty()){
+            System.err.println("Admin could not be found, is admins ID not 0?");
+            return null;
+        }else {
+            return (PersonEntity) query.getSingleResult();
+        }
+    }
+
 }
