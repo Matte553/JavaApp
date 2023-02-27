@@ -28,9 +28,10 @@ public class Main {
         //ArrayList<MessageEntity> message = ec.getMessagesFromPersonID(1,107);
 
         // INSERT
-        //ec.initiateContact(38,"Adam", "Gustavsson","070-2222222", "AdamGustavsson@gmail.com","Reperation");
-        //ec.addMessage(107, 104, "Hej, jag undrar om min gitarr är klar än?", "");
-        ec.insertTestData();
+        //ec.initiateContact(1,"Adam", "Gustavsson","070-4444444", "AdamGustavsson@gmail.com","Övrigt");
+        //ec.addMessage(4, 3, "Hej, jag undrar om min gitarr är klar än?", "");
+
+        //ec.insertTestData();
 
         // PRINT
         /*

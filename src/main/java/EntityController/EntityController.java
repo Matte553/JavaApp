@@ -56,6 +56,7 @@ public class EntityController {
 
     // Creates a chat and prepares it to be sent to database
     private Integer createChat(String subject) {
+        session.beginTransaction();
         ChatEntity chat = new ChatEntity(subject);
         session.persist(chat);
         return chat.getId();
@@ -63,6 +64,7 @@ public class EntityController {
 
     // Creates chat member and prepares it to be sent to the database
     private void createChatMember(Integer chatID, Integer personID) {
+        session.beginTransaction();
         ChatmemberEntity chatMember = new ChatmemberEntity(chatID, personID);
         session.persist(chatMember);
     }
@@ -96,6 +98,7 @@ public class EntityController {
 
     // Creates new reservation and prepares it to be sent to the database
     private void createReservation(Integer instrumentId, Integer personId) {
+        session.beginTransaction();
         ReservationEntity reservation = new ReservationEntity(instrumentId, personId);
         session.persist(reservation);
     }
@@ -103,6 +106,7 @@ public class EntityController {
     // Public method to add new messages to database
     // Actually commits the entry
     public void addMessage(Integer personID, Integer chatID, String text, String imageURL) {
+        session.beginTransaction();
         createMessage(personID, chatID, text, imageURL);
         session.getTransaction().commit();
     }
@@ -110,6 +114,7 @@ public class EntityController {
     // Public method to add new instruments to the database
     // Commits the entry
     public void addInstrument(String type, String name, Double price, String description) {
+        session.beginTransaction();
         createInstrument(type, name, price, description);
         session.getTransaction().commit();
     }
@@ -117,11 +122,13 @@ public class EntityController {
     // Public method to add new reparations
     // Commits the entry
     public void addReparation(Integer personId, String description, String type) {
+        session.beginTransaction();
         createReparation(personId, description, type);
         session.getTransaction().commit();
     }
 
     public void addReservation(Integer instrumentId, Integer personId) {
+        session.beginTransaction();
         createReservation(instrumentId, personId);
         session.getTransaction().commit();
     }
@@ -146,54 +153,6 @@ public class EntityController {
         List results = query.list();
         Integer personID = (Integer) results.get(0);
         return personID;
-    }
-
-    // Method to test things
-    public void insertTestData(){
-
-        session.beginTransaction();
-
-        PersonEntity p1 = new PersonEntity();
-        p1.setFirstname("Anders");
-        p1.setLastname("Andersson");
-        p1.setMail("Anders.Andersson@gmail.com");
-        p1.setPhone("070-0000000");
-        p1.setCustomerNumber("000000");
-        session.persist(p1);
-
-        PersonEntity p2 = new PersonEntity();
-        p2.setFirstname("Niklas");
-        p2.setLastname("Larsson");
-        p2.setMail("NiklasLarsson@gmail.com");
-        p2.setPhone("070-8888888");
-        p2.setCustomerNumber("111111");
-        session.persist(p2);
-
-        ChatEntity chat = new ChatEntity();
-        chat.setSubject("Reservation");
-        session.persist(chat);
-
-        ChatmemberEntity chat_member1 = new ChatmemberEntity();
-        chat_member1.setChatId(chat.getId());
-        chat_member1.setPersonId(p1.getId());
-        session.persist(chat_member1);
-
-        ChatmemberEntity chat_member2 = new ChatmemberEntity();
-        chat_member2.setChatId(chat.getId());
-        chat_member2.setPersonId(p2.getId());
-        session.persist(chat_member2);
-
-        MessageEntity mess = new MessageEntity();
-        mess.setChatId(chat.getId());
-        mess.setPersonId(p1.getId());
-        mess.setText("Hej där din rackare. Hur är läget?");
-
-        long now = System.currentTimeMillis();
-        Timestamp sqlTimestamp = new Timestamp(now);
-        mess.setMessageTimestamp(sqlTimestamp);
-        session.persist(mess);
-
-        session.getTransaction().commit();
     }
 
     // Returns chatID for a chat between two persons;
