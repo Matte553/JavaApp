@@ -96,7 +96,6 @@ public class EntityController {
 
     // Creates new reservation and prepares it to be sent to the database
     private void createReservation(Integer instrumentId, Integer personId) {
-        session.beginTransaction();
         ReservationEntity reservation = new ReservationEntity(instrumentId, personId);
         session.persist(reservation);
     }
@@ -276,12 +275,7 @@ public class EntityController {
         String hql = "SELECT P FROM PersonEntity P WHERE P.customerNumber = :customerNumber";
         Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
         PersonEntity person = (PersonEntity) query.getSingleResult();
-        if(person.getId() == getAdmin().getId()){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return person.getId() == getAdmin().getId();
     }
 
     // Returns the admin as a PersonEntity object. This object can be used to retrieve the admins details.
