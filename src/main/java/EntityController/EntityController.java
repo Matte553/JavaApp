@@ -2,6 +2,7 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
+import jakarta.ejb.Stateless;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -13,6 +14,7 @@ import java.util.List;
 import Entities.*;
 
 // This Class is used for Retrieving all data from database and also inserting data into database.
+@Stateless
 public class EntityController {
 
     SessionFactory sessionFactory;
