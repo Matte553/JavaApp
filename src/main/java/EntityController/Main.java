@@ -23,11 +23,11 @@ public class Main {
         //
         //System.out.println("is Authorized?: " + ec.isAuthorized("000000"));
 
-        // Test getImagesFromInstrumentId
-        //ArrayList<String> images = ec.getImagesFromInstrumentId(4);
-        //for(String e: images) {
-        //    System.out.println(e);
-        //}
+//        // Test getImagesFromInstrumentId
+//        ArrayList<String> images = ec.getImagesFromInstrumentId(4);
+//        for(String e: images) {
+//            System.out.println(e);
+//        }
         //ArrayList<MessageEntity> m = ec.getMessages(2, "Reservation");
 
         /*

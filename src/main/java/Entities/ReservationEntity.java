@@ -22,7 +22,8 @@ public class ReservationEntity {
     public ReservationEntity() {
     }
 
-    public ReservationEntity(Integer instrumentId, Integer personId) {
+    public ReservationEntity(Integer reservationNumber, Integer instrumentId, Integer personId) {
+        setReservationNumber(reservationNumber);
         setInstrumentId(instrumentId);
         setPersonId(personId);
     }
