@@ -2,6 +2,7 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
+import api.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -31,6 +32,24 @@ public class EntityController {
         PersonEntity person = new PersonEntity(firstname, lastname, phone, mail, customerNumber);
         session.persist(person);
         return person.getId();
+    }
+
+    // Generates a random customer number with 6 digits.
+    // Controls that there are no duplicates
+    private String generateCustomerNumber() throws Exception {
+        ArrayList<PersonEntity> persons = this.getPersons();
+        ArrayList<String> customerNumbers = new ArrayList<>();
+        for(PersonEntity p: persons) {
+            customerNumbers.add(p.getCustomerNumber());
+        }
+        Random rand = new Random();
+        Integer number;
+        String numberString = null;
+        do {
+            number = rand.nextInt(999999);
+            numberString = String.format("%06d", number);
+        } while (customerNumbers.contains(numberString));
+        return numberString;
     }
 
     // Creates a chat and prepares it to be sent to database. Returns the chatId
@@ -95,8 +114,9 @@ public class EntityController {
     }
 
     // Public method to add new messages to database
-    // Commits the entry
-    public void addMessage(Integer personID, Integer chatID, String text, String imageURL) {
+    // Commits the entry/
+    public void addMessage(Integer personID, String text, String imageURL) {
+        int chatID = getChatID(personID);
         session.beginTransaction();
         createMessage(personID, chatID, text, imageURL);
         session.getTransaction().commit();
@@ -149,53 +169,7 @@ public class EntityController {
         return (ArrayList<String>) results;
     }
 
-    // Public method to fetch a customer's ID based on their customer number
-    public Integer getIdFromCustomerNumber(String customerNumber) {
-        String hql = "SELECT E.id FROM PersonEntity E WHERE E.customerNumber = :customerNumber";
-        Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
-        List results = query.list();
-        Integer personID = (Integer) results.get(0);
-        return personID;
-    }
 
-
-
-    // Returns chatID for a chat between two persons;
-    // Inner join
-    public Integer getChatID(int customerID, String subject){
-        String hql;
-        Query query;
-        List results;
-
-        // Working SQL row. Needs to be converted to HQL to be placed in hql variable.
-        // Select * FROM Chatmember INNER JOIN CHAT C on CHATMEMBER.CHAT_ID = C.ID WHERE PERSON_ID=2 AND SUBJECT='Övrigt';
-        hql = "";
-        query = session.createQuery(hql)
-                .setParameter("customerID", customerID)
-                .setParameter("subject", subject);
-
-        System.out.println("SQL-result" + query.getSingleResult().toString());
-        //Integer chatID = (Integer) query.getSingleResult();
-/*
-        hql = "SELECT chat.chatId FROM ChatEntity chat WHERE chat.subject = :subject";
-        query = session.createQuery(hql).setParameter("subject", subject);
-
-
-
-        if(chatID == null){
-            System.err.println("There is no chat for this customer: " + customerID);
-            return -1;
-        }
-        else {
-            return chatID;
-        }
-
-         */
-        return -1;
-
-    }
-
-    /*
     // Adds Customer to database and initiates a chat with Admin, Returns the customer;
     public PersonEntity addCustomer(PersonEntity person, String subject) throws Exception {
         session.beginTransaction();
@@ -208,15 +182,26 @@ public class EntityController {
         session.persist(person);
         session.getTransaction().commit();
         return person;
-    }*/
+    }
 
-
-
+    // Returns chatID for a chat with the personID;
+    public int getChatID(int personID){
+        String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
+        Query query = session.createQuery(hql).setParameter("personID", personID);
+        Integer chatID = (Integer) query.getSingleResult();
+        if(chatID == null){
+            System.err.println("There is no chat for this person.");
+            return -1;
+        }
+        else{
+            return chatID;
+        }
+    }
 
     // Returns arraylist with all messages from a chat ID
-    public ArrayList<MessageEntity> getMessages(int customerID, String subject){
+    public ArrayList<MessageEntity> getMessages(int personID){
 
-        int chatID = getChatID(customerID, subject);
+        Integer chatID = getChatID(personID);
         if(chatID == -1){
             System.err.println("There is no chat between these two persons");
             return null;
@@ -281,24 +266,6 @@ public class EntityController {
         Query query = session.createQuery(("from InstrumentPicturesEntity"));
         List list = query.list();
         return (ArrayList<InstrumentPicturesEntity>) list;
-    }
-
-    // Generates a random customer number with 6 digits.
-    // Controls that there are no duplicates
-    private String generateCustomerNumber() throws Exception {
-        ArrayList<PersonEntity> persons = this.getPersons();
-        ArrayList<String> customerNumbers = new ArrayList<>();
-        for(PersonEntity p: persons) {
-            customerNumbers.add(p.getCustomerNumber());
-        }
-        Random rand = new Random();
-        Integer number;
-        String numberString = null;
-        do {
-            number = rand.nextInt(999999);
-            numberString = String.format("%06d", number);
-        } while (customerNumbers.contains(numberString));
-        return numberString;
     }
 
     // Generates reservation number for reservation
