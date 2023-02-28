@@ -29,4 +29,7 @@ public class MessageService {
         return MessageList;
     }
 
+    public void addMessage(Message message) {
+        ec.addMessage(message.getId(), message.getChat_id(), message.getText(), message.getImage());
+    }
 }

@@ -45,5 +45,9 @@ public List<Invoice> listUsersInvoices(
         return messageService.getMessages(id1,id2);
     }
 
+    @PostMapping("/Messages/{persId}/{chatId}/{text}/{picUrl}")
+    void addMessage(@RequestBody Message message) {
+        messageService.addMessage(message);
+    }
 
 }
