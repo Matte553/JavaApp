@@ -28,9 +28,36 @@
                 <ui:param name="nextMonth" value="#{calendarHandler.currentMonth+1}" />
                 <ui:param name="nextNextMonth" value="#{calendarHandler.currentMonth+2}" />
 
+                <!--
+                *** FIRST MONTH **
+                -->
                 <div class="column">
-                    <a href="calendar_month.xhtml?monthID=#{currentMonth}">#{calendarHandler.months[currentMonth-1].name} #{currentYear}</a> <br />
+                    <a class="title" href="calendar_month.xhtml?monthID=#{currentMonth}">#{calendarHandler.months[currentMonth-1].name} #{currentYear}</a> <br />
+                    <ul class="weekdays">
+                        <li>Mån</li>
+                        <li>Tis</li>
+                        <li>Ons</li>
+                        <li>Tor</li>
+                        <li>Fre</li>
+                        <li>Lör</li>
+                        <li>Sön</li>
+                    </ul>
                     <ul class="days">
+                        <c:choose>
+                            <c:when test="#{calendarHandler.months[currentMonth-1].days[0].name ne 'Måndag'}">
+                                <ui:param name="firstDay" value="#{calendarHandler.months[currentMonth-1].days[0].weekday}"/>
+                                <ui:param name="prevMonth" value="#{calendarHandler.months[currentMonth-2]}"/>
+                                <ui:param name="prevSize" value="#{prevMonth.days.size()}"/>
+                                <c:forEach items="#{prevMonth.days}" var="day">
+                                    <c:choose>
+                                        <c:when test="#{day.number ge prevSize - firstDay +2}">
+                                            <li><span class="anotherMonth"><a href="calendar_week.xhtml?monthID=#{currentMonth-1}day=#{day.number}">#{day.number}</a></span></li>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                        </c:choose>
+
                         <c:forEach items="#{calendarHandler.months[currentMonth-1].days}" var="day">
                             <c:choose>
                                 <c:when test="#{currentMonth eq currentMonth and currentDay eq day.number}">
@@ -41,14 +68,55 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
+
+                        <c:choose>
+                            <c:when test="#{calendarHandler.months[currentMonth-1].days[0].name ne 'Söndag'}">
+                                <ui:param name="lastDayID" value="#{calendarHandler.months[currentMonth-1].days.size()}"/>
+                                <ui:param name="lastDay" value="#{calendarHandler.months[currentMonth-1].days[lastDayID-1].weekday}"/>
+                                <ui:param name="nMonth" value="#{calendarHandler.months[currentMonth]}"/>
+
+                                <c:forEach items="#{nMonth.days}" var="day">
+                                    <c:choose>
+                                        <c:when test="#{day.number le 7 - lastDay}">
+                                            <li><span class="anotherMonth"><a href="calendar_week.xhtml?monthID=#{currentMonth}day=#{day.number}">#{day.number}</a></span></li>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                        </c:choose>
                     </ul>
                 </div>
 
+                <!--
+                *** SECOND MONTH **
+                -->
                 <div class="column">
-                    <div id="nav" >
-                    <a href="calendar_month.xhtml?monthID=#{nextMonth}">#{calendarHandler.months[nextMonth-1].name} #{currentYear}</a> <br />
-                    </div>
+                    <a class="title" href="calendar_month.xhtml?monthID=#{nextMonth}">#{calendarHandler.months[nextMonth-1].name} #{currentYear}</a> <br />
+                    <ul class="weekdays">
+                        <li>Mån</li>
+                        <li>Tis</li>
+                        <li>Ons</li>
+                        <li>Tor</li>
+                        <li>Fre</li>
+                        <li>Lör</li>
+                        <li>Sön</li>
+                    </ul>
                     <ul class="days">
+                        <c:choose>
+                            <c:when test="#{calendarHandler.months[nextMonth-1].days[0].name ne 'Måndag'}">
+                                <ui:param name="firstDay" value="#{calendarHandler.months[nextMonth-1].days[0].weekday}"/>
+                                <ui:param name="prevMonth" value="#{calendarHandler.months[nextMonth-2]}"/>
+                                <ui:param name="prevSize" value="#{prevMonth.days.size()}"/>
+                                <c:forEach items="#{prevMonth.days}" var="day">
+                                    <c:choose>
+                                        <c:when test="#{day.number ge prevSize - firstDay +2}">
+                                            <li><span class="anotherMonth"><a href="calendar_week.xhtml?monthID=#{nextMonth-1}day=#{day.number}">#{day.number}</a></span></li>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                        </c:choose>
+
                         <c:forEach items="#{calendarHandler.months[nextMonth-1].days}" var="day">
                             <c:choose>
                                 <c:when test="#{currentMonth eq nextMonth and currentDay eq day.number}">
@@ -59,12 +127,56 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
+
+                        <c:choose>
+                            <c:when test="#{calendarHandler.months[nextMonth-1].days[0].name ne 'Söndag'}">
+                                <ui:param name="lastDayID" value="#{calendarHandler.months[nextMonth-1].days.size()}"/>
+                                <ui:param name="lastDay" value="#{calendarHandler.months[nextMonth-1].days[lastDayID-1].weekday}"/>
+                                <ui:param name="nMonth" value="#{calendarHandler.months[nextMonth]}"/>
+
+                                <c:forEach items="#{nMonth.days}" var="day">
+                                    <c:choose>
+                                        <c:when test="#{day.number le 7 - lastDay}">
+                                            <li><span class="anotherMonth"><a href="calendar_week.xhtml?monthID=#{nextMonth}day=#{day.number}">#{day.number}</a></span></li>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                        </c:choose>
                     </ul>
                 </div>
 
+
+                <!--
+                *** THIRD MONTH **
+                -->
                 <div class="column">
-                    <a href="calendar_month.xhtml?monthID=#{nextNextMonth}">#{calendarHandler.months[nextNextMonth-1].name} #{currentYear}</a> <br />
+                    <a class="title" href="calendar_month.xhtml?monthID=#{nextNextMonth}">#{calendarHandler.months[nextNextMonth-1].name} #{currentYear}</a> <br />
+                    <ul class="weekdays">
+                        <li>Mån</li>
+                        <li>Tis</li>
+                        <li>Ons</li>
+                        <li>Tor</li>
+                        <li>Fre</li>
+                        <li>Lör</li>
+                        <li>Sön</li>
+                    </ul>
                     <ul class="days">
+                        <c:choose>
+                            <c:when test="#{calendarHandler.months[nextNextMonth-1].days[0].name ne 'Måndag'}">
+                                <ui:param name="firstDay" value="#{calendarHandler.months[nextNextMonth-1].days[0].weekday}"/>
+                                <ui:param name="prevMonth" value="#{calendarHandler.months[nextNextMonth-2]}"/>
+                                <ui:param name="prevSize" value="#{prevMonth.days.size()}"/>
+                                <c:forEach items="#{prevMonth.days}" var="day">
+                                    <c:choose>
+                                        <c:when test="#{day.number ge prevSize - firstDay +2}">
+                                            <li><span class="anotherMonth"><a href="calendar_week.xhtml?monthID=#{nextMonth-1}day=#{day.number}">#{day.number}</a></span></li>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                        </c:choose>
+
                         <c:forEach items="#{calendarHandler.months[nextNextMonth-1].days}" var="day">
                             <c:choose>
                                 <c:when test="#{currentMonth eq nextNextMonth and currentDay eq day.number}">
@@ -75,6 +187,22 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
+
+                        <c:choose>
+                            <c:when test="#{calendarHandler.months[nextNextMonth-1].days[0].name ne 'Söndag'}">
+                                <ui:param name="lastDayID" value="#{calendarHandler.months[nextNextMonth-1].days.size()}"/>
+                                <ui:param name="lastDay" value="#{calendarHandler.months[nextNextMonth-1].days[lastDayID-1].weekday}"/>
+                                <ui:param name="nMonth" value="#{calendarHandler.months[nextMonth]}"/>
+
+                                <c:forEach items="#{nMonth.days}" var="day">
+                                    <c:choose>
+                                        <c:when test="#{day.number le 7 - lastDay}">
+                                            <li><span class="anotherMonth"><a href="calendar_week.xhtml?monthID=#{nextNextMonth}day=#{day.number}">#{day.number}</a></span></li>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                        </c:choose>
                     </ul>
                 </div>
             </div>

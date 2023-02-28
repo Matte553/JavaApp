@@ -12,6 +12,7 @@ public class Month implements Serializable {
     private ArrayList<Day> days;
     private int year;
     private int firstWeekday;
+    private int paddedDays;
 
     public Month() {
         this.number         = 1;
@@ -26,8 +27,7 @@ public class Month implements Serializable {
         this.firstWeekday   = firstWeekday;
         this.year           = year;
         this.days           = createArrayList();
-
-
+        this.paddedDays     = firstWeekday-1;
     }
 
     public int getNumber() {
@@ -70,6 +70,14 @@ public class Month implements Serializable {
 
     public void setFirstWeekday(int firstWeekday) {
         this.firstWeekday = firstWeekday;
+    }
+
+    public int getPaddedDays() {
+        return paddedDays;
+    }
+
+    public void setPaddedDays(int paddedDays) {
+        this.paddedDays = paddedDays;
     }
 
     private ArrayList<Day> createArrayList() {
@@ -172,4 +180,6 @@ public class Month implements Serializable {
         }
         return result;
     }
+
+
 }

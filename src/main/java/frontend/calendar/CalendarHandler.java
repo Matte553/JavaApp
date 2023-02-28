@@ -1,7 +1,7 @@
 package frontend.calendar;
 
+
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 
 
 @Named
+@RequestScoped
 public class CalendarHandler implements Serializable {
     private Calendar calendar;
     private ArrayList<Integer> firstDaysEachMonth;
@@ -19,6 +20,21 @@ public class CalendarHandler implements Serializable {
     private int currentWeek;
     private int currentDay;
     private ArrayList<Month> months;
+    private ArrayList<Week> weeks;
+
+    private int test;
+
+    private int makeTest() {
+        return this.calendar.get(Calendar.FEBRUARY);
+    }
+
+    public int getTest() {
+        return test;
+    }
+
+    public void setTest(int test) {
+        this.test = test;
+    }
 
     CalendarHandler() {
         this.calendar           = Calendar.getInstance();
@@ -28,6 +44,8 @@ public class CalendarHandler implements Serializable {
         this.currentDay         = getDay();
         this.firstDaysEachMonth = fillWithFirstDays();
         this.months             = createArrayList();
+        this.test               = makeTest();
+
     }
 
     public Calendar getCalendar() {

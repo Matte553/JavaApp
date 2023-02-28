@@ -18,90 +18,115 @@ body {font-family: Verdana, sans-serif;}
 
 .overview .column {
     float: left;
-    /*width: 32.5%;*/
-    width: 25%;
+    width: 32.5%;
+/*width: 25%;*/
     height: 600px;
     padding: 20px;
     margin: 5px;
-    background: #cbc9c9;
+    background: #1abc9c;
+}
+
+.column .weekdays {
+    margin: 0;
+    padding: 5px 0;
+    background-color: #ddd;
+}
+
+.column .weekdays li {
+    display: inline-block;
+    width: 12.5%;
+    font-size:24px;
+    color: #666;
+    text-align: center;
 }
 
 .column .days {
     padding: 10px 0;
-    background: #cccccc;
+    background: #eee;
     margin: 5px;
+}
+
+.title {
+    color: #e7e7e7;
+    font-size: 30px;
 }
 
 .column .days li {
     list-style-type: none;
     display: inline-block;
-    width : 13.6%;
+    width : 12.5%;
     text-align: center;
-    margin-bottom: 5px;
-    font-size:12px;
+    margin-bottom: 65px;
+    font-size:20px;
     color: #777;
 }
 
 .month {
-    padding: 70px 25px;
-    width: 100%;
-    background: #1abc9c;
-    text-align: center;
+padding: 70px 25px;
+width: 100%;
+background: #1abc9c;
+text-align: center;
 }
 
 .month ul {
-    margin: 0;
-    padding: 0;
+margin: 0;
+padding: 0;
 }
 
 .month ul li {
-    color: white;
-    font-size: 20px;
-    letter-spacing: 3px;
+color: white;
+font-size: 20px;
+letter-spacing: 3px;
 }
 
 .month .prev {
-    float: left;
-    padding-top: 10px;
+float: left;
+padding-top: 10px;
 }
 
 .month .next {
-    float: right;
-    padding-top: 10px;
+float: right;
+padding-top: 10px;
 }
 
 .weekdays {
-    margin: 0;
-    padding: 10px 0;
-    background-color: #ddd;
+margin: 0;
+padding: 10px 0;
+background-color: #ddd;
 }
 
 .weekdays li {
-    display: inline-block;
-    width: 13.6%;
-    color: #666;
-    text-align: center;
+display: inline-block;
+width: 13.6%;
+color: #666;
+text-align: center;
 }
 
 .days {
-    padding: 10px 0;
-    background: #eee;
-    margin: 0;
+padding: 10px 0;
+background: #eee;
+margin: 0;
 }
 
 .days li {
-    list-style-type: none;
-    display: inline-block;
-    width: 13.6%;
-    text-align: center;
-    margin-bottom: 5px;
-    font-size:12px;
-    color: #777;
+list-style-type: none;
+display: inline-block;
+width: 13.6%;
+text-align: center;
+margin-bottom: 5px;
+font-size:12px;
+color: #777;
 }
 
 .days li .active {
     padding: 5px;
     background: #1abc9c;
+    color: white !important
+}
+
+.days li .anotherMonth {
+    padding: 5px;
+    background: #AFAFAF;
     color: white !important
 }
 
