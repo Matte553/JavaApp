@@ -89,6 +89,8 @@ public class EntityController {
 
     // Adds Customer to database and initiates a chat with Admin, Returns the customer;
     public PersonEntity addCustomer(PersonEntity person, String subject) throws Exception {
+
+        // DET LÄGGS TILL 2 PERSONER
         session.beginTransaction();
 
         Integer personID = createPerson(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail());
@@ -104,7 +106,7 @@ public class EntityController {
     // Adds new messages to database
     // Commits the entry
     public void addMessage(Integer personID, String text, String imageURL) {
-        int chatID = getChatID(personID);
+        int chatID = getChat(personID);
         session.beginTransaction();
         createMessage(personID, chatID, text, imageURL);
         session.getTransaction().commit();
@@ -199,8 +201,24 @@ public class EntityController {
     }
 
     // Returns the chatID for a chat that has the person as a member;
-    private int getChatID(int personID){
+    private int getChat(int personID){
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
+        Query query = session.createQuery(hql).setParameter("personID", personID);
+        Integer chatID = (Integer) query.getSingleResult();
+        if(chatID == null){
+            System.err.println("There is no chat for this person.");
+            return -1;
+        }
+        else{
+            return chatID;
+        }
+    }
+
+    private int getChatWithSubject(int personID, String subject){
+
+        // SELECT * FROM Chatmember INNER JOIN CHAT C ON CHATMEMBER.CHAT_ID=C.ID WHERE PERSON_ID=2 AND SUBJECT='Reservation';
+        String hql = "";
+
         Query query = session.createQuery(hql).setParameter("personID", personID);
         Integer chatID = (Integer) query.getSingleResult();
         if(chatID == null){
@@ -215,7 +233,21 @@ public class EntityController {
     // Returns arraylist with all messages from the chat containing the given personID. This personID should be the customer.
     public ArrayList<MessageEntity> getMessages(int personID){
 
-        Integer chatID = getChatID(personID);
+        Integer chatID = getChat(personID);
+        if(chatID == -1){
+            System.err.println("There is no chat between these two persons");
+            return null;
+        }
+        String hql = "SELECT E FROM MessageEntity E WHERE E.chatId = :chatID";
+        Query query = session.createQuery(hql).setParameter("chatID", chatID);
+        List list = query.list();
+        return (ArrayList) list;
+    }
+
+    // Returns arraylist with all messages from the chat containing the given personID. This personID should be the customer.
+    public ArrayList<MessageEntity> getMessagesWithSubject(int personID, String subject){
+
+        Integer chatID = getChatWithSubject(personID, subject);
         if(chatID == -1){
             System.err.println("There is no chat between these two persons");
             return null;
@@ -337,7 +369,14 @@ public class EntityController {
         String hql = "SELECT P FROM PersonEntity P WHERE P.customerNumber = :customerNumber";
         Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
         PersonEntity person = (PersonEntity) query.getSingleResult();
-        return person.getId() == getAdmin().getId();
+        if(person == null){
+            return true;
+        }
+        return false;
+    }
+
+    void getCustomersBySubject(String subject){
+
     }
 
     // Returns the admin as a PersonEntity object. This object can be used to retrieve the admins details.
