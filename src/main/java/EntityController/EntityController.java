@@ -100,9 +100,6 @@ public class EntityController {
         session.persist(reservation);
     }
 
-    // Public method to add new messages to database by entering the senders id, message text and image url.
-    public void addMessage(Integer personID, String text, String imageURL) {
-        int chatID = getChatID(personID);
     // Public method to start conversation. Is to be used when a new customer is added on the frontend.
     // A new chat is created with Anders, and a welcome message is sent from Anders to the new customer to
     // initiate contact. Everything is then committed to the database. A chat is always created for new customers.
@@ -118,7 +115,8 @@ public class EntityController {
 
     // Public method to add new messages to database
     // Commits the entry
-    public void addMessage(Integer personID, Integer chatID, String text, String imageURL) {
+    public void addMessage(Integer personID, String text, String imageURL) {
+        int chatID = getChatID(personID);
         session.beginTransaction();
         createMessage(personID, chatID, text, imageURL);
         session.getTransaction().commit();
@@ -171,7 +169,7 @@ public class EntityController {
         return (ArrayList<String>) results;
     }
 
-    /*
+
     // Adds Customer to database and initiates a chat with Admin, Returns the customer;
     public PersonEntity addCustomer(PersonEntity person, String subject) throws Exception {
         session.beginTransaction();
@@ -185,79 +183,25 @@ public class EntityController {
         session.getTransaction().commit();
         return person;
     }
-    */
-
-
-    // Public method to start conversation. Is to be used when a new customer is added on the frontend.
-    // A new chat is created with Anders, and a welcome message is sent from Anders to the new customer to
-    // initiate contact. Everything is then committed to the database. A chat is always created for new customers.
-    public void addCustomer(String firstname, String lastname, String phone, String mail, String subject) throws Exception {
-        session.beginTransaction();
-        Integer personID = createPerson(firstname, lastname, phone, mail);
-        Integer chatID = createChat(subject);
-        createChatMember(chatID, personID);
-        createChatMember(chatID, AdminID);
-        createMessage(AdminID, chatID, "Hej och välkommen! Här kan du skriva med mig, whoho", null);
-        session.getTransaction().commit();
-    }
-
 
     // Returns chatID for a chat with the personID;
-    private int getChatID(int personID){
-        String hql;
-        Query query;
-        List results;
-
-        // Working SQL row. Needs to be converted to HQL to be placed in hql variable.
-        // Select * FROM Chatmember INNER JOIN CHAT C on CHATMEMBER.CHAT_ID = C.ID WHERE PERSON_ID=2 AND SUBJECT='Övrigt';
-        hql = "";
-        query = session.createQuery(hql)
-                .setParameter("customerID", customerID)
-                .setParameter("subject", subject);
-
-        System.out.println("SQL-result" + query.getSingleResult().toString());
-        //Integer chatID = (Integer) query.getSingleResult();
-/*
-        hql = "SELECT chat.chatId FROM ChatEntity chat WHERE chat.subject = :subject";
-        query = session.createQuery(hql).setParameter("subject", subject);
-
-
-
+    public int getChatID(int personID){
+        String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
+        Query query = session.createQuery(hql).setParameter("personID", personID);
+        Integer chatID = (Integer) query.getSingleResult();
         if(chatID == null){
-            System.err.println("There is no chat for this customer: " + customerID);
+            System.err.println("There is no chat for this person.");
             return -1;
         }
-        else {
+        else{
             return chatID;
         }
-
-         */
-        return -1;
-
     }
 
-    /*
-    // Adds Customer to database and initiates a chat with Admin, Returns the customer;
-    public PersonEntity addCustomer(PersonEntity person, String subject) throws Exception {
-        session.beginTransaction();
-
-        Integer personID = createPerson(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail());
-        Integer chatID = createChat(subject);
-        createChatMember(chatID, personID);
-        createChatMember(chatID, AdminID);
-
-        session.persist(person);
-        session.getTransaction().commit();
-        return person;
-    }*/
-
-
-
-
     // Returns arraylist with all messages from a chat ID
-    public ArrayList<MessageEntity> getMessages(int customerID, String subject){
+    public ArrayList<MessageEntity> getMessages(int personID){
 
-        int chatID = getChatID(customerID, subject);
+        Integer chatID = getChatID(personID);
         if(chatID == -1){
             System.err.println("There is no chat between these two persons");
             return null;
@@ -322,24 +266,6 @@ public class EntityController {
         Query query = session.createQuery(("from InstrumentPicturesEntity"));
         List list = query.list();
         return (ArrayList<InstrumentPicturesEntity>) list;
-    }
-
-    // Generates a random customer number with 6 digits.
-    // Controls that there are no duplicates
-    private String generateCustomerNumber() throws Exception {
-        ArrayList<PersonEntity> persons = this.getPersons();
-        ArrayList<String> customerNumbers = new ArrayList<>();
-        for(PersonEntity p: persons) {
-            customerNumbers.add(p.getCustomerNumber());
-        }
-        Random rand = new Random();
-        Integer number;
-        String numberString = null;
-        do {
-            number = rand.nextInt(999999);
-            numberString = String.format("%06d", number);
-        } while (customerNumbers.contains(numberString));
-        return numberString;
     }
 
     // Generates reservation number for reservation
