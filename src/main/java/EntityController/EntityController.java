@@ -114,7 +114,7 @@ public class EntityController {
     }
 
     // Public method to add new messages to database
-    // Commits the entry
+    // Commits the entry/
     public void addMessage(Integer personID, String text, String imageURL) {
         int chatID = getChatID(personID);
         session.beginTransaction();

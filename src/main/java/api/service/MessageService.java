@@ -30,6 +30,6 @@ public class MessageService {
     }
 
     public void addMessage(Message message) {
-        ec.addMessage(message.getId(), message.getChat_id(), message.getText(), message.getImage());
+        ec.addMessage(message.getId(), message.getText(), message.getImage());
     }
 }
