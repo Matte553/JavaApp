@@ -24,7 +24,8 @@ public class ReparationsEntity {
     public ReparationsEntity() {
     }
 
-    public ReparationsEntity(Integer personId, String description, String type) {
+    public ReparationsEntity(Integer errandNumber, Integer personId, String description, String type) {
+        setErrandNumber(errandNumber);
         setPersonId(personId);
         setDescription(description);
         setType(type);

@@ -24,6 +24,23 @@ public class Main {
             //}
             //ArrayList<MessageEntity> m = ec.getMessages(2, "Reservation");
 
+        /*
+        for(MessageEntity mess: m){
+            System.out.println("Meddelande: " + mess.getText());
+        }
+        */
+
+
+        //System.out.println("is Auterized?: " + ec.isAuthorized("000000"));
+
+        // READ
+        //ArrayList<PersonEntity> persons           = ec.getPersons();
+        //ArrayList<ChatEntity> chats             = ec.getChats();
+        //ArrayList<ChatmemberEntity> chatMembers = ec.getChatMembers();
+        //ArrayList<MessageEntity> messages       = ec.getMessages();
+        //ArrayList<MessageEntity> messages = ec.getMessagesFromChatID(1,2);
+        //ArrayList<MessageEntity> message = ec.getMessagesFromPersonID(1,107);
+
         // INSERT
             //ec.initiateContact(1,"Adam", "Gustavsson","070-4444444", "AdamGustavsson@gmail.com","Övrigt");
             //ec.addMessage(4, 3, "Hej, jag undrar om min gitarr är klar än?", "");
