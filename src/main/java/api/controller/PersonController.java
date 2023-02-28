@@ -25,9 +25,10 @@ public class PersonController {
     }
 
     @GetMapping("/person")
-    Person one(@RequestParam Integer id) throws Exception {
+    Person getOne(@RequestParam Integer id) throws Exception {
         return personService.getPerson(id);
     }
-
+    //@PostMapping("person")
+    //Person postOne(RequestParam)
 
 }

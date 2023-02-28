@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -45,9 +46,9 @@ public List<Invoice> listUsersInvoices(
         return messageService.getMessages(id1,id2);
     }
 
-    @PostMapping("/Messages/{persId}/{chatId}/{text}/{picUrl}")
-    void addMessage(@RequestBody Message message) {
-        messageService.addMessage(message);
+    @PostMapping("/Messages/{persId}/{text}/{picUrl}")
+    void addMessage(@PathVariable Integer persId, @PathVariable String text, @PathVariable String picUrl) {
+        messageService.addMessage(persId, text, picUrl);
     }
 
 }

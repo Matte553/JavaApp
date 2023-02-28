@@ -198,8 +198,8 @@ public class EntityController {
         return result;
     }
 
-    // Returns chatID for a chat with the personID;
-    public int getChatID(int personID){
+    // Returns the chatID for a chat that has the person as a member;
+    private int getChatID(int personID){
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
         Integer chatID = (Integer) query.getSingleResult();
@@ -212,7 +212,7 @@ public class EntityController {
         }
     }
 
-    // Returns arraylist with all messages from a chat ID
+    // Returns arraylist with all messages from the chat containing the given personID. This personID should be the customer.
     public ArrayList<MessageEntity> getMessages(int personID){
 
         Integer chatID = getChatID(personID);
@@ -332,7 +332,7 @@ public class EntityController {
         return number;
     }
 
-    // Returns true if the person is Admin, else returns false
+    // Returns true if given customerNumber is the Admin
     public Boolean isAuthorized(String customerNumber){
         String hql = "SELECT P FROM PersonEntity P WHERE P.customerNumber = :customerNumber";
         Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);

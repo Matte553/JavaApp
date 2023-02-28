@@ -29,7 +29,7 @@ public class MessageService {
         return MessageList;
     }
 
-    public void addMessage(Message message) {
-        ec.addMessage(message.getId(), message.getText(), message.getImage());
+    public void addMessage(Integer persId, String text, String picUrl) {
+        ec.addMessage(persId, text, picUrl);
     }
 }
