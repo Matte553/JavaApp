@@ -14,7 +14,10 @@ import services.EntityControllerInterface;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,8 +80,10 @@ public class MessageManager implements Serializable {
         return messages;
     }
 
+
     public void submit() throws IOException {
         //entityController.addMessage(sender.getId(), receiver.getId(), subject, message);
+        message.setMessageTimestamp(new Timestamp(System.currentTimeMillis()));
         messages.add(message); //temp
         messageMap.put("data", message);
         messageMap.put("name", "fname"); //tmp

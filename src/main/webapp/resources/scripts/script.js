@@ -25,23 +25,32 @@ function clearErrorMessages(target, eventType = 'keydown') {
     })
 }
 
+
+
+function getCurrentTime() {
+    const d = new Date(); // for now
+    return d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+}
+
 function sendMessage(message, channel, event) {
     let name = message.name;
     let text = message.data.text;
     let image = message.data.image;
-    //let time = message.data.time;
-    let time = getDate();
-    let msgDarker = '';
-    let msgLeftSide = '';
-    if (message.isCustomer) {
-        msgDarker = 'message-darker';
-        msgLeftSide = 'float-right';
-    }
+    let time = getCurrentTime();
+
+    /*    let msgDarker = '';
+        let msgLeftSide = '';
+        if (message.isCustomer) {
+            msgDarker = 'message-darker';
+            msgLeftSide = 'float-right';
+        }*/
+
+
     let msg = '<div>' +
-        '<div class="message-user-name ' + msgLeftSide + '"> ' +
+        '<div class="message-user-name float-right"> ' +
         '<h:panelGroup>' + name + '</h:panelGroup>' +
         '</div>' +
-        '<div class="user-message ' + msgLeftSide + '">' +
+        '<div class="user-message message-darker">' +
         '<h:panelGroup>' + text + '<h:panelGroup>' +
         '<h:outputLink value="http://localhost:8080/test-1.0-SNAPSHOT/jakarta.faces.resource/' + image + '.xhtml?ln=uploads">' +
         '<h:graphicImage library="uploads" ' + 'name=' + image + ' styleClass="img-message"/>' + '</h:outputLink>' +
@@ -53,14 +62,4 @@ function sendMessage(message, channel, event) {
     $('#message-container').append(msg);
 }
 
-function getDate() {
-    let timeStamp = 1107110465663;
-    let dateFormat = new Date(timeStamp);
-    let d = dateFormat.getDate() +
-        "-" + (dateFormat.getMonth() + 1) +
-        "-" + dateFormat.getFullYear() +
-        " " + dateFormat.getHours() +
-        ":" + dateFormat.getMinutes() +
-        ":" + dateFormat.getSeconds();
-    return d;
-}
+
