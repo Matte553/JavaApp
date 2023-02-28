@@ -10,7 +10,7 @@ public class Main {
 
     // New Controller
         EntityController ec = new EntityController();
-        ec.insertTestData();
+        //ec.insertTestData();
 
     /*Read from all database tables*/
         ArrayList<PersonEntity> persons         = ec.getPersons();

@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Entities.*;
-
-import javax.security.auth.Subject;
-
 // This Class is used for Retrieving all data from database and also inserting data into database.
 @Stateless
 public class EntityController implements Serializable {
@@ -89,7 +85,6 @@ public class EntityController implements Serializable {
     }
 
 
-
     // <!-- PUBLIC METHODS --!>
 
     // Adds Customer to database and initiates a chat with Admin, Returns the customer;
@@ -148,7 +143,7 @@ public class EntityController implements Serializable {
     }
 
     // Returns the customer with the exact customer number.
-    public PersonEntity getCustomer(String customerNumber){
+    public PersonEntity getCustomer(String customerNumber) {
         String hql = "SELECT E FROM PersonEntity E WHERE E.customerNumber = :customerNumber";
         Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
         return (PersonEntity) query.getSingleResult();
@@ -204,37 +199,35 @@ public class EntityController implements Serializable {
     }
 
     // Returns the chatID for a chat that has the person as a member;
-    private int getChat(int personID){
+    private int getChat(int personID) {
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
         Integer chatID = (Integer) query.getSingleResult();
-        if(chatID == null){
+        if (chatID == null) {
             System.err.println("There is no chat for this person.");
             return -1;
-        }
-        else{
+        } else {
             return chatID;
         }
     }
 
-    private int getChatWithSubject(int personID, String subject){
+    private int getChatWithSubject(int personID, String subject) {
 
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
         Integer chatID = (Integer) query.getSingleResult();
-        if(chatID == null){
+        if (chatID == null) {
             System.err.println("There is no chat for this person.");
             return -1;
-        }
-        else{
+        } else {
             return chatID;
         }
     }
 
     // Returns arraylist with all messages from the chat containing the given personID. This personID should be the customer.
-    public ArrayList<MessageEntity> getMessages(int personID){
+    public ArrayList<MessageEntity> getMessages(int personID) {
         Integer chatID = getChat(personID);
-        if(chatID == -1){
+        if (chatID == -1) {
             System.err.println("There is no chat between these two persons");
             return null;
         }
@@ -245,9 +238,9 @@ public class EntityController implements Serializable {
     }
 
     // Returns arraylist with all messages from the chat containing the given personID and subject. This personID should be the customer.
-    public ArrayList<MessageEntity> getMessages(int personID, String subject){
+    public ArrayList<MessageEntity> getMessages(int personID, String subject) {
         Integer chatID = getChatWithSubject(personID, subject);
-        if(chatID == -1){
+        if (chatID == -1) {
             System.err.println("There is no chat between these two persons");
             return null;
         }
@@ -260,28 +253,28 @@ public class EntityController implements Serializable {
     // Returns an arraylist with all Persons from database
     public ArrayList<PersonEntity> getPersons() throws Exception {
         Query query = session.createQuery(("from PersonEntity "));
-        List list=query.list();
+        List list = query.list();
         return (ArrayList) list;
     }
 
     // Returns an arraylist with all Chats from database
     public ArrayList<ChatEntity> getChats() throws Exception {
         Query query = session.createQuery(("from ChatEntity "));
-        List list=query.list();
+        List list = query.list();
         return (ArrayList) list;
     }
 
     // Returns an arraylist with all Messages from database
     public ArrayList<MessageEntity> getMessages() throws Exception {
         Query query = session.createQuery(("from MessageEntity "));
-        List list=query.list();
+        List list = query.list();
         return (ArrayList) list;
     }
 
     // Returns an arraylist with all ChatMembers from database
     public ArrayList<ChatmemberEntity> getChatMembers() throws Exception {
         Query query = session.createQuery(("from ChatmemberEntity "));
-        List list=query.list();
+        List list = query.list();
         return (ArrayList) list;
     }
 
@@ -318,7 +311,7 @@ public class EntityController implements Serializable {
     private String generateCustomerNumber() throws Exception {
         ArrayList<PersonEntity> persons = this.getPersons();
         ArrayList<String> customerNumbers = new ArrayList<>();
-        for(PersonEntity p: persons) {
+        for (PersonEntity p : persons) {
             customerNumbers.add(p.getCustomerNumber());
         }
         Random rand = new Random();
@@ -336,7 +329,7 @@ public class EntityController implements Serializable {
     private Integer generateReservationNumber() {
         ArrayList<ReservationEntity> reservations = this.getReservations();
         ArrayList<Integer> reservationNumbers = new ArrayList<>();
-        for(ReservationEntity r: reservations) {
+        for (ReservationEntity r : reservations) {
             reservationNumbers.add(r.getReservationNumber());
         }
         Random rand = new Random();
@@ -352,7 +345,7 @@ public class EntityController implements Serializable {
     private Integer generateErrandNumber() {
         ArrayList<ReparationsEntity> reparations = this.getReparations();
         ArrayList<Integer> errandNumbers = new ArrayList<>();
-        for(ReparationsEntity r: reparations) {
+        for (ReparationsEntity r : reparations) {
             errandNumbers.add(r.getErrandNumber());
         }
         Random rand = new Random();
@@ -364,23 +357,26 @@ public class EntityController implements Serializable {
     }
 
     // Returns true if given customerNumber is the Admin
-    public Boolean isAuthorized(String customerNumber){
+    public Boolean isAuthorized(String customerNumber) {
         String hql = "SELECT P FROM PersonEntity P WHERE P.customerNumber = :customerNumber";
         Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
         PersonEntity person = (PersonEntity) query.getSingleResult();
-        return person.getId() == getAdmin().getId();
+        if (person == null) {
+            return false;
+        }
+        return true;
     }
 
     // Returns the admin as a PersonEntity object. This object can be used to retrieve the admins details.
-    public PersonEntity getAdmin(){
+    public PersonEntity getAdmin() {
         int adminID = AdminID;
         String hql = "SELECT P FROM PersonEntity P WHERE P.id = :adminID";
         Query query = session.createQuery(hql).setParameter("adminID", adminID);
         List<MessageEntity> list = query.list();
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             System.err.println("Admin could not be found, is admins ID not 0?");
             return null;
-        }else {
+        } else {
             return (PersonEntity) query.getSingleResult();
         }
     }
@@ -389,7 +385,7 @@ public class EntityController implements Serializable {
     //<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
     // Anton och Antons favoriter, Matte rör ej!!!
     // Returns chatID for a chat between two persons;
-    public Integer getChatIDold(int person_A_ID, int person_B_ID){
+    public Integer getChatIDold(int person_A_ID, int person_B_ID) {
 
         String hql;
         Query query;
@@ -409,19 +405,18 @@ public class EntityController implements Serializable {
 
         compareList.retainAll(person_B_Chatlist);
 
-        if(compareList.isEmpty()){
+        if (compareList.isEmpty()) {
             return -1;
-        }
-        else {
+        } else {
             Integer chatID = compareList.get(0);
             return chatID;
         }
     }
 
     // Returns arraylist with all messages from a chat ID
-    public ArrayList<MessageEntity> getMessagesFromPersonID(int person_A_ID, int person_B_ID){
+    public ArrayList<MessageEntity> getMessagesFromPersonID(int person_A_ID, int person_B_ID) {
         int chatID = getChatIDold(person_A_ID, person_B_ID);
-        if(chatID == -1){
+        if (chatID == -1) {
             System.err.println("There is no chat between these two persons");
             return null;
         }

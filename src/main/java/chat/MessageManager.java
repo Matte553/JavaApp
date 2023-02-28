@@ -1,8 +1,6 @@
 package chat;
 
-import Entities.PersonEntity;
-import chat.SessionManager;
-import Entities.MessageEntity;
+import Entities.*;
 import EntityController.EntityController;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
@@ -11,13 +9,9 @@ import jakarta.faces.push.PushContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import services.EntityControllerInterface;
-
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +29,7 @@ public class MessageManager implements Serializable {
     private MessageEntity message = new MessageEntity();
 
     @Inject
-    private EntityControllerInterface entityController;
+    private EntityController entityController;
 
     private ArrayList<MessageEntity> messages;
 
@@ -74,16 +68,15 @@ public class MessageManager implements Serializable {
     }
 
     public ArrayList<MessageEntity> getMessages() {
-/*        if (receiver != null) {
+        if (receiver != null) {
             return entityController.getMessages(receiver.getId(), subject);
-        }*/
-        return messages;
+        }
+        return new ArrayList<MessageEntity>();
     }
 
 
     public void submit() throws IOException {
         //entityController.addMessage(sender.getId(), receiver.getId(), subject, message);
-        message.setMessageTimestamp(new Timestamp(System.currentTimeMillis()));
         messages.add(message); //temp
         messageMap.put("data", message);
         messageMap.put("name", "fname"); //tmp

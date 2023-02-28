@@ -1,6 +1,7 @@
 package chat;
 
-import Entities.PersonEntity;
+import Entities.*;
+import EntityController.EntityController;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -18,7 +19,7 @@ public class CustomerManager implements Serializable {
     private PersonEntity person = new PersonEntity();
 
     @Inject
-    private EntityControllerInterface entityController;
+    private EntityController entityController;
 
     @Inject
     private MessageManager messageManager;
@@ -46,7 +47,7 @@ public class CustomerManager implements Serializable {
             }
         } else { // create new customer
             try {
-                person = entityController.addCustomer(person);
+                person = entityController.addCustomer(person, messageManager.getSubject());
             } catch (Exception e) {
                 System.out.println(e.toString());
             }

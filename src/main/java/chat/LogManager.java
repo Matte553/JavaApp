@@ -1,6 +1,7 @@
 package chat;
 
-import Entities.PersonEntity;
+import Entities.*;
+import EntityController.EntityController;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;

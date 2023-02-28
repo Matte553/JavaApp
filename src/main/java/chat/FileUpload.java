@@ -1,6 +1,6 @@
 package chat;
 
-import Entities.MessageEntity;
+import Entities.*;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.servlet.http.Part;
