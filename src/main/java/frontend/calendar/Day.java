@@ -21,7 +21,9 @@ public class Day implements Serializable {
         this.number = number;
         this.weekday= weekday;
         this.name = enumToString(intToEnum(weekday));
-        this.services = createArrayList();
+        this.services = new ArrayList<>();
+        addService(new Service(8,10));
+        addService(new Service(13,17));
     }
 
     public int getNumber() {
@@ -56,6 +58,18 @@ public class Day implements Serializable {
         this.weekday = weekday;
     }
 
+    public void addService(Service newSer) {
+        boolean same = false;
+        for (Service added : this.services) {
+            if (newSer.startTime <= added.startTime && newSer.endTime <= added.endTime || newSer.startTime == 12) {
+                same = true;
+                break;
+            }
+        }
+        if (!same) {
+            this.services.add(newSer);
+        }
+    }
     private DayNames intToEnum(int dayNumber) {
         DayNames result = DayNames.MONDAY;
         switch (dayNumber) {
@@ -111,9 +125,9 @@ public class Day implements Serializable {
     }
     private ArrayList<Service> createArrayList() {
         ArrayList<Service> result = new ArrayList<>();
-        for (int i = 10; i < 18; i++) {
+        for (int i = 8; i < 18; i++) {
             if (i != 12) {
-                Service temp = new Service(Integer.toString(i), Integer.toString(++i));
+                Service temp = new Service(i, i+1);
                 result.add(temp);
             }
         }

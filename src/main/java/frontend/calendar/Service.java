@@ -5,38 +5,50 @@ import java.io.Serializable;
 
 @Named
 public class Service implements Serializable {
-    String startTime;
-    String endTime;
+    int startTime;
+    int endTime;
     double cost;
     Person customer;
     String description;
+    String type;
     boolean active;
 
     public Service() {
     }
 
-    public Service(String startTime, String endTime) {
+    public Service(int startTime, int endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.cost = 0;
+        this.type = "noType";
         this.customer = new Person();
         this.description = "Description";
         this.active = false;
     }
 
-    public String getStartTime() {
+    /*public Service(int startTime, int endTime, String description) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.cost = 0;
+        this.type = "noType";
+        this.customer = new Person();
+        this.description = description;
+        this.active = false;
+    }*/
+
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 

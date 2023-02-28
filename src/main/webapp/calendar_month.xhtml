@@ -16,6 +16,8 @@
 <h:head>
 <title>Calendar</title>
     <h:outputStylesheet library="css" name="calendar.css"/>
+    <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+    <h:outputScript library="scripts" name="calendar.js"/>
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"/>
@@ -63,7 +65,7 @@
                     <c:forEach items="#{prevMonth.days}" var="day">
                         <c:choose>
                             <c:when test="#{day.number ge prevSize - firstDay +2}">
-                                <li><span class="anotherMonth"><a href="calendar_week.xhtml?weekID=#{calendarHandler.currentWeek}">#{day.number}</a></span></li>
+                                <li class="anotherMonth" onclick="moveToWeek(#{currentWeek})">#{day.number}</li>
                             </c:when>
                         </c:choose>
                     </c:forEach>
@@ -72,10 +74,10 @@
             <c:forEach items="#{calendarHandler.months[monthID-1].days}" var="day">
                 <c:choose>
                     <c:when test="#{monthID eq currentMonth and currentDay eq day.number}">
-                        <li><span class="active"><a href="calendar_week.xhtml?monthID=#{monthID}day=#{day.number}">#{day.number}</a></span></li>
+                        <li class="active" onclick="moveToWeek(#{currentWeek})">#{day.number}</li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="calendar_week.xhtml?weekID=#{calendarHandler.currentWeek}">#{day.number}</a></li>
+                        <li onclick="moveToWeek(#{currentWeek})">#{day.number}</li>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
@@ -89,13 +91,12 @@
             <c:forEach items="#{nextMonth.days}" var="day">
                 <c:choose>
                     <c:when test="#{day.number le 7 - lastDay}">
-                        <li><span class="anotherMonth"><a href="calendar_week.xhtml?weekID=#{calendarHandler.currentWeek}">#{day.number}</a></span></li>
+                        <li class="anotherMonth" onclick="moveToWeek(#{currentWeek})">#{day.number}</li>
                     </c:when>
                 </c:choose>
             </c:forEach>
             </c:when>
             </c:choose>
-
         </ul>
 
 </h:body>

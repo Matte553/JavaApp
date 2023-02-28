@@ -18,9 +18,8 @@
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"/>
-
+        <h1 align="center">Boka</h1>
         <div class="overview">
-            <h1 align="center">Boka</h1>
             <div class="row">
                 <ui:param name="currentYear" value="#{calendarHandler.currentYear}" />
                 <ui:param name="currentDay" value="#{calendarHandler.currentDay}"/>
@@ -51,7 +50,7 @@
                                 <c:forEach items="#{prevMonth.days}" var="day">
                                     <c:choose>
                                         <c:when test="#{day.number ge prevSize - firstDay +2}">
-                                            <li><span class="anotherMonth"><a href="calendar_week.xhtml?monthID=#{currentMonth-1}day=#{day.number}">#{day.number}</a></span></li>
+                                            <li class="anotherMonth">#{day.number}</li>
                                         </c:when>
                                     </c:choose>
                                 </c:forEach>
@@ -61,10 +60,10 @@
                         <c:forEach items="#{calendarHandler.months[currentMonth-1].days}" var="day">
                             <c:choose>
                                 <c:when test="#{currentMonth eq currentMonth and currentDay eq day.number}">
-                                    <li><span class="active"><a href="calendar_week.xhtml?monthID=#{currentMonth}day=#{day.number}">#{day.number}</a></span></li>
+                                    <li class="active">#{day.number}</li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li><a href="calendar_week.xhtml/monthID=#{currentMonth}/?day=#{day.number}">#{day.number}</a></li>
+                                    <li>#{day.number}</li>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
@@ -78,7 +77,7 @@
                                 <c:forEach items="#{nMonth.days}" var="day">
                                     <c:choose>
                                         <c:when test="#{day.number le 7 - lastDay}">
-                                            <li><span class="anotherMonth"><a href="calendar_week.xhtml?monthID=#{currentMonth}day=#{day.number}">#{day.number}</a></span></li>
+                                            <li class="anotherMonth">#{day.number}</li>
                                         </c:when>
                                     </c:choose>
                                 </c:forEach>

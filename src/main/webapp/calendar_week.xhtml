@@ -9,24 +9,22 @@
 >
 
 <!-- LÄNKAR:
- https://www.w3schools.com/howto/howto_css_calendar.asp // CALENDAR LAYOUT
- https://stackoverflow.com/questions/6377798/what-can-fmetadata-fviewparam-and-fviewaction-be-used-for/6377957#6377957 // BEAN
+ https://www.w3schools.com/cssref/pr_class_cursor.php
+ https://codepen.io/alvarotrigo/pen/KKQzvdr
  -->
 <h:head>
 <title>Calendar</title>
-    <h:outputStylesheet library="css" name="calendar.css"/>
+    <h:outputStylesheet library="css" name="week.scss"/>
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"/>
 
-        <div class="month">
+        <!--<div class="month">
             <ul>
                 <f:metadata>
                     <f:viewParam name="weekID"/>
                 </f:metadata>
                 <h:form>
-                    <!--    Fixa en block så att man inte kan gå längre till vänster än calendarHandler.currentMonth
-                            och inte längre till höger än 2 månader! -->
                     <li class="prev"><a href="calendar_week.xhtml?weekID=#{weekID-1}">Prev</a></li>
                     <li class="next"><a href="calendar_week.xhtml?weekID=#{weekID+1}">Next</a></li>
                 </h:form>
@@ -46,14 +44,131 @@
             <li>Lör</li>
             <li>Sön</li>
         </ul>
-        <ul class="days">
-            currentWeek = #{calendarHandler.currentWeek}
-            weekID = #{weekID}
+        <div class="days">
+            <div class="weeks">
+                <c:forEach items="#{calendarHandler.months[2].days[0].services}" var="ser">
+                    <li>#{ser.active}: #{ser.startTime} #{ser.endTime} #{ser.cost} </li>
+                </c:forEach>
+            </div>
 
-            <c:forEach items="#{calendarHandler.months[2].days[0].services}" var="ser">
-                <li>#{ser.active}: #{ser.startTime} #{ser.endTime} #{ser.cost} </li>
-            </c:forEach>
-        </ul>
+        </div>-->
+    <f:metadata>
+        <f:viewParam name="weekID"/>
+    </f:metadata>
+
+    <h1 style="text-align: center">Vecka #{weekID}</h1>
+    <div class="calendar">
+        <div class="timeline">
+            <div class="spacer"></div>
+            <div class="time-marker">8:00</div>
+            <div class="time-marker">9:00</div>
+            <div class="time-marker">10:00</div>
+            <div class="time-marker">11:00</div>
+            <div class="time-marker">12:00</div>
+            <div class="time-marker">13:00</div>
+            <div class="time-marker">14:00</div>
+            <div class="time-marker">15:00</div>
+            <div class="time-marker">16:00</div>
+            <div class="time-marker">17:00</div>
+        </div>
+        <div class="days">
+            <div class="day mon">
+                <div class="date">
+                    <p class="date-num">9</p>
+                    <p class="date-day">Mån</p>
+                </div>
+                <div class="events">
+                    <div class="event start-14 end-17 blocked">
+                        <p class="title">Securities Regulation</p>
+                        <p class="time">2 PM - 5 PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="day tues">
+                <div class="date">
+                    <p class="date-num">12</p>
+                    <p class="date-day">Tis</p>
+                </div>
+                <div class="events">
+                    <div class="event start-10 end-12 repair">
+                        <p class="title">Corporate Finance</p>
+                        <p class="time">10 AM - 12 PM</p>
+                    </div>
+                    <div class="event start-13 end-16 customer">
+                        <p class="title">Entertainment Law</p>
+                        <p class="time">1PM - 4PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="day wed">
+                <div class="date">
+                    <p class="date-num">11</p>
+                    <p class="date-day">Ons</p>
+                </div>
+                <div class="events">
+                    <div class="event start-11 end-12 writing">
+                        <p class="title">Writing Seminar</p>
+                        <p class="time">11 AM - 12 PM</p>
+                    </div>
+                    <div class="event start-14 end-17 blocked">
+                        <p class="title">Securities Regulation</p>
+                        <p class="time">2 PM - 5 PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="day thurs">
+                <div class="date">
+                    <p class="date-num">12</p>
+                    <p class="date-day">Tor</p>
+                </div>
+                <div class="events">
+                    <div class="event start-10 end-12 customer">
+                        <p class="title">Corporate Finance</p>
+                        <p class="time">10 AM - 12 PM</p>
+                    </div>
+                    <div class="event start-13 end-16 repair">
+                        <p class="title">Entertainment Law</p>
+                        <p class="time">1PM - 4PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="day fri">
+                <div class="date">
+                    <p class="date-num">13</p>
+                    <p class="date-day">Fre</p>
+                </div>
+                <div class="events">
+                    <c:forEach items="#{calendarHandler.months[2].days[0].services}" var="ser">
+                        <div id="#{ser.customer.id}" class="event start-#{ser.startTime} end-#{ser.endTime} repair">
+                            <p class="title">#{ser.customer.firstName}</p>
+                            <p class="time">#{ser.startTime}:00 - #{ser.endTime}:00</p>
+                            <p class="description">#{ser.description}</p>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+            <div class="day sat">
+                <div class="date">
+                    <p class="date-num">14</p>
+                    <p class="date-day">Lör</p>
+                </div>
+                <div class="events">
+                    <div class="event start-8 end-17 customer">
+                        <p class="title">Test1</p>
+                        <p class="time">9:00 - 17:00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="day sun">
+                <div class="date">
+                    <p class="date-num">15</p>
+                    <p class="date-day">Sön</p>
+                </div>
+                <div class="events">
+                </div>
+            </div>
+        </div>
+    </div>
 
 </h:body>
 </html>
