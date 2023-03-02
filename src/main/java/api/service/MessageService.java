@@ -3,6 +3,7 @@ package api.service;
 import api.model.Message;
 import Entities.MessageEntity;
 import EntityController.EntityController;
+import api.model.MessageModelPost;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
@@ -29,7 +30,14 @@ public class MessageService {
         return MessageList;
     }
 
+    /*
     public void addMessage(Integer persId, String text, String picUrl) {
         //ec.addMessage(persId, text, picUrl);
+    }
+    */
+
+    public MessageModelPost addMessage(MessageModelPost postMessage) {
+        ec.addMessage(postMessage.getPersId(), postMessage.getText(), postMessage.getImageUrl());
+        return postMessage;
     }
 }
