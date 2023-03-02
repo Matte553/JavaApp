@@ -5,12 +5,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
->
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-    <title>title</title>
+    <title>Admin-chat-log</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet library="css" name="style.css"/>
     <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
@@ -19,63 +16,7 @@
 <h:body>
     <ui:include src="header.xhtml"/>
     <div jsf:id="log-container" class="main-container">
-        <div class="main-chat-container" id="main-chat-container">
-            <div class="message-container" jsf:id="message-container">
-                <ui:repeat value="#{messageManager.messages}" var="messageItem">
-                    <div>
-                        <div class="message-user-name float-right">
-                            <h:panelGroup>Fix it later</h:panelGroup>
-                        </div>
-                        <div class="user-message message-darker">
-                            <h:panelGroup>#{messageItem.text}</h:panelGroup>
-                            <h:outputLink
-                                    value="http://localhost:8080/test-1.0-SNAPSHOT/jakarta.faces.resource/#{messageItem.image}.xhtml?ln=uploads"
-                                    rendered="#{not empty messageItem.image}">
-                                <h:graphicImage library="uploads" name="#{messageItem.image}" styleClass="img-message"/>
-                            </h:outputLink>
-                        </div>
-                        <div class="message-time">
-                            <h:panelGroup>sent #{messageItem.messageTimestamp.toString()}</h:panelGroup>
-                        </div>
-                    </div>
-                </ui:repeat>
-            </div>
-
-            <h:form id="chat-form" styleClass="chat-form" enctype="multipart/form-data">
-                <div class="message-input" jsf:id="message-input">
-                    <h:message for="messageText" id="m_messageText" errorClass="error"/>
-                    <h:inputTextarea
-                            id="messageText"
-                            a:placeholder="Skriv meddelande..."
-                            value="#{messageManager.message.text}"
-                            validatorMessage="Skriv nåt i text fält"
-                            onfocus="clearErrorMessages('#chat-form\\:messageText')">
-                        <f:validateLength minimum="1" for="messageText"/>
-                    </h:inputTextarea>
-                </div>
-                <div id="file-upload">
-                    <h:outputText id="originalFileName" value="#{fileUpload.originalFileName}"/>
-                    <h:outputLabel for="fileToUpload">
-                        <h:graphicImage library="images" name="upload-icon.png"/>
-                    </h:outputLabel>
-                    <h:inputFile id="fileToUpload" value="#{fileUpload.fileToUpload}">
-                        <f:ajax listener="#{fileUpload.onFileUpload(messageManager.message)}"
-                                render="originalFileName"/>
-                    </h:inputFile>
-                </div>
-                <div>
-                    <h:commandButton
-                            id="messageSubmit"
-                            value="Skicka"
-                            styleClass="btn success" action="#{messageManager.submit}">
-                        <f:ajax execute="chat-form" render="message-input originalFileName :message-container"
-                                resetValues="true"/>
-                    </h:commandButton>
-                </div>
-                <f:websocket channel="chat_channel" onmessage="sendMessage" />
-            </h:form>
-        </div>
-
+        <ui:include src="template/components/chatBox.xhtml"/>
         <div jsf:id="subject-container">
             <h:form id="form">
                 <div id="select-btn-group">
@@ -95,16 +36,16 @@
                                 render="m_selectedSubject :subject-list-container"/>
                     </h:selectOneMenu>
                 </div>
-
             </h:form>
 
             <h:form id="subject-list-container">
                 <ul id="subject-list">
                     <ui:repeat value="#{logManager.customers}" var="customer">
                         <li>
-                            <h:commandLink value="#{customer.firstname} #{customer.lastname}">
-                                <f:ajax render=":message-container"
-                                        listener="#{logManager.setReceiver(customer.customerNumber)}"/>
+                            <h:commandLink
+                                    value="#{customer.firstname} #{customer.lastname}"
+                                    action="#{logManager.setReceiver(customer.customerNumber)}">
+                                <f:ajax render=":message-container " execute="@this"/>
                             </h:commandLink>
                         </li>
                     </ui:repeat>
@@ -112,6 +53,5 @@
             </h:form>
         </div>
     </div>
-
 </h:body>
 </html>

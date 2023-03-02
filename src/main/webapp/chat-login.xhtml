@@ -5,118 +5,119 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
-    <h:head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <h:outputStylesheet library="css" name="style.css"/>
-        <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
-        <h:outputScript library="scripts" name="script.js"/>
-    </h:head>
-    <h:body>
+>
+<h:head>
+    <title>Chatta med Anders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+    <h:outputScript library="scripts" name="script.js"/>
+</h:head>
+<h:body>
     <ui:include src="header.xhtml"/>
-        <div>
-            <h:form id="form" styleClass="chat-form">
-                <div>
-                    <h3>Rubrik</h3>
-                </div>
+    <div>
+        <h:form id="form" styleClass="chat-form">
+            <div>
+                <h3>Starta Chatt med Anders</h3>
+            </div>
 
-                <div>
-                    <h:selectOneMenu
-                            id="selectedSubject"
-                            value="#{messageManager.subject}"
-                            validator="#{chatFormValidatorBean.validateSubjectSelection}"
-                            onfocus="clearErrorMessages('#form\\:selectedSubject','change')">
-                        <f:selectItem itemValue="#{null}" itemLabel="-- select subject --"/>
-                        <f:selectItem itemValue="Reparation" itemLabel="Reparation"/>
-                        <f:selectItem itemValue="Bookning" itemLabel="Bookning"/>
-                        <f:selectItem itemValue="Reservation" itemLabel="Reservation"/>
-                    </h:selectOneMenu>
-                    <h:message for="selectedSubject" id="m_selectedSubject" errorClass="error" />
-                </div>
+            <div>
+                <h:selectOneMenu
+                        id="selectedSubject"
+                        value="#{messageManager.subject}"
+                        validator="#{chatFormValidatorBean.validateSubjectSelection}"
+                        onfocus="clearErrorMessages('#form\\:selectedSubject','change')">
+                    <f:selectItem itemValue="#{null}" itemLabel="-- select subject --"/>
+                    <f:selectItem itemValue="Reparation" itemLabel="Reparation"/>
+                    <f:selectItem itemValue="Bookning" itemLabel="Bookning"/>
+                    <f:selectItem itemValue="Reservation" itemLabel="Reservation"/>
+                </h:selectOneMenu>
+                <h:message for="selectedSubject" id="m_selectedSubject" errorClass="error"/>
+            </div>
 
-                <div>
-                    <h:outputLabel for="customerId" styleClass="input-lables">
-                        Kund Id:
-                    </h:outputLabel>
-                    <h:inputText 
-                        id="customerId" 
+            <div>
+                <h:outputLabel for="customerId" styleClass="input-lables">
+                    Kund Id:
+                </h:outputLabel>
+                <h:inputText
+                        id="customerId"
                         value="#{customerManager.person.customerNumber}"
-                        a:placeholder="Skriv in Kund id" 
+                        a:placeholder="Skriv in Kund id"
                         validator="#{chatFormValidatorBean.validateCustomerId}">
-                    </h:inputText>
-                    <h:message for="customerId" id="m_customerId" errorClass="error" style="color: #D20005; display: block"/>
-                </div>
+                </h:inputText>
+                <h:message for="customerId" id="m_customerId" errorClass="error"
+                           style="color: #D20005; display: block"/>
+            </div>
 
-                <div>
-                    <h4>Har du inget ärende eller bokning? <h:link>Boka här</h:link></h4>
-                    <h4>Eller skapa en konversation direket med Anders här!</h4>
-                </div>
+            <div>
+                <h4>Har du inget ärende eller bokning? <h:link>Boka här</h:link></h4>
+                <h4>Eller skapa en konversation direket med Anders här!</h4>
+            </div>
 
-                <div>
-                    <h:outputLabel for="firstname" styleClass="input-lables">
-                        Förnamn:
-                    </h:outputLabel>
-                    <h:inputText 
+            <div>
+                <h:outputLabel for="firstname" styleClass="input-lables">
+                    Förnamn:
+                </h:outputLabel>
+                <h:inputText
                         id="firstname"
                         value="#{customerManager.person.firstname}"
-                        a:placeholder="Skriv in förnamn" 
+                        a:placeholder="Skriv in förnamn"
                         validator="#{chatFormValidatorBean.validateEmptyField}">
-                    </h:inputText>
-                    <h:message for="firstname" id="m_firstname" errorClass="error" />
-                </div>
+                </h:inputText>
+                <h:message for="firstname" id="m_firstname" errorClass="error"/>
+            </div>
 
-                <div>
-                    <h:outputLabel for="lastname" styleClass="input-lables">
-                        Efternamn:
-                    </h:outputLabel>
-                    <h:inputText 
+            <div>
+                <h:outputLabel for="lastname" styleClass="input-lables">
+                    Efternamn:
+                </h:outputLabel>
+                <h:inputText
                         id="lastname"
                         value="#{customerManager.person.lastname}"
-                        a:placeholder="Skriv in efternamn" 
+                        a:placeholder="Skriv in efternamn"
                         validator="#{chatFormValidatorBean.validateEmptyField}">
-                    </h:inputText>
-                    <h:message for="lastname" id="m_lastname" errorClass="error" />
-                </div>
+                </h:inputText>
+                <h:message for="lastname" id="m_lastname" errorClass="error"/>
+            </div>
 
-                <div>
-                    <h:outputLabel for="mail" styleClass="input-lables">
-                        E-postadress:
-                    </h:outputLabel>
-                    <h:inputText 
+            <div>
+                <h:outputLabel for="mail" styleClass="input-lables">
+                    E-postadress:
+                </h:outputLabel>
+                <h:inputText
                         id="mail"
                         value="#{customerManager.person.mail}"
-                        a:placeholder="Skriv in e-postadress" 
+                        a:placeholder="Skriv in e-postadress"
                         validator="#{chatFormValidatorBean.validateEmail}">
-                    </h:inputText>
-                    <h:message for="mail" id="m_mail" errorClass="error" />
-                </div>
+                </h:inputText>
+                <h:message for="mail" id="m_mail" errorClass="error"/>
+            </div>
 
-                <div>
-                    <h:outputLabel for="phone" styleClass="input-lables">
-                        Telefonnummer:
-                    </h:outputLabel>
-                    <h:inputText 
+            <div>
+                <h:outputLabel for="phone" styleClass="input-lables">
+                    Telefonnummer:
+                </h:outputLabel>
+                <h:inputText
                         id="phone"
                         value="#{customerManager.person.phone}"
-                        a:placeholder="Skriv in telefonnummer" 
+                        a:placeholder="Skriv in telefonnummer"
                         validator="#{chatFormValidatorBean.validateTelephone}">
-                    </h:inputText>
-                    <h:message for="phone" id="m_phone" errorClass="error" />
-                </div>
+                </h:inputText>
+                <h:message for="phone" id="m_phone" errorClass="error"/>
+            </div>
 
-                <div>
-                    <h:commandButton 
-                        id="submit" 
-                        value="Start chatt" 
+            <div>
+                <h:commandButton
+                        id="submit"
+                        value="Start chatt"
                         action="#{customerManager.submit}"
                         styleClass="btn success">
-                        <f:ajax 
-                            execute="@form" 
-                            render="m_selectedSubject m_customerId m_firstname m_lastname m_mail m_phone" />
-                    </h:commandButton>
-                </div>
-            </h:form>
-        </div>
-    </h:body>
+                    <f:ajax
+                            execute="@form"
+                            render="m_selectedSubject m_customerId m_firstname m_lastname m_mail m_phone"/>
+                </h:commandButton>
+            </div>
+        </h:form>
+    </div>
+</h:body>
 </html>

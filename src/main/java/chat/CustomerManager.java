@@ -7,7 +7,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import services.EntityControllerInterface;
+
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -16,6 +16,8 @@ import java.io.Serializable;
 @SessionScoped
 public class CustomerManager implements Serializable {
 
+    private static final String CLIENT_CHAT_PAGE = "chat.xhtml?faces-redirect=true";
+    private static final String ADMIN_CHAT_PAGE = "admin-chat-log.xhtml?faces-redirect=true";
     private PersonEntity person = new PersonEntity();
 
     @Inject
@@ -44,6 +46,9 @@ public class CustomerManager implements Serializable {
             } else {
                 // get customer data
                 person = entityController.getCustomer(customerNum);
+                if (person.equals(entityController.getAdmin())) { // if logged as Admin, redirect to admin page
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(ADMIN_CHAT_PAGE);
+                }
             }
         } else { // create new customer
             try {
@@ -55,6 +60,6 @@ public class CustomerManager implements Serializable {
         SessionManager.setObjectAttribute("customer", person);
         messageManager.setSender(person);
         messageManager.setReceiver(entityController.getAdmin());
-        FacesContext.getCurrentInstance().getExternalContext().redirect("chat.xhtml?faces-redirect=true");
+        FacesContext.getCurrentInstance().getExternalContext().redirect(CLIENT_CHAT_PAGE);
     }
 }

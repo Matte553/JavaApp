@@ -19,7 +19,6 @@ a:link, a:visited {
 a:link:hover, a:visited:hover {
     color: #045491;
     font-weight: bold;
-    text-decoration: none;
 }
 
 .h1 {
@@ -266,7 +265,7 @@ a:link:hover, a:visited:hover {
 }
 
 .main-chat-container {
-    max-width: 500px;
+    max-width: 600px;
     height: 500px;
     margin: auto auto 10px;
 }
@@ -327,7 +326,9 @@ a:link:hover, a:visited:hover {
 #chat-form {
     width: 100%;
 }
-
+.main-chat-container #logout-link{
+    text-align: end;
+}
 .message-input {
     border-top-style: solid;
     margin-bottom: 10px;
@@ -340,6 +341,7 @@ a:link:hover, a:visited:hover {
     /*border: 2px solid #dedede;*/
     border: 2px solid #aaa;
     border-radius: 5px;
+    padding: 5px;
 }
 
 .img-message {
@@ -433,5 +435,8 @@ a:link:hover, a:visited:hover {
 
 #subject-container #subject-list li .actived{
     background-color:  #2196F3;
+}
+#logout-link a{
+    text-decoration: none;
 }
 /*=================End chat admin style====================*/

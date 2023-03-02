@@ -8,36 +8,31 @@ import jakarta.faces.push.Push;
 import jakarta.faces.push.PushContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import services.EntityControllerInterface;
-import java.io.IOException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @Named
 @SessionScoped
 public class MessageManager implements Serializable {
     private String subject;
+
+    private String senderFullName;
+
+    private String receiverFullName;
+
     private PersonEntity sender = null;
     private PersonEntity receiver = null;
-    Map<String, Object> messageMap;
+
     @Inject
-    @Push(channel = "chat_channel")
-    private PushContext pushMessage;
+    @Push(channel = "updateMessages")
+    private PushContext pushUpdate;
 
     private MessageEntity message = new MessageEntity();
 
     @Inject
     private EntityController entityController;
-
-    private ArrayList<MessageEntity> messages;
-
-    @PostConstruct
-    public void init() {
-        messages = new ArrayList<>();
-        messageMap = new HashMap<>();
-    }
 
     public String getSubject() {
         return subject;
@@ -67,27 +62,30 @@ public class MessageManager implements Serializable {
         return message;
     }
 
-    public ArrayList<MessageEntity> getMessages() {
-        if (receiver != null) {
-            return entityController.getMessages(receiver.getId(), subject);
-        }
-        return new ArrayList<MessageEntity>();
+    public String getReceiverFullName() {
+        return receiverFullName;
     }
 
+    public String getSenderFullName() {
+        return senderFullName;
+    }
 
-    public void submit() throws IOException {
-        //entityController.addMessage(sender.getId(), receiver.getId(), subject, message);
-        messages.add(message); //temp
-        messageMap.put("data", message);
-        messageMap.put("name", "fname"); //tmp
-        //messageMap.put("name", sender.getFirstname() + " " + sender.getLastname());
-        messageMap.put("isCustomer", true);
-        if (SessionManager.getValue("customer") == null) {
-            messageMap.put("isCustomer", false);
+    public ArrayList<MessageEntity> getMessages() {
+        if (receiver != null && sender != null) {
+            this.senderFullName = sender.getFirstname() + " " + sender.getLastname();
+            this.receiverFullName = receiver.getFirstname() + " " + receiver.getLastname();
+            if (SessionManager.getValue("customer") == null) {
+                return entityController.getMessagesWithSubject(receiver.getId(), subject);
+            } else {
+                return entityController.getMessagesWithSubject(sender.getId(), subject);
+            }
         }
-        pushMessage.send(messageMap);
-        System.out.println("====Message: " + message.toString());//tmp
-        System.out.println(messages.size()); //tmp
+        return new ArrayList<>();
+    }
+
+    public void submit() {
+        entityController.addMessage(sender.getId(), message.getText(), message.getImage());
+        pushUpdate.send("update");
         // reset values
         message = new MessageEntity();
     }

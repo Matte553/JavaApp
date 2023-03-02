@@ -9,7 +9,6 @@ $(document).ready(function () {
         })
         $(this).addClass('actived');
     })
-
 });
 
 /**
@@ -25,41 +24,11 @@ function clearErrorMessages(target, eventType = 'keydown') {
     })
 }
 
-
-
-function getCurrentTime() {
-    const d = new Date(); // for now
-    return d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+/**
+ * Scroll messages to bottom
+ * @param id element id
+ */
+function scrollToBottom(id){
+    const element = document.getElementById(id);
+    element.scrollTop = element.scrollHeight;
 }
-
-function sendMessage(message, channel, event) {
-    let name = message.name;
-    let text = message.data.text;
-    let image = message.data.image;
-    let time = getCurrentTime();
-
-    /*    let msgDarker = '';
-        let msgLeftSide = '';
-        if (message.isCustomer) {
-            msgDarker = 'message-darker';
-            msgLeftSide = 'float-right';
-        }*/
-
-
-    let msg = '<div>' +
-        '<div class="message-user-name float-right"> ' +
-        '<h:panelGroup>' + name + '</h:panelGroup>' +
-        '</div>' +
-        '<div class="user-message message-darker">' +
-        '<h:panelGroup>' + text + '<h:panelGroup>' +
-        '<h:outputLink value="http://localhost:8080/test-1.0-SNAPSHOT/jakarta.faces.resource/' + image + '.xhtml?ln=uploads">' +
-        '<h:graphicImage library="uploads" ' + 'name=' + image + ' styleClass="img-message"/>' + '</h:outputLink>' +
-        '</div>' +
-        '<div class="message-time">' +
-        ' <h:panelGroup>sent ' + time + '</h:panelGroup>' +
-        '</div>' +
-        '</div>';
-    $('#message-container').append(msg);
-}
-
-

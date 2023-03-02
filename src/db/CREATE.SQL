@@ -5,7 +5,7 @@ create table PERSON
     LASTNAME        VARCHAR(255),
     MAIL            VARCHAR(255),
     PHONE           VARCHAR(30),
-    CUSTOMER_NUMBER INTEGER
+    CUSTOMER_NUMBER VARCHAR(6)
 );
 
 create table CHAT

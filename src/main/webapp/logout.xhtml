@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>logout</title>
+    #{sessionManager.destroySession()}
     <meta http-equiv="refresh" content="0;url=#{request.contextPath}/chat-login.xhtml"/>
 </head>
 <body>
