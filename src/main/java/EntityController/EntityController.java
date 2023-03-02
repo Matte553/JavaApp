@@ -100,10 +100,19 @@ public class EntityController {
 
     // Adds new messages to database
     // Commits the entry
-    public void addMessage(Integer personID, String text, String imageURL) {
-        int chatID = getChat(personID);
+    public void addMessage(Integer fromID, Integer toID, String text, String imageURL) {
+
+        int chatID;
+
+        if(fromID == AdminID){
+            chatID = getChat(toID);
+        }
+        else {
+            chatID = getChat(fromID);
+        }
+
         session.beginTransaction();
-        createMessage(personID, chatID, text, imageURL);
+        createMessage(fromID, chatID, text, imageURL);
         session.getTransaction().commit();
     }
 

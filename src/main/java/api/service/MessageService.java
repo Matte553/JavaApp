@@ -30,6 +30,6 @@ public class MessageService {
     }
 
     public void addMessage(Integer persId, String text, String picUrl) {
-        ec.addMessage(persId, text, picUrl);
+        //ec.addMessage(persId, text, picUrl);
     }
 }

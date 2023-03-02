@@ -8,6 +8,7 @@ public class Main {
 
         // TESTING
         EntityController ec = new EntityController();
+        //ec.addMessage(2, 1, "Hej på dig Anders", "URL");
 
     }
 }
