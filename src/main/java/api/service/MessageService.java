@@ -37,7 +37,7 @@ public class MessageService {
     */
 
     public MessageModelPost addMessage(MessageModelPost postMessage) {
-        ec.addMessage(postMessage.getPersId(), postMessage.getText(), postMessage.getImageUrl());
+        ec.addMessage(postMessage.getFromID(), postMessage.getToID(), postMessage.getText(), postMessage.getImageUrl());
         return postMessage;
     }
 }

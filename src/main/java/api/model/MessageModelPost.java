@@ -5,25 +5,34 @@ import jakarta.json.bind.annotation.JsonbProperty;
 
 public class MessageModelPost {
 
-    private int persId;
+    private int fromID;
+    private int toID;
     private String text;
     private String imageUrl;
 
     public MessageModelPost() {};
 
-    @JsonbCreator
-    public MessageModelPost(@JsonbProperty("persId") int persId, @JsonbProperty("text") String text, @JsonbProperty("imageUrl") String imageUrl) {
-        this.persId = persId;
+    public MessageModelPost(int persId, int toID, String text, String imageUrl) {
+        this.fromID = fromID;
+        this.toID = toID;
         this.text = text;
         this.imageUrl = imageUrl;
     }
 
-    public int getPersId() {
-        return persId;
+    public int getFromID() {
+        return fromID;
     }
 
-    public void setPersId(int persId) {
-        this.persId = persId;
+    public void setFromID(int persId) {
+        this.fromID = persId;
+    }
+
+    public int getToID() {
+        return toID;
+    }
+
+    public void setToID(int toID) {
+        this.toID = toID;
     }
 
     public String getText() {
@@ -41,4 +50,5 @@ public class MessageModelPost {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
 }
