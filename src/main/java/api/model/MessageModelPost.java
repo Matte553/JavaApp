@@ -12,7 +12,7 @@ public class MessageModelPost {
 
     public MessageModelPost() {};
 
-    public MessageModelPost(int persId, int toID, String text, String imageUrl) {
+    public MessageModelPost(int fromID, int toID, String text, String imageUrl) {
         this.fromID = fromID;
         this.toID = toID;
         this.text = text;
@@ -23,8 +23,8 @@ public class MessageModelPost {
         return fromID;
     }
 
-    public void setFromID(int persId) {
-        this.fromID = persId;
+    public void setFromID(int fromID) {
+        this.fromID = fromID;
     }
 
     public int getToID() {
