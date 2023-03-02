@@ -36,15 +36,15 @@ public class MessageController {
     List<Message> allBetweenTwoPeople(@PathVariable("id1") Integer id1, @PathVariable("id2") Integer id2) throws Exception {
         return messageService.getMessages(id1,id2);
     }
-
+/*
     //In Postman, POST localhost:8080/messages/personID/text/picURL
     @PostMapping("/messages/{persId}/{text}/{picUrl}")
     void addMessage(@PathVariable Integer persId, @PathVariable String text, @PathVariable String picUrl) {
         messageService.addMessage(persId, text, picUrl);
     }
-
+*/
     @PostMapping("/messages/add")
-    void addMessage(@RequestBody MessageModelPost postMessages) {
-        messageService.addMessage(postMessages.getPersId(), postMessages.getText(), postMessages.getImageUrl());
+    private MessageModelPost addMessage(@RequestBody MessageModelPost postMessages) {
+        return messageService.addMessage(postMessages);
     }
 }

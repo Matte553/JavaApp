@@ -1,12 +1,18 @@
 package api.model;
 
+import jakarta.json.bind.annotation.JsonbCreator;
+import jakarta.json.bind.annotation.JsonbProperty;
+
 public class MessageModelPost {
 
     private int persId;
     private String text;
     private String imageUrl;
 
-    public MessageModelPost(int persId, String text, String imageUrl) {
+    public MessageModelPost() {};
+
+    @JsonbCreator
+    public MessageModelPost(@JsonbProperty("persId") int persId, @JsonbProperty("text") String text, @JsonbProperty("imageUrl") String imageUrl) {
         this.persId = persId;
         this.text = text;
         this.imageUrl = imageUrl;
