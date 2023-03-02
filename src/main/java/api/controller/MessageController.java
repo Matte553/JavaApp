@@ -1,6 +1,7 @@
 package api.controller;
 
 import api.model.Message;
+import api.model.MessageModelPost;
 import api.service.MessageService;
 import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,10 @@ public class MessageController {
     @PostMapping("/messages/{persId}/{text}/{picUrl}")
     void addMessage(@PathVariable Integer persId, @PathVariable String text, @PathVariable String picUrl) {
         messageService.addMessage(persId, text, picUrl);
+    }
+
+    @PostMapping("/messages/add")
+    void addMessage(@RequestBody MessageModelPost postMessages) {
+        messageService.addMessage(postMessages.getPersId(), postMessages.getText(), postMessages.getImageUrl());
     }
 }

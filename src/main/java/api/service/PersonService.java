@@ -36,6 +36,6 @@ public class PersonService {
     }
 
     public void addPerson(String fname, String lname, String mail, String phone) throws Exception {
-        ec.addCustomer(fname, lname, phone, mail, "VarförBehövsSubject?");
+        //ec.addCustomer(fname, lname, phone, mail, "VarförBehövsSubject?");
     }
 }
