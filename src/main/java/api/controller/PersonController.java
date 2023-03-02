@@ -28,8 +28,16 @@ public class PersonController {
     Person getOne(@RequestParam Integer id) throws Exception {
         return personService.getPerson(id);
     }
-    //In Postman, POST localhost:8080/person/Sven/Svensson/sven@gmail.com/0707070
-    @PostMapping("person/{fname}/{lname}/{mail}/{phone}")
-    void postOne(@PathVariable String fname, @PathVariable String lname, @PathVariable String mail, @PathVariable String phone) throws Exception{
-        personService.addPerson(fname, lname, mail, phone);
-}}
+    //In Postman, in body
+    //{
+    //    "fname": "name1",
+    //    "lname": "lname2",
+    //    "email": "testmail",
+    //    "phone": "testphone",
+    //    "customerNumber": "5215215"
+    //}
+    @PostMapping("person/add")
+    private Person addCustomer(@RequestBody Person postPerson) throws Exception {
+        return personService.addPerson(postPerson);
+    }
+}

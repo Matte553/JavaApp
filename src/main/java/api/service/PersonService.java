@@ -35,7 +35,9 @@ public class PersonService {
         return new Person(-1, "This", "person","did","not","exist");
     }
 
-    public void addPerson(String fname, String lname, String mail, String phone) throws Exception {
-        //ec.addCustomer(fname, lname, phone, mail, "VarförBehövsSubject?");
+    public Person addPerson(Person postPerson) throws Exception {
+        PersonEntity p = new PersonEntity(postPerson.getFname(),postPerson.getLname(),postPerson.getPhone(), postPerson.getEmail(), postPerson.getCustomerNumber());
+        ec.addCustomer(p, "Random Subject");
+        return postPerson;
     }
 }
