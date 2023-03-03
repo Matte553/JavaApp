@@ -14,6 +14,9 @@
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"/>
+    <h:panelGroup>#{messageManager.subject}</h:panelGroup>
+    <h:panelGroup>#{messageManager.senderFullName}</h:panelGroup>
+    <h:panelGroup>#{messageManager.receiverFullName}</h:panelGroup>
     <ui:include src="template/components/chatBox.xhtml"/>
 </h:body>
 </html>
