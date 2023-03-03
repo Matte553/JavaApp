@@ -84,7 +84,7 @@ public class MessageManager implements Serializable {
     }
 
     public void submit() {
-        entityController.addMessage(sender.getId(), message.getText(), message.getImage());
+        entityController.addMessage(sender.getId(), receiver.getId(),message.getText(), message.getImage());
         pushUpdate.send("update");
         // reset values
         message = new MessageEntity();
