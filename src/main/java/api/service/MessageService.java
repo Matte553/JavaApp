@@ -14,8 +14,8 @@ public class MessageService {
     public MessageService() throws Exception {
     }
 
-    public ArrayList<Message> getMessages(int id1, int id2) throws Exception {
-        ArrayList<MessageEntity> dblist = ec.getMessagesFromPersonID(id1,id2);
+    public ArrayList<Message> getMessages(int id1) throws Exception {
+        ArrayList<MessageEntity> dblist = ec.getMessages(id1);
         //
         ArrayList<Message> MessageList = new ArrayList<>();
         for (MessageEntity m : dblist) {

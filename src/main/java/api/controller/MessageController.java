@@ -32,9 +32,9 @@ public class MessageController {
     }*/
 
     //In Postman, GET localhost:8080/messages/1/2   for messages between person 1 and 2
-    @GetMapping("/messages/{id1}/{id2}")
-    List<Message> allBetweenTwoPeople(@PathVariable("id1") Integer id1, @PathVariable("id2") Integer id2) throws Exception {
-        return messageService.getMessages(id1,id2);
+    @GetMapping("/messages/{id1}")
+    List<Message> allBetweenTwoPeople(@PathVariable("id1") Integer id1) throws Exception {
+        return messageService.getMessages(id1);
     }
 /*
     //In Postman, POST localhost:8080/messages/personID/text/picURL
