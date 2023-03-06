@@ -2,6 +2,7 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
+import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -347,6 +348,21 @@ public class EntityController {
         Query query = session.createQuery(("from InstrumentEntity"));
         List list = query.list();
         return (ArrayList<InstrumentEntity>) list;
+    }
+
+    // Returns a InstrumentEntity object from given instrument ID.
+    public InstrumentEntity getInstrumentWithID(int instrumentID){
+        String hql = "FROM InstrumentEntity i WHERE i.id = :instrumentID";
+        Query query = session.createQuery(hql).setParameter("instrumentID", instrumentID);
+
+        // Throws error if no instrument was found with this ID
+        InstrumentEntity instrument = new InstrumentEntity();
+        try {
+             instrument = (InstrumentEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no instrument with this ID: " + instrumentID);
+        };
+        return instrument;
     }
 
     // Returns an arraylist with all Instrument Pictures from database

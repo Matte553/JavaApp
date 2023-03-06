@@ -8,10 +8,10 @@ public class Main {
 
         // TESTING
         EntityController ec = new EntityController();
-        ArrayList<MessageEntity> mess = ec.getMessagesWithSubject(3, "Reparation");
-        for (MessageEntity m: mess){
-            System.out.println(m.getText());
-        }
+        //ec.addMessage(2, 1, "Hej på dig Anders", "URL");
+        InstrumentEntity e = ec.getInstrumentWithID(1);
+        System.out.println(e.getName());
+
 
     }
 }
