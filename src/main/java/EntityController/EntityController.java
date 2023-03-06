@@ -372,6 +372,17 @@ public class EntityController {
         return (ArrayList<InstrumentPicturesEntity>) list;
     }
 
+    public ArrayList<LogEntity> getLogWithID(int personID){
+        String hql = "FROM LogEntity WHERE personId= :personID";
+        Query query = session.createQuery(hql).setParameter("personID", personID);
+        ArrayList<LogEntity> result = (ArrayList<LogEntity>) query.getResultList();
+        if(result.isEmpty()){
+            System.err.println("There is no log for person ID: " + personID);
+            return null;
+        }
+        return result;
+    }
+
     // Generates a random customer number with 6 digits.
     // Controls that there are no duplicates
     private String generateCustomerNumber() throws Exception {

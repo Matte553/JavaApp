@@ -5,7 +5,7 @@ create table PERSON
     LASTNAME        VARCHAR(255),
     MAIL            VARCHAR(255),
     PHONE           VARCHAR(30),
-    CUSTOMER_NUMBER INTEGER
+    CUSTOMER_NUMBER VARCHAR(255)
 );
 
 create table CHAT
@@ -83,6 +83,18 @@ create table RESERVATION
         primary key (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID)
 );
 
+create table LOG
+(
+    ID                INTEGER GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
+    TEXT              VARCHAR(5000),
+    PERSON_ID         INTEGER
+        constraint "LOG_PERSON_ID_fk"
+            references PERSON(ID),
+    LOG_TIMESTAMP     TIMESTAMP,
+    constraint "LOG_pk"
+        primary key (ID, PERSON_ID)
+);
+
 INSERT INTO PERSON (FIRSTNAME, LASTNAME, MAIL, PHONE, CUSTOMER_NUMBER) VALUES('Anders', 'Andersson', 'AndersAndersson@gmail.com', '060-0000000', '000000');
 INSERT INTO PERSON (FIRSTNAME, LASTNAME, MAIL, PHONE, CUSTOMER_NUMBER) VALUES('Anton', 'Persson', 'AntonPerson@gmail.com', '070-11111111', '111111');
 INSERT INTO PERSON (FIRSTNAME, LASTNAME, MAIL, PHONE, CUSTOMER_NUMBER) VALUES('Lisa', 'Karlsson', 'LisaKarlsson@gmail.com', '070-2222222', '222222');
@@ -129,3 +141,6 @@ INSERT INTO RESERVATION (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID) VALUES (2
 
 INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (1, 2, 'Min ukulele saknar flera strängar och har spruckit lite.', 'Ukulele');
 INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (2, 3, 'En tangent på mitt keyboard funkar inte alls.', 'Keyboard');
+
+INSERT INTO LOG (TEXT, PERSON_ID, LOG_TIMESTAMP) VALUES ('Detta är min log för kund Lisa. ', 3, null);
+INSERT INTO LOG (TEXT, PERSON_ID, LOG_TIMESTAMP) VALUES ('Nu är jag klar med lisas arbete', 3, null);
