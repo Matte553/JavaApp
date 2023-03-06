@@ -21,9 +21,9 @@ public class Day implements Serializable {
         this.number = number;
         this.weekday= weekday;
         this.name = enumToString(intToEnum(weekday));
-        this.services = new ArrayList<>();
-        addService(new Service(8,10));
-        addService(new Service(13,17));
+        this.services = createArrayList();
+        /*addService(new Service(8,10));
+        addService(new Service(13,17));*/
     }
 
     public int getNumber() {
@@ -125,9 +125,25 @@ public class Day implements Serializable {
     }
     private ArrayList<Service> createArrayList() {
         ArrayList<Service> result = new ArrayList<>();
-        for (int i = 8; i < 18; i++) {
+        ArrayList<String> types = new ArrayList<>();
+            types.add("repair");
+            types.add("customer");
+            types.add("writing");
+        ArrayList<Person> persons = new ArrayList<>();
+        persons.add(new Person(1, "Peter", "Stegeby", "+467271341", "peter.stegeby@gmail.com"));
+        persons.add(new Person(2, "Brutus", "Frazze", "+461372151", "brutus.frazze@gmail.com"));
+        persons.add(new Person(3, "Hans", "Klorén", "+101150123", "hasse.klo@gmail.com"));
+        ArrayList<String> descriptions = new ArrayList<>();
+            descriptions.add("Time to repair!");
+            descriptions.add("Having a customer over.");
+            descriptions.add("Writing on paper!");
+            descriptions.add("This is a very very long description so that I can show what happens when the description simply does NOT fit in the regular box of description, no! a scrollbar appears and so you can still read all of this without any problems! ;)");
+
+
+
+        for (int i = 8; i < 18; i += 1) {
             if (i != 12) {
-                Service temp = new Service(i, i+1);
+                Service temp = new Service(i, i+1, (i*2.15),types.get(i%3),persons.get(i%3),descriptions.get(i%4));
                 result.add(temp);
             }
         }

@@ -15,6 +15,10 @@
 <h:head>
 <title>Calendar</title>
     <h:outputStylesheet library="css" name="week.scss"/>
+    <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+    <h:outputScript library="scripts" name="calendar.js"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <h:outputScript library="scripts" name="bootstrap.js"/>
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"/>
@@ -55,11 +59,21 @@
     <f:metadata>
         <f:viewParam name="weekID"/>
     </f:metadata>
+    <h:form>
+        <li style='float:left'><a href="calendar_week.xhtml?weekID=#{weekID-1}">Prev</a></li>
+        <li style='float:right'><a href="calendar_week.xhtml?weekID=#{weekID+1}">Next</a></li>
+    </h:form>
 
-    <h1 style="text-align: center">Vecka #{weekID}</h1>
+    <!--
+    Här kommer jag behöva fixa så att jag kan räkna upp en månad beroende på vilken vecka det blir!
+    -->
+    <h1 style="text-align: center">#{calendarHandler.months[calendarHandler.currentMonth-1].name }</h1>
+    <h2 style="text-align: center">Vecka #{weekID}</h2>
+    <!--<h1 style="text-align: center">test2 #{calendarHandler.test2}</h1>
+    <h1 style="text-align: center">test #{calendarHandler.test}</h1>-->
     <div class="calendar">
         <div class="timeline">
-            <div class="spacer"></div>
+            <div class="spacer"/>
             <div class="time-marker">8:00</div>
             <div class="time-marker">9:00</div>
             <div class="time-marker">10:00</div>
@@ -72,7 +86,29 @@
             <div class="time-marker">17:00</div>
         </div>
         <div class="days">
-            <div class="day mon">
+            <c:forEach items="#{calendarHandler.getList(weekID, 2023)}" var="day">
+                <div class="day #{day.getValue()}">
+                    <div class="date">
+                        <p class="date-num">#{day.getKey()}</p>
+                        <p class="date-day">#{day.getValue()}</p>
+                    </div>
+                    <div class="events">
+                        <c:forEach items="#{calendarHandler.months[2].days[0].services}" var="ser">
+                            <ui:param name="serID" value="#{day.getKey()}#{ser.startTime}"/>
+                            <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime} #{ser.type}" onclick="alterService(#{serID})">
+                                <p class="title">#{ser.customer.firstName}</p>
+                                <p class="time">#{ser.startTime}:00 - #{ser.endTime}:00</p>
+                                <p class="description">#{ser.description}</p>
+                                <div class="btn">
+                                    <p class="move">Ändra</p>
+                                    <p class="delete">Ta Bort</p>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </c:forEach>
+            <!--<div class="day mon">
                 <div class="date">
                     <p class="date-num">9</p>
                     <p class="date-day">Mån</p>
@@ -86,7 +122,7 @@
             </div>
             <div class="day tues">
                 <div class="date">
-                    <p class="date-num">12</p>
+                    <p class="date-num">10</p>
                     <p class="date-day">Tis</p>
                 </div>
                 <div class="events">
@@ -139,15 +175,16 @@
                 </div>
                 <div class="events">
                     <c:forEach items="#{calendarHandler.months[2].days[0].services}" var="ser">
-                        <div id="#{ser.customer.id}" class="event start-#{ser.startTime} end-#{ser.endTime} repair">
+                        <ui:param name="serID" value="#{ser.startTime}"/>
+                        <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime} repair" onclick="alterService(#{serID})">
                             <p class="title">#{ser.customer.firstName}</p>
                             <p class="time">#{ser.startTime}:00 - #{ser.endTime}:00</p>
                             <p class="description">#{ser.description}</p>
                         </div>
                     </c:forEach>
                 </div>
-            </div>
-            <div class="day sat">
+            </div>-->
+           <!-- <div class="day sat">
                 <div class="date">
                     <p class="date-num">14</p>
                     <p class="date-day">Lör</p>
@@ -166,7 +203,7 @@
                 </div>
                 <div class="events">
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 

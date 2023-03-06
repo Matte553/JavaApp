@@ -4,10 +4,12 @@ package frontend.calendar;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
+
+/* LÄNKAR
+https://www.joda.org/joda-time/ Potentiellt byta ut Calendar mot Joda!
+
+ */
 
 
 @Named
@@ -23,9 +25,46 @@ public class CalendarHandler implements Serializable {
     private ArrayList<Week> weeks;
 
     private int test;
+    private Date test2;
 
-    private int makeTest() {
-        return this.calendar.get(Calendar.FEBRUARY);
+    public Date getTest2() {
+        return test2;
+    }
+
+    public void setTest2(Date test2) {
+        this.test2 = test2;
+    }
+
+    public String getNameOfWeekdayInWeek(int week, int year) {
+        Date temp = getWeekInYear(week, year);
+        int number = dateToInt(temp);
+
+        return intToWeekOfDay(number);
+    }
+
+    public int getFirstWeekdayOfWeek(int week, int year) {
+        Date temp = getWeekInYear(week, year);
+        String sub = temp.toString().substring(8,10);
+
+        return Integer.parseInt(sub);
+    }
+
+    public HashMap<Integer, String> getList(int week, int year) {
+        HashMap<Integer, String> result = new HashMap<>();
+        int value = getFirstWeekdayOfWeek(week, year);
+        for (int i = 0; i<5; i++) {
+            result.put(value+i, intToWeekOfDay(i+1));
+        }
+
+        return result;
+    }
+
+    private Date getWeekInYear(int week, int year) {
+        Calendar temp = Calendar.getInstance();
+        temp.clear();
+        temp.set(Calendar.WEEK_OF_YEAR, week);
+        temp.set(Calendar.YEAR, year);
+        return temp.getTime();
     }
 
     public int getTest() {
@@ -44,7 +83,8 @@ public class CalendarHandler implements Serializable {
         this.currentDay         = getDay();
         this.firstDaysEachMonth = fillWithFirstDays();
         this.months             = createArrayList();
-        this.test               = makeTest();
+        this.test               = getFirstWeekdayOfWeek(this.currentWeek, this.currentYear);
+        this.test2              = getWeekInYear(this.currentWeek, this.currentYear);
 
     }
 
@@ -123,6 +163,18 @@ public class CalendarHandler implements Serializable {
         if (day.equals("Sun")) return 7;
 
         return -1;
+    }
+
+    private String intToWeekOfDay(int number) {
+        if (number == 1 ) return "Mån";
+        if (number == 2) return "Tis";
+        if (number == 3) return "Ons";
+        if (number == 4) return "Tor";
+        if (number == 5) return "Fre";
+        if (number == 6) return "Lör";
+        if (number == 7) return "Sön";
+
+        return "-1";
     }
 
     private ArrayList<Month> createArrayList() {

@@ -11,7 +11,6 @@ public class Service implements Serializable {
     Person customer;
     String description;
     String type;
-    boolean active;
 
     public Service() {
     }
@@ -22,19 +21,17 @@ public class Service implements Serializable {
         this.cost = 0;
         this.type = "noType";
         this.customer = new Person();
-        this.description = "Description";
-        this.active = false;
+        this.description = "Vi testar med en mycket längre description än tidigare och ser vad som händer";
     }
 
-    /*public Service(int startTime, int endTime, String description) {
+    public Service(int startTime, int endTime, double cost, String type, Person customer, String description) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.cost = 0;
-        this.type = "noType";
-        this.customer = new Person();
+        this.cost = cost;
+        this.type = type;
+        this.customer = customer;
         this.description = description;
-        this.active = false;
-    }*/
+    }
 
     public int getStartTime() {
         return startTime;
@@ -76,11 +73,11 @@ public class Service implements Serializable {
         this.description = description;
     }
 
-    public boolean isActive() {
-        return active;
+    public String getType() {
+        return type;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setType(String type) {
+        this.type = type;
     }
 }
