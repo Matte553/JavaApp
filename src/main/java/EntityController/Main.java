@@ -3,6 +3,8 @@ package EntityController;
 import Entities.*;
 import java.util.ArrayList;
 
+// Log Tabell i DB: LOG(kundid, text, pictures, datetime);
+
 public class Main {
     public static void main(String[] args) throws Exception {
 
