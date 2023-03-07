@@ -1,10 +1,9 @@
 package api.service;
 
-import Entities.LogEntity;
-import Entities.ReparationsEntity;
 import EntityController.EntityController;
 import api.model.LogModel;
 import org.springframework.stereotype.Service;
+import Entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
