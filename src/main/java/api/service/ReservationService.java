@@ -48,7 +48,7 @@ public class ReservationService {
     }
 //addReservation(Integer instrumentId, Integer personId)
     public ReservationModel addReservation(ReservationModel p) {
-        ec.addReservation(p.getPersonId(), p.getPersonId());
+        ec.addReservation(p.getInstrumentId(), p.getPersonId());
         return p;
     }
 
