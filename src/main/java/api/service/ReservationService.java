@@ -49,22 +49,9 @@ public class ReservationService {
         return this.convertListEntity(dbList);
     }
 
-    public List<ReservationModel> getReservationsByPersonID(Integer id) throws Exception{
-        ArrayList<ReservationEntity> dblist = ec.getReservations();
-        List<ReservationModel> apiList = new ArrayList<>();
-
-        for (ReservationEntity e : dblist) {
-            if (e.getPersonId() == id) {
-                apiList.add(this.convertReservationEntity(e));
-            }
-            return apiList;
-        }
-        //apiList.add(this.convertReservationEntity(new ReservationEntity(-1, -1, -1)));
-        return apiList;
-    }
-
     public ReservationModel addReservation(ReservationModel postReservation) {
-        ReservationModel r = new ReservationEntity()
+        ReservationModel r = new ReservationModel();
+        return r;
     }
 
     /*//  PUT
