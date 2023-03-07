@@ -3,9 +3,7 @@ package api.controller;
 import api.model.ReservationModel;
 import api.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,9 +19,14 @@ public class ReservationController {
     List<ReservationModel> getAllReservations() throws Exception {
         return service.getAllReservations();
     }
-
+    //in Postman, GET localhost:8080/reservation?id=2   [for all reservations made by person with id 2]
     @GetMapping("/reservation")
-    List<ReservationModel> getReservationByPersonId(@RequestParam Integer persId) {
-        return service.getReservationByPersonId(persId);
+    List<ReservationModel> getReservationByPersonId(@RequestParam Integer id) {
+        return service.getReservationByPersonId(id);
+    }
+
+    @PostMapping("reservation/add")
+    ReservationModel addReservation(@RequestBody ReservationModel p) throws Exception {
+        return service.addReservation(p);
     }
 }
