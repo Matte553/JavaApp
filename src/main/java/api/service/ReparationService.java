@@ -42,4 +42,10 @@ public class ReparationService {
         ArrayList<ReparationsEntity> dbList = ec.getReparationsFromPersonId(persId);
         return this.convertListEntity(dbList);
     }
+
+
+    public ReparationModel AddReparation(ReparationModel newReparation) {
+        ec.addReparation(newReparation.getPersonId(), newReparation.getDescription(), newReparation.getType());
+        return newReparation;
+    }
 }
