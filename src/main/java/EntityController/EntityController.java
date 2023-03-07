@@ -3,6 +3,7 @@ package EntityController;
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
 import jakarta.persistence.NoResultException;
+import org.apache.commons.logging.Log;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -82,6 +83,12 @@ public class EntityController {
         Integer reservationNumber = generateReservationNumber();
         ReservationEntity reservation = new ReservationEntity(reservationNumber, instrumentId, personId);
         session.persist(reservation);
+    }
+
+    // Creates new Log and prepares it to be sent to the database
+    private void createLog(Integer personId, String text, Timestamp timestamp) {
+        LogEntity logEntity = new LogEntity(personId, text, timestamp);
+        session.persist(logEntity);
     }
 
 
@@ -381,6 +388,16 @@ public class EntityController {
             return null;
         }
         return result;
+    }
+
+    public LogEntity addLog(int personID, String text){
+        session.beginTransaction();
+        long now = System.currentTimeMillis();
+        Timestamp timestamp = new Timestamp(now);
+        LogEntity logEntity = new LogEntity(personID, text, timestamp);
+        session.persist(logEntity);
+        session.getTransaction().commit();
+        return logEntity;
     }
 
     // Generates a random customer number with 6 digits.
