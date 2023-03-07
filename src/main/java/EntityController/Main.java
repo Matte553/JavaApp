@@ -3,7 +3,7 @@ package EntityController;
 import Entities.*;
 import java.util.ArrayList;
 
-// Kalender Tabell i DB: KALENDER(id, starttid, sluttid, startdatum, slutdatum, errandNumber, ämne, fritext);
+// Kalender Tabell i DB: KALENDER(id, starttid, sluttid, startdatum, slutdatum, errandNumber, ämne, fritext);;
 
 
 public class Main {
