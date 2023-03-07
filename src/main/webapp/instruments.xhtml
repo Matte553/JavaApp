@@ -9,7 +9,7 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
-    <title>instrument</title>
+    <title>instruments</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet library="css" name="style.css"/>
     <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
@@ -25,16 +25,16 @@
         </ul>
         <div class="flex-instruments-container">
             <ui:repeat value="#{instrumentManager.instruments}" var="item">
-                <a href="#">
-                    <span><strong>#{item.type}</strong></span>
-                    <span class="instrument-cover">
-                        <h:graphicImage library="uploads" name="#{instrumentManager.getOneImage(item.id)}"/>
-                    </span>
-                    <span class="text-center">
+                <div>
+                    <p><strong>#{item.type}</strong></p>
+                    <a href="#" class="instrument-link">
+                        <span class="instrument-cover">
+                            <h:graphicImage library="uploads" name="#{instrumentManager.getOneImage(item.id)}"/>
+                        </span>
                         <span><strong>#{item.name}</strong></span>
                         <span><strong>#{item.price} Kr</strong></span>
-                    </span>
-                </a>
+                    </a>
+                </div>
             </ui:repeat>
         </div>
     </div>

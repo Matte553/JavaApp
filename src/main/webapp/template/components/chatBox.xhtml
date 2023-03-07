@@ -6,7 +6,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <div class="main-chat-container" id="main-chat-container">
-        <div id="logout-link"><h:link value="Logga ut" outcome="logout.xhtml"/></div>
+        <ui:insert /> <!--Logout link place-->
         <div class="message-container" jsf:id="message-container">
             <ui:repeat value="#{messageManager.messages}" var="messageItem">
                 <c:set var="isCustomer" value="#{messageManager.sender.id==messageItem.personId}"/>

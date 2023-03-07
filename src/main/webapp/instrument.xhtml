@@ -5,7 +5,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
     <title>instrument</title>
@@ -18,29 +19,47 @@
 <h:body>
     <ui:include src="header.xhtml"/>
     <div class="main-container">
+        <ul class="breadcrumb">
+            <li><a href="#">Hem</a></li>
+            <li><a href="#">Instruments</a></li>
+            <li>#{instrumentManager.instrument.type}</li>
+        </ul>
         <div class="slideshow-container">
-            <div class="slides">
-                <h:graphicImage library="uploads" name="cascha_premium_1.jpg"/>
-            </div>
-            <div class="slides">
-                <h:graphicImage library="uploads" name="cascha_premium_2.jpg"/>
-            </div>
-            <div class="slides">
-                <h:graphicImage library="uploads" name="classic_guitar_cort.jpg"/>
-            </div>
-
+            <ui:repeat value="#{instrumentManager.images}" var="imgItem">
+                <div class="slides">
+                    <h:graphicImage library="uploads" name="#{imgItem}"/>
+                </div>
+            </ui:repeat>
             <a class="prev" id="prev">Prev</a>
             <a class="next" id="next">Next</a>
             <input type="hidden" value="0" id="current-slide"/>
             <div class="dots">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+                <c:forEach begin="#{0}" end="#{instrumentManager.images.size()-1}" var="index">
+                    <span class="dot"/>
+                </c:forEach>
             </div>
         </div>
-
-
+        <div class="instrument-details">
+            <div>
+                <h3>Namn</h3>
+                <p>#{instrumentManager.instrument.name}</p>
+            </div>
+            <div>
+                <h3>Pris</h3>
+                <p>#{instrumentManager.instrument.price} Kr :-</p>
+            </div>
+            <div>
+                <h3>Type</h3>
+                <p>#{instrumentManager.instrument.type}</p>
+            </div>
+            <div>
+                <h3>Beskrivning</h3>
+                <p>#{instrumentManager.instrument.name} Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            </div>
+            <h:form>
+                <h:commandButton value="Reservera" styleClass="btn success"/>
+            </h:form>
+        </div>
     </div>
-
 </h:body>
 </html>

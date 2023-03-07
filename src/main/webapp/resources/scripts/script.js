@@ -1,7 +1,7 @@
 'use strict';
 $(document).ready(function () {
     clearErrorMessages(".chat-form div input[type='text']");
-    $('#subject-list-container #subject-list li a').on('click', function () {
+    $('#subject-list-container #subject-list li a').on('click', function (e) {
         $('#subject-list-container #subject-list li a').each(function () {
             if ($(this).hasClass('actived')) {
                 $(this).removeClass('actived');
@@ -9,7 +9,6 @@ $(document).ready(function () {
         })
         $(this).addClass('actived');
     })
-
     showSlides(0);
     $('#prev').on('click', function () {
         showSlides(-1);
