@@ -5,6 +5,13 @@ import java.util.ArrayList;
 
 // Log Tabell i DB: LOG(kundid, text, pictures, datetime); GÖR ER TILL STARK ENTITET FÖR AUTOINCREMENT
 
+//addMessage() now returns message
+//addInstrument() now returns instrument
+//addInstrumentPicture() now returns instrumentPicture
+//addReservation() now returns reservation
+//addReparation() now returs reparation
+//addLog() now returns log
+
 // Kalender Tabell i DB: KALENDER(id, starttid, sluttid, startdatum, slutdatum, errandNumber, ämne, fritext);
 
 
@@ -14,12 +21,9 @@ public class Main {
         // TESTING
         EntityController ec = new EntityController();
 
-        ec.addLog(3, "Lisa kommer och hämtar sitt intrument imorgon");
-        ArrayList<LogEntity> le = ec.getLogWithID(3);
+        //ReservationEntity r = ec.addReservation(101, 3);
+        //System.out.println(r.getInstrumentId());
 
 
-        for(LogEntity e: le){
-            System.out.println(e.getText());
-        }
     }
 }
