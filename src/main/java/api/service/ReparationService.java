@@ -29,8 +29,8 @@ public class ReparationService {
         ArrayList<ReparationsEntity> dbList = ec.getReparations();
         List<ReparationModel> apiList = new ArrayList<>();
 
-        for (ReparationsEntity rep : dbList) {
-            apiList.add( this.convertReparationEntity(rep));
+        for (ReparationsEntity entity : dbList) {
+            apiList.add( this.convertReparationEntity(entity));
         }
 
         return apiList;
@@ -40,8 +40,8 @@ public class ReparationService {
         ArrayList<ReparationsEntity> dbList = ec.getReparationsFromPersonId(persId);
         List<ReparationModel> apiList = new ArrayList<>();
 
-        for (ReparationsEntity rep : dbList) {
-            apiList.add( this.convertReparationEntity(rep));
+        for (ReparationsEntity entity : dbList) {
+            apiList.add( this.convertReparationEntity(entity));
         }
 
         return apiList;
