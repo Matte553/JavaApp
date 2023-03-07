@@ -20,11 +20,8 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    /*@GetMapping("/messages")
-    List<Message> allBetweenTwoPeople() throws Exception {
-        return messageService.getMessages(1,2);
-    }
-
+    /*
+    // Anton vad e detta??
     @GetMapping("/Messages/{id]")
     Message one(@PathVariable Integer id){
         return service.findById(id)
@@ -36,13 +33,12 @@ public class MessageController {
     List<Message> allBetweenTwoPeople(@PathVariable("id1") Integer id1) throws Exception {
         return messageService.getMessages(id1);
     }
-/*
-    //In Postman, POST localhost:8080/messages/personID/text/picURL
-    @PostMapping("/messages/{persId}/{text}/{picUrl}")
-    void addMessage(@PathVariable Integer persId, @PathVariable String text, @PathVariable String picUrl) {
-        messageService.addMessage(persId, text, picUrl);
+
+    @GetMapping("/messages/all")
+    List<Message> getAllMessages() throws Exception {
+        return messageService.getAllMessages();
     }
-*/
+
     @PostMapping("/messages/add")
     private MessageModelPost addMessage(@RequestBody MessageModelPost postMessages) {
         return messageService.addMessage(postMessages);
