@@ -2,7 +2,6 @@ package frontend;
 
 import Entities.InstrumentEntity;
 import EntityController.EntityController;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -15,23 +14,17 @@ public class InstrumentManager implements Serializable {
 
     private InstrumentEntity instrument;
 
-    ArrayList<InstrumentEntity> instruments;
-
     private int instrumentID;
 
     @Inject
     private EntityController entityController;
 
-    public InstrumentManager(){
+    public InstrumentManager() {
         instrument = new InstrumentEntity();
     }
 
     public InstrumentEntity getInstrument() {
         return instrument;
-    }
-
-    public void setInstrument(InstrumentEntity instrument) {
-        this.instrument = instrument;
     }
 
     public int getInstrumentID() {
@@ -46,21 +39,20 @@ public class InstrumentManager implements Serializable {
         return entityController.getInstruments();
     }
 
-    @PostConstruct
-    public void init(){ // del later
-        instrument = entityController.getInstruments().get(1);
+    public ArrayList<String> getImages() {
+        return entityController.getImagesFromInstrumentId(this.instrumentID);
     }
 
-    public ArrayList<String> getImages(){
-        return entityController.getImagesFromInstrumentId(1);
+    public String oneImage(int instrumentID) {
+        ArrayList<String> images = entityController.getImagesFromInstrumentId(instrumentID);
+        if (images.isEmpty()) {
+            return "";
+        }
+        return images.get(0);
     }
 
-    public String getOneImage(int instrumentID){
-        return entityController.getImagesFromInstrumentId(instrumentID).get(0);
-    }
-
-    public void onLoad(){
-
+    public void onLoad() {
+        instrument = entityController.getInstrumentWithID(this.instrumentID);
     }
 
 }
