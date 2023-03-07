@@ -1,13 +1,12 @@
 package EntityController;
 
 import Entities.HibernateSetup;
-import Entities.*;
-import jakarta.ejb.Stateless;
+import Entities.PersonEntity;
+import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +15,7 @@ import java.util.Random;
 import Entities.*;
 
 // This Class is used for Retrieving all data from database and also inserting data into database.
-@Stateless
-public class EntityController implements Serializable {
+public class EntityController {
     SessionFactory sessionFactory;
     Session session;
     Integer AdminID = 1;
@@ -352,11 +350,37 @@ public class EntityController implements Serializable {
         return (ArrayList<InstrumentEntity>) list;
     }
 
+    // Returns a InstrumentEntity object from given instrument ID.
+    public InstrumentEntity getInstrumentWithID(int instrumentID){
+        String hql = "FROM InstrumentEntity i WHERE i.id = :instrumentID";
+        Query query = session.createQuery(hql).setParameter("instrumentID", instrumentID);
+
+        // Throws error if no instrument was found with this ID
+        InstrumentEntity instrument = new InstrumentEntity();
+        try {
+             instrument = (InstrumentEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no instrument with this ID: " + instrumentID);
+        };
+        return instrument;
+    }
+
     // Returns an arraylist with all Instrument Pictures from database
     public ArrayList<InstrumentPicturesEntity> getInstrumentPictures() {
         Query query = session.createQuery(("from InstrumentPicturesEntity"));
         List list = query.list();
         return (ArrayList<InstrumentPicturesEntity>) list;
+    }
+
+    public ArrayList<LogEntity> getLogWithID(int personID){
+        String hql = "FROM LogEntity WHERE personId= :personID";
+        Query query = session.createQuery(hql).setParameter("personID", personID);
+        ArrayList<LogEntity> result = (ArrayList<LogEntity>) query.getResultList();
+        if(result.isEmpty()){
+            System.err.println("There is no log for person ID: " + personID);
+            return null;
+        }
+        return result;
     }
 
     // Generates a random customer number with 6 digits.
@@ -433,51 +457,4 @@ public class EntityController implements Serializable {
         }
     }
 
-
-    //<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
-    // Anton och Antons favoriter, Matte rör ej!!!
-    // Returns chatID for a chat between two persons;
-    public Integer getChatIDold(int person_A_ID, int person_B_ID){
-
-        String hql;
-        Query query;
-        List results;
-
-        hql = "SELECT E.chatId FROM ChatmemberEntity E WHERE E.personId = :person_A_ID";
-        query = session.createQuery(hql).setParameter("person_A_ID", person_A_ID);
-        results = query.list();
-        ArrayList<Integer> person_A_Chatlist = (ArrayList) results;
-
-        hql = "SELECT E.chatId FROM ChatmemberEntity E WHERE E.personId = :person_B_ID";
-        query = session.createQuery(hql).setParameter("person_B_ID", person_B_ID);
-        results = query.list();
-        ArrayList<Integer> person_B_Chatlist = (ArrayList) results;
-
-        ArrayList<Integer> compareList = new ArrayList<Integer>(person_A_Chatlist);
-
-        compareList.retainAll(person_B_Chatlist);
-
-        if(compareList.isEmpty()){
-            return -1;
-        }
-        else {
-            Integer chatID = compareList.get(0);
-            return chatID;
-        }
-    }
-
-    // Returns arraylist with all messages from a chat ID
-    public ArrayList<MessageEntity> getMessagesFromPersonID(int person_A_ID, int person_B_ID){
-        int chatID = getChatIDold(person_A_ID, person_B_ID);
-        if(chatID == -1){
-            System.err.println("There is no chat between these two persons");
-            return null;
-        }
-        String hql = "SELECT E FROM MessageEntity E WHERE E.chatId = :chatID";
-        Query query = session.createQuery(hql).setParameter("chatID", chatID);
-        List<MessageEntity> list = query.list();
-        ArrayList arrayList = (ArrayList) list;
-        return arrayList;
-    }
-    //<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
 }
