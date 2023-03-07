@@ -28,6 +28,11 @@ public class PersonController {
     Person getOne(@RequestParam Integer id) throws Exception {
         return personService.getPerson(id);
     }
+
+    @GetMapping("/person/admin")
+    Person getAdmin() throws Exception {
+        return personService.getAdmin();
+    }
     //In Postman, in body
     //{
     //    "fname": "name1",

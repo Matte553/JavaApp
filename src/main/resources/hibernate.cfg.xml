@@ -27,6 +27,8 @@
         <mapping class="Entities.ReparationsEntity"/>
         <mapping class="Entities.InstrumentEntity"/>
         <mapping class="Entities.InstrumentPicturesEntity"/>
+        <mapping class="Entities.LogEntity"/>
+
 
     </session-factory>
 </hibernate-configuration>

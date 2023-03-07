@@ -40,4 +40,9 @@ public class PersonService {
         ec.addCustomer(p, "Random Subject");
         return postPerson;
     }
+
+    public Person getAdmin() {
+        PersonEntity p = ec.getAdmin();
+        return new Person(p.getId(), p.getFirstname(), p.getLastname(), p.getMail(), p.getPhone(), p.getCustomerNumber());
+    }
 }

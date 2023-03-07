@@ -44,3 +44,6 @@ INSERT INTO RESERVATION (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID) VALUES (2
 
 INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (1, 2, 'Min ukulele saknar flera strängar och har spruckit lite.', 'Ukulele');
 INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (2, 3, 'En tangent på mitt keyboard funkar inte alls.', 'Keyboard');
+
+INSERT INTO LOG (TEXT, PERSON_ID, LOG_TIMESTAMP) VALUES ('Detta är min log för kund Lisa. ', 3, null);
+INSERT INTO LOG (TEXT, PERSON_ID, LOG_TIMESTAMP) VALUES ('Nu är jag klar med lisas arbete', 3, null);
