@@ -35,4 +35,15 @@ public class ReparationService {
 
         return apiList;
     }
+
+    public List<ReparationModel> getReparationById(int persId) {
+        ArrayList<ReparationsEntity> dbList = ec.getReparationsFromPersonId(persId);
+        List<ReparationModel> apiList = new ArrayList<>();
+
+        for (ReparationsEntity rep : dbList) {
+            apiList.add( this.convertReparationEntity(rep));
+        }
+
+        return apiList;
+    }
 }
