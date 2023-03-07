@@ -2,11 +2,13 @@ package EntityController;
 
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,8 @@ import java.util.Random;
 import Entities.*;
 
 // This Class is used for Retrieving all data from database and also inserting data into database.
-public class EntityController {
+@Stateless
+public class EntityController implements Serializable {
     SessionFactory sessionFactory;
     Session session;
     Integer AdminID = 1;
