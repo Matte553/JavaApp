@@ -1,9 +1,7 @@
 package api.service;
 
-import Entities.PersonEntity;
 import Entities.ReservationEntity;
 import EntityController.EntityController;
-import api.model.Person;
 import api.model.ReservationModel;
 import org.springframework.stereotype.Service;
 
@@ -44,14 +42,14 @@ public class ReservationService {
         return this.convertListEntity(dbList);
     }
 
-    public List<ReservationModel> getReservationByPersonId(Integer persId) {
-        ArrayList<ReservationEntity> dbList = ec.getReservationsFromPersonId(persId);
+    public List<ReservationModel> getReservationByPersonId(Integer id) {
+        ArrayList<ReservationEntity> dbList = ec.getReservationsFromPersonId(id);
         return this.convertListEntity(dbList);
     }
-
-    public ReservationModel addReservation(ReservationModel postReservation) {
-        ReservationModel r = new ReservationModel();
-        return r;
+//addReservation(Integer instrumentId, Integer personId)
+    public ReservationModel addReservation(ReservationModel p) {
+        ec.addReservation(p.getPersonId(), p.getPersonId());
+        return p;
     }
 
     /*//  PUT

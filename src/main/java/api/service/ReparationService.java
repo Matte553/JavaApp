@@ -16,7 +16,6 @@ public class ReparationService {
     public ReparationService() throws Exception {
     }
 
-
     private ReparationModel convertReparationEntity(ReparationsEntity value) {
         return new ReparationModel(
                 value.getErrandNumber(),
