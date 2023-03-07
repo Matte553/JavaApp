@@ -16,7 +16,16 @@ public class ReservationService {
         return new ReservationModel(
                 value.getReservationNumber(),
                 value.getInstrumentId(),
-                value.getReservationNumber());
+                value.getPersonId());
+    }
+
+    private List<ReservationModel> convertListEntity(ArrayList<ReservationEntity> dbList) {
+        List<ReservationModel> apiList = new ArrayList<>();
+
+        for (ReservationEntity entity : dbList) {
+            apiList.add( this.convertReservationEntity(entity));
+        }
+        return apiList;
     }
 
     public ReservationService() throws Exception {
@@ -24,11 +33,11 @@ public class ReservationService {
 
     public List<ReservationModel> getAllReservations() {
         ArrayList<ReservationEntity> dbList = ec.getReservations();
-        List<ReservationModel> apiList = new ArrayList<>();
+        return this.convertListEntity(dbList);
+    }
 
-        for (ReservationEntity entity : dbList) {
-            apiList.add( this.convertReservationEntity(entity));
-        }
-        return apiList;
+    public List<ReservationModel> getReservationByPersonId(Integer persId) {
+        ArrayList<ReservationEntity> dbList = ec.getReservationsFromPersonId(persId);
+        return this.convertListEntity(dbList);
     }
 }

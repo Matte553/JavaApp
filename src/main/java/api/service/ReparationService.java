@@ -25,25 +25,22 @@ public class ReparationService {
                 value.getType());
     }
 
-    public List<ReparationModel> getAllReparations() throws Exception {
-        ArrayList<ReparationsEntity> dbList = ec.getReparations();
+    private List<ReparationModel> convertListEntity(ArrayList<ReparationsEntity> dbList) {
         List<ReparationModel> apiList = new ArrayList<>();
 
         for (ReparationsEntity entity : dbList) {
             apiList.add( this.convertReparationEntity(entity));
         }
-
         return apiList;
+    }
+
+    public List<ReparationModel> getAllReparations() throws Exception {
+        ArrayList<ReparationsEntity> dbList = ec.getReparations();
+        return this.convertListEntity(dbList);
     }
 
     public List<ReparationModel> getReparationById(int persId) {
         ArrayList<ReparationsEntity> dbList = ec.getReparationsFromPersonId(persId);
-        List<ReparationModel> apiList = new ArrayList<>();
-
-        for (ReparationsEntity entity : dbList) {
-            apiList.add( this.convertReparationEntity(entity));
-        }
-
-        return apiList;
+        return this.convertListEntity(dbList);
     }
 }
