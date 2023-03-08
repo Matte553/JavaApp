@@ -36,4 +36,9 @@ public class LogService {
         ArrayList<LogEntity> dbList = ec.getLogWithID(id);
         return this.convertListEntity(dbList);
     }
+
+    public LogModel addLogEntry(LogModel newLog) {
+        LogEntity log = ec.addLog(newLog.getPersonId(), newLog.getText());
+        return this.convertLogEntity(log);
+    }
 }

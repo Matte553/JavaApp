@@ -17,8 +17,8 @@ public class PersonController {
         this.personService = personService;
     }
     //In Postman, GET localhost:8080/persons for a list for all people
-    @GetMapping("/persons")
-    List<PersonModel> all() throws Exception {
+    @GetMapping("/person/all")
+    List<PersonModel> getAllPersons() throws Exception {
         return personService.getAllPersons();
     }
 
