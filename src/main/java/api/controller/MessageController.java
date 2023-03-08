@@ -1,14 +1,12 @@
 package api.controller;
 
-import api.model.Message;
+import api.model.MessageModel;
 import api.model.MessageModelPost;
 import api.service.MessageService;
-import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -30,12 +28,12 @@ public class MessageController {
 
     //In Postman, GET localhost:8080/messages/1/2   for messages between person 1 and 2
     @GetMapping("/messages/{id1}")
-    List<Message> allBetweenTwoPeople(@PathVariable("id1") Integer id1) throws Exception {
+    List<MessageModel> allBetweenTwoPeople(@PathVariable("id1") Integer id1) throws Exception {
         return messageService.getMessages(id1);
     }
 
     @GetMapping("/messages/all")
-    List<Message> getAllMessages() throws Exception {
+    List<MessageModel> getAllMessages() throws Exception {
         return messageService.getAllMessages();
     }
 
