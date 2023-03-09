@@ -122,10 +122,12 @@ public class EntityController implements Serializable {
 
     // Adds new instruments to the database
     // Commits the entry
-    public void addInstrument(String type, String name, Double price, String description) {
+    public InstrumentEntity addInstrument(String type, String name, Double price, String description) {
         session.beginTransaction();
-        createInstrument(type, name, price, description);
+        InstrumentEntity instrument = new InstrumentEntity(type, name, price, description);
+        session.persist(instrument);
         session.getTransaction().commit();
+        return instrument;
     }
 
     // Adds new instrument images to the database

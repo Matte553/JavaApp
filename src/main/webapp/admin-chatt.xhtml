@@ -6,16 +6,16 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" >
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <h:head>
-    <title>Admin-chat-log</title>
+    <title>Adnders chatt</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet library="css" name="style.css"/>
     <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
     <h:outputScript library="scripts" name="script.js"/>
 </h:head>
 <h:body>
-    <ui:include src="header.xhtml"/>
+    <ui:decorate template="template/layout/admin-header.xhtml"/>
     <div jsf:id="log-container" class="main-container">
         <ui:include src="template/components/chatBox.xhtml"/>
 
@@ -34,7 +34,7 @@
                         <f:selectItem itemValue="Bookning" itemLabel="Bookning"/>
                         <f:selectItem itemValue="Reservation" itemLabel="Reservation"/>
                         <f:ajax
-                                listener="#{logManager.getCustomersBySubject}"
+                                listener="#{adminChatManager.getCustomersBySubject}"
                                 render="m_selectedSubject :subject-list-container"/>
                     </h:selectOneMenu>
                 </div>
@@ -42,11 +42,11 @@
 
             <h:form id="subject-list-container">
                 <ul id="subject-list">
-                    <ui:repeat value="#{logManager.customers}" var="customer" varStatus="currentIndex">
+                    <ui:repeat value="#{adminChatManager.customers}" var="customer" varStatus="currentIndex">
                         <li>
                             <h:commandLink
                                     value="#{currentIndex.index}# #{customer.firstname} #{customer.lastname}"
-                                    action="#{logManager.setReceiver(customer.customerNumber)}">
+                                    action="#{adminChatManager.setReceiver(customer.customerNumber)}">
                                 <f:ajax render=":message-container " execute="@this"/>
                             </h:commandLink>
                         </li>

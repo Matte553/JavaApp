@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class CustomerManager implements Serializable {
 
     private static final String CLIENT_CHAT_PAGE = "chat.xhtml?faces-redirect=true";
-    private static final String ADMIN_CHAT_PAGE = "admin-chat-log.xhtml?faces-redirect=true";
+    private static final String ADMIN_CHAT_PAGE = "admin-chatt.xhtml?faces-redirect=true";
     private PersonEntity person = new PersonEntity();
 
     @Inject

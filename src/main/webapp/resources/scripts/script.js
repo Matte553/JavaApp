@@ -1,6 +1,6 @@
 'use strict';
 $(document).ready(function () {
-    clearErrorMessages(".chat-form div input[type='text']");
+    clearErrorMessages("#form div input[type='text']");
     $('#subject-list-container #subject-list li a').on('click', function (e) {
         $('#subject-list-container #subject-list li a').each(function () {
             if ($(this).hasClass('actived')) {
@@ -16,7 +16,7 @@ $(document).ready(function () {
     $('#next').on('click', function () {
         showSlides(1);
     })
-
+    markActived();
 });
 
 /**
@@ -64,4 +64,25 @@ function showSlides(next) {
     $slides.eq(currentSlide).css('display', 'block');
     $dots.eq(currentSlide).addClass('active');
     $(currentId).val(currentSlide);
+}
+
+function searchCustomer() {
+    let $value = $('#Search-customer').val().toUpperCase();
+    $('#subject-list-container #subject-list li a').each(function () {
+        if (this.innerHTML.toUpperCase().indexOf($value) > -1) {
+            this.style.display = "";
+        } else {
+            this.style.display = "none";
+        }
+    })
+}
+
+function markActived(){
+    $('.admin-header a').each(function () {
+        let index = $(location).prop('pathname').lastIndexOf("/");
+        let current = $(this).attr('href');
+        if (current == $(location).prop('pathname').substring(index+1)) {
+            $(this).addClass('active');
+        }
+    })
 }

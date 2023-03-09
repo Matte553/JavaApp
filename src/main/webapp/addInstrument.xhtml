@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h:head>
+    <title>Add instruments</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+    <h:outputScript library="scripts" name="script.js"/>
+</h:head>
+<h:body>
+    <ui:decorate template="template/layout/admin-header.xhtml" />
+    <div class="add-instruments">
+        <h:form id="form" enctype="multipart/form-data">
+            <div>
+                <h3>Lägg till instruments</h3>
+            </div>
+            <div>
+                <h:outputLabel for="itemName" styleClass="input-lables">Namn</h:outputLabel>
+                <h:inputText
+                        id="itemName"
+                        value="#{addInstrument.instrument.name}"
+                        a:placeholder="Skriv in instrument namn"
+                        required="true"
+                        requiredMessage="Fyll in instrument namn">
+                </h:inputText>
+                <h:message for="itemName" id="m_itemName" errorClass="error"/>
+            </div>
+            <div>
+                <h:outputLabel for="itemType" styleClass="input-lables">Typ</h:outputLabel>
+                <h:inputText
+                        id="itemType"
+                        value="#{addInstrument.instrument.type}"
+                        required="true"
+                        requiredMessage="Fyll in instrument typ"
+                        a:placeholder="Skriv in instrument typ">
+                </h:inputText>
+                <h:message for="itemType" id="m_itemType" errorClass="error"/>
+            </div>
+            <div>
+                <h:outputLabel for="itemPrice" styleClass="input-lables">Pris</h:outputLabel>
+                <h:inputText
+                        id="itemPrice"
+                        value="#{addInstrument.instrument.price}"
+                        a:placeholder="Skriv in pris"
+                        required="true"
+                        requiredMessage="Fyll i pris"
+                        converterMessage="Endast siffror">
+                    <f:convertNumber type="number" for="itemPrice"/>
+                </h:inputText>
+                <h:message for="itemPrice" id="m_itemPrice" errorClass="error"/>
+            </div>
+            <div>
+                <h:outputLabel for="description" styleClass="input-lables">Beskrivning</h:outputLabel>
+                <h:inputTextarea
+                        id="description"
+                        value="#{addInstrument.instrument.description}"
+                        required="true"
+                        a:placeholder="Skriv in beskrivning"
+                        onfocus="clearErrorMessages('#form\\:description')"
+                        requiredMessage="Fyll i beskrivning"/>
+                <h:message for="description" id="m_description" errorClass="error"/>
+            </div>
+            <div id="file-upload">
+                <h:outputLabel for="fileToUpload" styleClass="input-lables">Ladda upp bilder</h:outputLabel>
+                <h:outputLabel for="fileToUpload">
+                    <h:graphicImage
+                            library="images"
+                            name="upload-icon.png" onclick="clearErrorMessages('#form\\:fileToUpload','click')"/>
+                </h:outputLabel>
+                <h:inputFile
+                        id="fileToUpload"
+                        value="#{addInstrument.file.fileToUpload}"
+                        required="true"
+                        requiredMessage="Ladda upp minst en bild">
+                    <f:ajax listener="#{addInstrument.onImageUpload}" render="form:uploaded-images"/>
+                </h:inputFile>
+                <h:message for="fileToUpload" id="m_fileToUpload" errorClass="error"/>
+            </div>
+            <div jsf:id="uploaded-images">
+                <c:forEach var="image" items="#{addInstrument.uploadedImages}" varStatus="status">
+                    <div>#{status.index +1}) "#{image}" Uploaded</div>
+                </c:forEach>
+            </div>
+            <div>
+                <h:commandButton
+                        id="submit"
+                        value="Skicka"
+                        action="#{addInstrument.save}"
+                        styleClass="btn success">
+                    <f:ajax
+                            execute="@form"
+                            render="m_itemName m_itemType m_itemPrice m_description m_fileToUpload"/>
+                </h:commandButton>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

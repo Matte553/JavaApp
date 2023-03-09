@@ -25,6 +25,8 @@ public class MessageManager implements Serializable {
     private PersonEntity sender = null;
     private PersonEntity receiver = null;
 
+    private FileUpload file = new FileUpload();
+
     @Inject
     @Push(channel = "updateMessages")
     private PushContext pushUpdate;
@@ -33,6 +35,14 @@ public class MessageManager implements Serializable {
 
     @Inject
     private EntityController entityController;
+
+    public FileUpload getFile() {
+        return file;
+    }
+
+    public void setFile(FileUpload file) {
+        this.file = file;
+    }
 
     public String getSubject() {
         return subject;
@@ -84,9 +94,11 @@ public class MessageManager implements Serializable {
     }
 
     public void submit() {
+        message.setImage(file.getServerFileName());
         entityController.addMessage(sender.getId(), receiver.getId(),message.getText(), message.getImage());
         pushUpdate.send("update");
         // reset values
         message = new MessageEntity();
+        file.reset();
     }
 }
