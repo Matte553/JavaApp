@@ -25,24 +25,22 @@ create table INSTRUMENT
 
 create table INSTRUMENT_PICTURES
 (
+    ID            INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     IMAGE_URL     VARCHAR(1600) not null,
     INSTRUMENT_ID INTEGER       not null
         constraint "INSTRUMENT_PICTURES_INSTRUMENT_ID_fk"
-            references INSTRUMENT(ID),
-    constraint "INSTRUMENT_PICTURES_pk"
-        primary key (IMAGE_URL, INSTRUMENT_ID)
+            references INSTRUMENT(ID)
 );
 
 create table CHATMEMBER
 (
+    ID        INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     CHAT_ID   INTEGER not null
         constraint "CHATMEMBER_CHAT_ID_fk"
             references CHAT(ID),
     PERSON_ID INTEGER not null
         constraint "CHATMEMBER_PERSON_ID_fk"
-            references PERSON(ID),
-    constraint "CHATMEMBER_pk"
-        primary key (PERSON_ID, CHAT_ID)
+            references PERSON(ID)
 );
 
 create table MESSAGE
@@ -61,26 +59,25 @@ create table MESSAGE
 
 create table REPARATIONS
 (
+    ID            INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     ERRAND_NUMBER INTEGER not null,
     PERSON_ID     INTEGER not null
         constraint "REPARATIONS_PERSON_ID_fk"
             references PERSON(ID),
     DESCRIPTION   VARCHAR(3600),
-    TYPE          VARCHAR(255),
-    primary key (ERRAND_NUMBER, PERSON_ID)
+    TYPE          VARCHAR(255)
 );
 
 create table RESERVATION
 (
+    ID                 INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     RESERVATION_NUMBER INTEGER not null,
     INSTRUMENT_ID      INTEGER not null
         constraint "RESERVATION_INSTRUMENT_ID_fk"
             references INSTRUMENT(ID),
     PERSON_ID          INTEGER not null
         constraint "RESERVATION_PERSON_ID_fk"
-            references PERSON(ID),
-    constraint "RESERVATION_pk"
-        primary key (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID)
+            references PERSON(ID)
 );
 
 create table CALENDAR
