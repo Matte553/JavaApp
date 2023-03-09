@@ -1,34 +1,21 @@
-package Entities;
+package api.model;
 
-import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "LOG", schema = "APP")
-public class LogEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "ID")
+public class LogModel {
     private int id;
-    @Basic
-    @Column(name = "TEXT")
+    private int personId;
     private String text;
-    @Basic
-    @Column(name = "PERSON_ID")
-    private Integer personId;
-    @Basic
-    @Column(name = "LOG_TIMESTAMP")
     private Timestamp logTimestamp;
 
-    public LogEntity(){
+    public LogModel() {};
 
-    }
-
-    public LogEntity(int id, String text, Timestamp timestamp){
-        setPersonId(id);
-        setText(text);
-        setLogTimestamp(timestamp);
+    public LogModel(int id, int personId, String text, Timestamp logTimestamp) {
+        this.id = id;
+        this.personId = personId;
+        this.text = text;
+        this.logTimestamp = logTimestamp;
     }
 
     public int getId() {
@@ -39,20 +26,20 @@ public class LogEntity {
         this.id = id;
     }
 
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
     }
 
     public Timestamp getLogTimestamp() {
@@ -68,11 +55,11 @@ public class LogEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LogEntity logEntity = (LogEntity) o;
+        LogModel logEntity = (LogModel) o;
 
         if (id != logEntity.id) return false;
+        if (personId != logEntity.personId) return false;
         if (text != null ? !text.equals(logEntity.text) : logEntity.text != null) return false;
-        if (personId != null ? !personId.equals(logEntity.personId) : logEntity.personId != null) return false;
         if (logTimestamp != null ? !logTimestamp.equals(logEntity.logTimestamp) : logEntity.logTimestamp != null)
             return false;
 
@@ -82,9 +69,10 @@ public class LogEntity {
     @Override
     public int hashCode() {
         int result = id;
+        result = 31 * result + personId;
         result = 31 * result + (text != null ? text.hashCode() : 0);
-        result = 31 * result + (personId != null ? personId.hashCode() : 0);
         result = 31 * result + (logTimestamp != null ? logTimestamp.hashCode() : 0);
         return result;
     }
 }
+

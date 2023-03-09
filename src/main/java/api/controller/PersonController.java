@@ -1,8 +1,7 @@
 package api.controller;
 
-import api.model.Person;
+import api.model.PersonModel;
 import api.service.PersonService;
-import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,19 +17,18 @@ public class PersonController {
         this.personService = personService;
     }
     //In Postman, GET localhost:8080/persons for a list for all people
-    @GetMapping("/persons")
-    List<Person> all() throws Exception {
-        return personService.getPersons();
+    @GetMapping("/person/all")
+    List<PersonModel> getAllPersons() throws Exception {
+        return personService.getAllPersons();
     }
 
-    //In Postman, GET localhost:8080/person/1 to get person 1 (Anders)
     @GetMapping("/person")
-    Person getOne(@RequestParam Integer id) throws Exception {
+    PersonModel getOne(@RequestParam Integer id) throws Exception {
         return personService.getPerson(id);
     }
 
     @GetMapping("/person/admin")
-    Person getAdmin() throws Exception {
+    PersonModel getAdmin() throws Exception {
         return personService.getAdmin();
     }
     //In Postman, in body
@@ -42,7 +40,7 @@ public class PersonController {
     //    "customerNumber": "5215215"
     //}
     @PostMapping("person/add")
-    private Person addCustomer(@RequestBody Person postPerson) throws Exception {
+    private PersonModel addCustomer(@RequestBody PersonModel postPerson) throws Exception {
         return personService.addPerson(postPerson);
     }
 }

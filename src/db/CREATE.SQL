@@ -85,12 +85,10 @@ create table RESERVATION
 
 create table LOG
 (
-    ID                INTEGER GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
+    ID                INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     TEXT              VARCHAR(5000),
     PERSON_ID         INTEGER
         constraint "LOG_PERSON_ID_fk"
             references PERSON(ID),
-    LOG_TIMESTAMP     TIMESTAMP,
-    constraint "LOG_pk"
-        primary key (ID, PERSON_ID)
+    LOG_TIMESTAMP     TIMESTAMP
 );
