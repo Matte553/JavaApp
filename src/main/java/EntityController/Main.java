@@ -10,6 +10,6 @@ public class Main {
 
         // TESTING
         EntityController ec = new EntityController();
-
+        ec.updateLog(3,1, "Detta är min log för lisa uppdaterad");
     }
 }

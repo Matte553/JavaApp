@@ -231,15 +231,15 @@ public class EntityController {
         return calendar;
     }
 
-    public void updateReparation(int personId, int reparationID, String description, String type){
+    public void updateReparation(int personId, int reparationID, String newDescription, String newType){
         String hql = "FROM ReparationsEntity r WHERE r.personId = :personId AND r.errandNumber= :reparationID";
         Query query = session.createQuery(hql).setParameter("personId", personId).setParameter("reparationID", reparationID);
         List e = query.getResultList();
 
         if(!e.isEmpty()){
             session.getTransaction().begin();
-            String hql2 = "UPDATE ReparationsEntity r SET r.personId= :personId,r.description= :description, r.type= :type  WHERE r.personId = :personId AND r.errandNumber= :reparationID";
-            Query query2 = session.createQuery(hql2).setParameter("personId", personId).setParameter("description", description).setParameter("type", type).setParameter("reparationID", reparationID);
+            String hql2 = "UPDATE ReparationsEntity r SET r.personId= :personId,r.description= :newDescription, r.type= :newType  WHERE r.personId = :personId AND r.errandNumber= :reparationID";
+            Query query2 = session.createQuery(hql2).setParameter("personId", personId).setParameter("newDescription", newDescription).setParameter("newType", newType).setParameter("reparationID", reparationID);
             query2.executeUpdate();
             System.out.println("Updated table");
             session.getTransaction().commit();
@@ -267,7 +267,7 @@ public class EntityController {
         }
     }
 
-    public void updateLog(int personID, int messageID, String text){
+    public void updateLog(int personID, int messageID, String newText){
         String hql = "FROM LogEntity l WHERE l.personId = :personID AND l.id= :messageID";
         Query query = session.createQuery(hql).setParameter("personID", personID).setParameter("messageID", messageID);
         List e = query.getResultList();
@@ -276,8 +276,8 @@ public class EntityController {
             long now = System.currentTimeMillis();
             Timestamp timestamp = new Timestamp(now);
             session.getTransaction().begin();
-            String hql2 = "UPDATE LogEntity l SET l.personId= :personID, l.text= :text, l.logTimestamp = :timestamp WHERE l.personId = :personID AND l.id= : messageID";
-            Query query2 = session.createQuery(hql2).setParameter("personID", personID).setParameter("text", text).setParameter("timestamp", timestamp).setParameter("messageID", messageID);
+            String hql2 = "UPDATE LogEntity l SET l.personId= :personID, l.text= :newText, l.logTimestamp = :timestamp WHERE l.personId = :personID AND l.id= : messageID";
+            Query query2 = session.createQuery(hql2).setParameter("personID", personID).setParameter("newText", newText).setParameter("timestamp", timestamp).setParameter("messageID", messageID);
             query2.executeUpdate();
             System.out.println("Updated table");
             session.getTransaction().commit();
