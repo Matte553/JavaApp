@@ -3,7 +3,7 @@ package EntityController;
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
 import jakarta.persistence.NoResultException;
-import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.Log;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
