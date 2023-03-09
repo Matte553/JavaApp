@@ -231,6 +231,65 @@ public class EntityController {
         return calendar;
     }
 
+    public void updateReparation(int personId, int reparationID, String description, String type){
+        String hql = "FROM ReparationsEntity r WHERE r.personId = :personId AND r.errandNumber= :reparationID";
+        Query query = session.createQuery(hql).setParameter("personId", personId).setParameter("reparationID", reparationID);
+        List e = query.getResultList();
+
+        if(!e.isEmpty()){
+            session.getTransaction().begin();
+            String hql2 = "UPDATE ReparationsEntity r SET r.personId= :personId,r.description= :description, r.type= :type  WHERE r.personId = :personId AND r.errandNumber= :reparationID";
+            Query query2 = session.createQuery(hql2).setParameter("personId", personId).setParameter("description", description).setParameter("type", type).setParameter("reparationID", reparationID);
+            query2.executeUpdate();
+            System.out.println("Updated table");
+            session.getTransaction().commit();
+        }
+        else {
+            System.err.println("There is no reparation for person: " + personId + " and reparationID: " + reparationID);
+        }
+    }
+
+    public void updateReservation(Integer personId, int reservationNumber, Integer newinstrumentID){
+        String hql = "FROM ReservationEntity r WHERE r.personId = :personId AND r.reservationNumber= :reservationNumber";
+        Query query = session.createQuery(hql).setParameter("personId", personId).setParameter("reservationNumber", reservationNumber);
+        List e = query.getResultList();
+
+        if(!e.isEmpty()){
+            session.getTransaction().begin();
+            String hql2 = "UPDATE ReservationEntity r SET r.personId= :personId,r.instrumentId= :newinstrumentID WHERE r.personId = :personId AND r.reservationNumber= :reservationNumber";
+            Query query2 = session.createQuery(hql2).setParameter("personId", personId).setParameter("newinstrumentID", newinstrumentID).setParameter("reservationNumber", reservationNumber);
+            query2.executeUpdate();
+            System.out.println("Updated table");
+            session.getTransaction().commit();
+        }
+        else {
+            System.err.println("There is no Reservation for person: " + personId + " and reservationNumber: " + reservationNumber);
+        }
+    }
+
+    public void updateLog(int personID, int messageID, String text){
+        String hql = "FROM LogEntity l WHERE l.personId = :personID AND l.id= :messageID";
+        Query query = session.createQuery(hql).setParameter("personID", personID).setParameter("messageID", messageID);
+        List e = query.getResultList();
+
+        if(!e.isEmpty()){
+            long now = System.currentTimeMillis();
+            Timestamp timestamp = new Timestamp(now);
+            session.getTransaction().begin();
+            String hql2 = "UPDATE LogEntity l SET l.personId= :personID, l.text= :text, l.logTimestamp = :timestamp WHERE l.personId = :personID AND l.id= : messageID";
+            Query query2 = session.createQuery(hql2).setParameter("personID", personID).setParameter("text", text).setParameter("timestamp", timestamp).setParameter("messageID", messageID);
+            query2.executeUpdate();
+            System.out.println("Updated table");
+            session.getTransaction().commit();
+        }
+        else {
+            System.err.println("There is no log for person: " + personID + " and messageID: " + messageID);
+        }
+
+
+
+    }
+
 
 
 
