@@ -37,21 +37,6 @@ public class EntityController {
 
     // <!-- PRIVATE METHODS. Used to retrieve or generate data needed for public functions /////////////////////////--!>
 
-    // Returns the Person that has the given person ID.
-    private PersonEntity getPersonWithID(int personID){
-        String hql = "FROM PersonEntity p WHERE p.id = :personID";
-        Query query = session.createQuery(hql).setParameter("personID", personID);
-
-        // Throws error if no instrument was found with this ID
-        PersonEntity person = new PersonEntity();
-        try {
-            person = (PersonEntity) query.getSingleResult();
-        }catch (NoResultException e){
-            System.err.println("There is no person with this ID: " + personID);
-        };
-        return person;
-    }
-
     // Returns the chatID for a chat that has the given person as a member;
     private int getChat(int personID){
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
@@ -250,6 +235,21 @@ public class EntityController {
 
 
     // <!-- PUBLIC GET METHODS, For retrieving data from database ///////////////////////////////////////////////// --!>
+
+    // Returns the Person that has the given person ID.
+    public PersonEntity getPersonWithID(int personID){
+        String hql = "FROM PersonEntity p WHERE p.id = :personID";
+        Query query = session.createQuery(hql).setParameter("personID", personID);
+
+        // Throws error if no instrument was found with this ID
+        PersonEntity person = new PersonEntity();
+        try {
+            person = (PersonEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no person with this ID: " + personID);
+        };
+        return person;
+    }
 
     // Returns the customer with the given customer number.
     public PersonEntity getCustomer(String customerNumber){
