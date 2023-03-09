@@ -7,13 +7,17 @@ import jakarta.persistence.*;
 public class ChatEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private int id;
     @Basic
-    @Column(name = "SUBJECT", nullable = true, length = 255)
+    @Column(name = "SUBJECT")
     private String subject;
 
     public ChatEntity() {
+    }
+
+    public ChatEntity(String subject) {
+        setSubject(subject);
     }
 
     public int getId() {
@@ -24,7 +28,6 @@ public class ChatEntity {
         this.id = id;
     }
 
-
     public String getSubject() {
         return subject;
     }
@@ -32,6 +35,7 @@ public class ChatEntity {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -51,10 +55,5 @@ public class ChatEntity {
         int result = id;
         result = 31 * result + (subject != null ? subject.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "ID: " + id + " SUBJECT: " + subject;
     }
 }

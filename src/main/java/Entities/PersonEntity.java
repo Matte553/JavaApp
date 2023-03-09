@@ -7,25 +7,35 @@ import jakarta.persistence.*;
 public class PersonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private int id;
     @Basic
-    @Column(name = "FIRSTNAME", nullable = true, length = 255)
+    @Column(name = "FIRSTNAME")
     private String firstname;
     @Basic
-    @Column(name = "LASTNAME", nullable = true, length = 255)
+    @Column(name = "LASTNAME")
     private String lastname;
     @Basic
-    @Column(name = "MAIL", nullable = true, length = 255)
+    @Column(name = "MAIL")
     private String mail;
     @Basic
-    @Column(name = "PHONE", nullable = true, length = 30)
+    @Column(name = "PHONE")
     private String phone;
     @Basic
-    @Column(name = "CUSTOMER_NUMBER", nullable = true, length = 6)
+    @Column(name = "CUSTOMER_NUMBER")
     private String customerNumber;
 
+
+    public PersonEntity(String firstname, String lastname, String phone, String mail, String customerNumber) {
+        setFirstname(firstname);
+        setLastname(lastname);
+        setPhone(phone);
+        setMail(mail);
+        setCustomerNumber(customerNumber);
+    }
+
     public PersonEntity() {
+
     }
 
     public int getId() {
@@ -68,7 +78,6 @@ public class PersonEntity {
         this.phone = phone;
     }
 
-
     public String getCustomerNumber() {
         return customerNumber;
     }
@@ -104,11 +113,5 @@ public class PersonEntity {
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (customerNumber != null ? customerNumber.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "ID: " + id + " FIRSTNAME: " + firstname + " LASTNAME: " + lastname + "\n"
-                + " PHONE: " + phone + " MAIL: " + mail + " CUSTOMER_NUMBER: " + customerNumber;
     }
 }

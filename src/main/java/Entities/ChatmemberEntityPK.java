@@ -1,27 +1,17 @@
 package Entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 
-@Entity
-@Table(name = "CHATMEMBER", schema = "APP")
-@IdClass(ChatmemberEntityPK.class)
-public class ChatmemberEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+import java.io.Serializable;
+
+public class ChatmemberEntityPK implements Serializable {
     @Column(name = "CHAT_ID")
-    private int chatId;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    private int chatId;
     @Column(name = "PERSON_ID")
+    @Id
     private int personId;
-
-    public ChatmemberEntity() {
-    }
-
-    public ChatmemberEntity(Integer chatID, Integer personID) {
-        setChatId(chatID);
-        setPersonId(personID);
-    }
 
     public int getChatId() {
         return chatId;
@@ -44,7 +34,7 @@ public class ChatmemberEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ChatmemberEntity that = (ChatmemberEntity) o;
+        ChatmemberEntityPK that = (ChatmemberEntityPK) o;
 
         if (chatId != that.chatId) return false;
         if (personId != that.personId) return false;

@@ -31,3 +31,4 @@ public class HibernateSetup {
         getSessionFactory().close();
     }
 }
+

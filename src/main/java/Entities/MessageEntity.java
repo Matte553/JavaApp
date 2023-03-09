@@ -9,25 +9,33 @@ import java.sql.Timestamp;
 public class MessageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private int id;
     @Basic
-    @Column(name = "CHAT_ID", nullable = false)
+    @Column(name = "CHAT_ID")
     private int chatId;
     @Basic
-    @Column(name = "PERSON_ID", nullable = false)
+    @Column(name = "PERSON_ID")
     private int personId;
     @Basic
-    @Column(name = "TEXT", nullable = true, length = 5000)
+    @Column(name = "TEXT")
     private String text;
     @Basic
-    @Column(name = "IMAGE", nullable = true, length = 1000)
+    @Column(name = "IMAGE")
     private String image;
     @Basic
-    @Column(name = "MESSAGE_TIMESTAMP", nullable = true)
+    @Column(name = "MESSAGE_TIMESTAMP")
     private Timestamp messageTimestamp;
 
     public MessageEntity() {
+    }
+
+    public MessageEntity(Integer personID, Integer chatID, String text, Timestamp timestamp, String imageURL) {
+        setPersonId(personID);
+        setChatId(chatID);
+        setText(text);
+        setMessageTimestamp(timestamp);
+        setImage(imageURL);
     }
 
     public int getId() {
@@ -105,11 +113,5 @@ public class MessageEntity {
         result = 31 * result + (image != null ? image.hashCode() : 0);
         result = 31 * result + (messageTimestamp != null ? messageTimestamp.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "ID: " + id + " CHAT_ID: " + chatId + " PERSON_ID: " + personId + "\n"
-                + " TEXT: " + text + " IMAGE: " + image + " MESSAGE_TIMESTAMP: " + messageTimestamp;
     }
 }
