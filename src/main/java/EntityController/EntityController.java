@@ -7,12 +7,17 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
 import Entities.*;
+
+import javax.naming.spi.ResolveResult;
 
 // This Class is used for Retrieving all data from database and also inserting data into database.
 public class EntityController {
@@ -84,6 +89,12 @@ public class EntityController {
         session.persist(reservation);
     }
 
+    // Creates new calendar entry and prepares it to be sent to the database
+    private void createCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+        CalendarEntity calendar = new CalendarEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
+        session.persist(calendar);
+    }
+
 
 
     // <!-- PUBLIC METHODS --!>
@@ -141,11 +152,19 @@ public class EntityController {
         session.getTransaction().commit();
     }
 
-    // Adds new reservations
+    // Adds new reservation
     // Commits the entry
     public void addReservation(Integer instrumentId, Integer personId) {
         session.beginTransaction();
         createReservation(instrumentId, personId);
+        session.getTransaction().commit();
+    }
+
+    // Adds new calendar entry
+    // Commits the entry
+    public void addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+        session.beginTransaction();
+        createCalendar(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
         session.getTransaction().commit();
     }
 
@@ -299,6 +318,32 @@ public class EntityController {
         return (ArrayList) list;
     }
 
+    // Fetches reparation with errand number that matches the reference number of a booking
+    public ReparationsEntity getReparationFromReferenceNumber(Integer referenceNumber) {
+        String hql = "SELECT E FROM ReparationsEntity E WHERE E.errandNumber = :referenceNumber";
+        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
+        ReparationsEntity reparation = new ReparationsEntity();
+        try {
+            reparation = (ReparationsEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no reparation with this errand number: " + referenceNumber);
+        };
+        return reparation;
+    }
+
+    // Fetches reservation with reservation number that matches the reference number of a booking
+    public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
+        String hql = "SELECT E FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
+        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
+        ReservationEntity reservation = new ReservationEntity();
+        try {
+            reservation = (ReservationEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no reservation with this reservation number: " + referenceNumber);
+        };
+        return reservation;
+    }
+
 
 
     // Returns an arraylist with all Persons from database
@@ -370,6 +415,13 @@ public class EntityController {
         Query query = session.createQuery(("from InstrumentPicturesEntity"));
         List list = query.list();
         return (ArrayList<InstrumentPicturesEntity>) list;
+    }
+
+    // Returns an arraylist with all Calendar entries from database
+    public ArrayList<CalendarEntity> getCalendar() {
+        Query query = session.createQuery(("from CalendarEntity"));
+        List list = query.list();
+        return (ArrayList<CalendarEntity>) list;
     }
 
     // Generates a random customer number with 6 digits.

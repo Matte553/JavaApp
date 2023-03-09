@@ -83,6 +83,21 @@ create table RESERVATION
         primary key (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID)
 );
 
+create table CALENDAR
+(
+    ID               INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
+    START_TIME       time        not null,
+    STOP_TIME        time        not null,
+    START_DATE       date        not null,
+    STOP_DATE        date        not null,
+    SUBJECT          VARCHAR(50) not null,
+    FREE_TEXT        VARCHAR(5000),
+    REFERENCE_NUMBER INTEGER     not null,
+    PERSON_ID        INTEGER     not null
+        constraint "CALENDAR_PERSON_ID_fk"
+            references PERSON(ID)
+);
+
 INSERT INTO PERSON (FIRSTNAME, LASTNAME, MAIL, PHONE, CUSTOMER_NUMBER) VALUES('Anders', 'Andersson', 'AndersAndersson@gmail.com', '060-0000000', '000000');
 INSERT INTO PERSON (FIRSTNAME, LASTNAME, MAIL, PHONE, CUSTOMER_NUMBER) VALUES('Anton', 'Persson', 'AntonPerson@gmail.com', '070-11111111', '111111');
 INSERT INTO PERSON (FIRSTNAME, LASTNAME, MAIL, PHONE, CUSTOMER_NUMBER) VALUES('Lisa', 'Karlsson', 'LisaKarlsson@gmail.com', '070-2222222', '222222');
