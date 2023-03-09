@@ -133,7 +133,7 @@ public class EntityController {
 
     // <!-- PUBLIC ADD METHODS, For inserting data into database ///////////////////////////////////////////////// --!>
 
-    // Adds Customer to database and initiates a chat with Admin, Returns the customer;
+    // Adds Customer to database and initiates a chat with Admin, Returns the customer //;
     public PersonEntity addCustomer(PersonEntity person, String subject) throws Exception {
 
         session.beginTransaction();

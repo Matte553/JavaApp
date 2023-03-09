@@ -1,37 +1,16 @@
 package EntityController;
 
 import Entities.*;
-
 import java.util.ArrayList;
-//Irrelevant to the API-team
+
+// Kalender Tabell i DB: KALENDER(id, starttid, sluttid, startdatum, slutdatum, errandNumber, ämne, fritext);;
+
+
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        // New Controller
-        //EntityController ec = new EntityController();
-        //ec.insertTestData();
-
-        // Read from all database tables
-
-        //ArrayList<PersonEntity> persons         = ec.getPersons();
-
-        /*
-        ArrayList<ChatEntity> chats             = ec.getChats();
-        ArrayList<ChatmemberEntity> chatMembers = ec.getChatMembers();
-        ArrayList<MessageEntity> messages       = ec.getMessages();
-        */
-
-        //ArrayList<MessageEntity> messages = ec.getMessagesFromChatID(1,2);
-
-        // Iterate through list
-        /*for (PersonEntity m: persons) {
-            System.out.println(m);
-        }*/
-
-
-
-
-
+        // TESTING
+        EntityController ec = new EntityController();
 
     }
 }
