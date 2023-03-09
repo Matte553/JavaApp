@@ -15,7 +15,7 @@ import java.util.Random;
 
 import Entities.*;
 
-// This Class is used for Retrieving all data from database and also inserting data into database.
+// This Class is used for Retrieving all data from database and also inserting data into database..
 public class EntityController {
     SessionFactory sessionFactory;
     Session session;
