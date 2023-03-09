@@ -18,13 +18,13 @@ public class CalenderController {
         this.service = service;
     }
 
-    @GetMapping("/Calender/all")
+    @GetMapping("/calender/all")
     List<CalenderModel> getAllCalenderEvent() {
         return service.getAllCalenderEvent();
     }
 
 
-    @PostMapping("/Calender/add")
+    @PostMapping("/calender/add")
     CalenderModel addCalenderEvent(CalenderModel calenderEvent) {
         return service.addCalenderEvent(calenderEvent);
     }
