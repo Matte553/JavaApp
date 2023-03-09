@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+        <h:outputScript library="scripts" name="script.js"/>
+    </h:head>
+    <body>
+    <ui:include src="header.xhtml"/>
+        <div>
+
+            <h:form id="form">
+                <div>
+                    <h3>Rubrik</h3>
+                </div>
+                <div>
+                    <h:outputLabel for="customerId" styleClass="input-lables">
+                        Kund Id:
+                    </h:outputLabel>
+                    <h:inputText 
+                        id="customerId" 
+                        value="#{test.name}"  
+                        a:placeholder="Skriv in Kund id" 
+                        validator="#{chatFormValidatorBean.validateCustomerId}">
+                    </h:inputText>
+                    <h:message for="customerId" id="m_customerId" errorClass="error"></h:message>
+                </div>
+
+                <div>
+                    <h4>Har du inget ärende eller bokning? <h:link>Boka här</h:link></h4>
+                    <h4>Eller skapa en konversation direket med Anders här!</h4>
+                </div>
+
+                <div>
+                    <h:outputLabel for="firstName" styleClass="input-lables">
+                        Förnamn:
+                    </h:outputLabel>
+                    <h:inputText 
+                        id="firstName"
+                        value="#{test.name}" 
+                        a:placeholder="Skriv in förnamn" 
+                        validator="#{chatFormValidatorBean.validateEmptyField}">
+                    </h:inputText>
+                    <h:message for="firstName" id="m_firstName" errorClass="error"></h:message>
+                </div>
+
+                <div>
+                    <h:outputLabel for="lastName" styleClass="input-lables">
+                        Efternamn:
+                    </h:outputLabel>
+                    <h:inputText 
+                        id="lastName"
+                        value="#{test.name}" 
+                        a:placeholder="Skriv in efternamn" 
+                        validator="#{chatFormValidatorBean.validateEmptyField}">
+                    </h:inputText>
+                    <h:message for="lastName" id="m_lastName" errorClass="error"></h:message>
+                </div>
+
+                <div>
+                    <h:outputLabel for="emailAddress" styleClass="input-lables">
+                        E-postadress:
+                    </h:outputLabel>
+                    <h:inputText 
+                        id="emailAddress"
+                        value="#{test.name}" 
+                        a:placeholder="Skriv in e-postadress" 
+                        validator="#{chatFormValidatorBean.validateEmail}">
+                    </h:inputText>
+                    <h:message for="emailAddress" id="m_emailAddress" errorClass="error"></h:message>
+                </div>
+
+                <div>
+                    <h:outputLabel for="telephone" styleClass="input-lables">
+                        Telefonnummer:
+                    </h:outputLabel>
+                    <h:inputText 
+                        id="telephone"
+                        value="#{test.name}" 
+                        a:placeholder="Skriv in telefonnummer" 
+                        validator="#{chatFormValidatorBean.validateTelephone}">
+                    </h:inputText>
+                    <h:message for="telephone" id="m_telephone" errorClass="error"></h:message>
+                </div>
+
+                <div>
+                    <h:commandButton 
+                        id="submit" 
+                        value="Start chatt" 
+                        action="#{chatFormValidatorBean.submit}"
+                        styleClass="btn success">
+                        <f:ajax 
+                            execute="@form" 
+                            render="m_customerId m_firstName m_lastName m_emailAddress m_telephone" />
+                    </h:commandButton>
+                </div>
+            </h:form>
+        </div>
+    </body>
+</html>

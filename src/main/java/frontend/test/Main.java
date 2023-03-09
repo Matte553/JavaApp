@@ -1,20 +1,20 @@
-package se.miun.dt170g.test;
+package frontend.test;
 
-import Entities.*;
-import jakarta.persistence.*;
-import jakarta.persistence.spi.PersistenceProvider;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-
-import java.util.List;
-import java.sql.Timestamp;
+import frontend.calendar.Person;
+import frontend.calendar.Persons;
 
 // Helloj
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        SessionFactory sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
+
+        Persons pe = new Persons();
+        System.out.println("\nSize: " + pe.getSize());
+        for (Person p : pe.getList()) {
+            System.out.println("id: " + p.getId() + ": " + p.getFirstName() + " " + p.getLastName() + " <" + p.getPhoneNumber() + ">");
+        }
+
+        /*SessionFactory sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
         Session session = sessionFactory.openSession();                     // Skapa en session för koppling.
         session.beginTransaction();                                         // Starta någonting som behövs
 
@@ -61,6 +61,6 @@ public class Main {
         List list=query.list();
         list.forEach(System.out::println);
 
-        session.getTransaction().commit();
+        session.getTransaction().commit();*/
     }
 }
