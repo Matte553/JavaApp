@@ -6,8 +6,8 @@ import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@Table(name = "CALENDAR", schema = "APP")
-public class CalendarEntity {
+@Table(name = "CALENDAR_EVENT", schema = "APP")
+public class CalendarEventEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID", nullable = false)
@@ -37,10 +37,10 @@ public class CalendarEntity {
     @Column(name = "PERSON_ID", nullable = false)
     private int personId;
 
-    public CalendarEntity() {
+    public CalendarEventEntity() {
     }
 
-    public CalendarEntity(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+    public CalendarEventEntity(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
         setStartTime(startTime);
         setStopTime(stopTime);
         setStartDate(startDate);
@@ -128,7 +128,7 @@ public class CalendarEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CalendarEntity that = (CalendarEntity) o;
+    CalendarEventEntity that = (CalendarEventEntity) o;
 
         if (id != that.id) return false;
         if (referenceNumber != that.referenceNumber) return false;
