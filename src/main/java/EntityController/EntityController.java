@@ -23,7 +23,9 @@ public class EntityController {
     Session session;
     Integer AdminID = 1;
 
-    // Constructor that initiates a connection to DB.
+
+    /* Constructor that initiates a connection to DB. A new connection to DB is created when a
+       new EntityController is created. */
     public EntityController() throws Exception {
         sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
         session = sessionFactory.openSession();             // Skapa en session för koppling.
@@ -35,7 +37,7 @@ public class EntityController {
 
     // <!-- PRIVATE METHODS. Used to retrieve or generate data needed for public functions /////////////////////////--!>
 
-    // Return Person with the given person ID.
+    // Returns the Person that has the given person ID.
     private PersonEntity getPersonWithID(int personID){
         String hql = "FROM PersonEntity p WHERE p.id = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
@@ -50,7 +52,7 @@ public class EntityController {
         return person;
     }
 
-    // Returns the chatID for a chat that has the person as a member;
+    // Returns the chatID for a chat that has the given person as a member;
     private int getChat(int personID){
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
@@ -163,8 +165,7 @@ public class EntityController {
     }
 
 
-    // Adds new messages to database
-    // Commits the entry
+    // Creates a new message and adds it to database
     public MessageEntity addMessage(Integer fromID, Integer toID, String text, String imageURL) {
 
         int chatID;
@@ -187,8 +188,7 @@ public class EntityController {
         return message;
     }
 
-    // Adds new instruments to the database
-    // Commits the entry
+    // Creates a new Instrument and adds it to database
     public InstrumentEntity addInstrument(String type, String name, Double price, String description) {
         session.beginTransaction();
         InstrumentEntity instrument = new InstrumentEntity(type, name, price, description);
@@ -197,8 +197,7 @@ public class EntityController {
         return instrument;
     }
 
-    // Adds new instrument images to the database
-    // Commits the entry
+    // Creates a new InstrumentPicture and adds it to database
     public InstrumentPicturesEntity addInstrumentPicture(String imageURL, Integer instrumentId) {
         session.beginTransaction();
         InstrumentPicturesEntity instrumentPicture = new InstrumentPicturesEntity(imageURL, instrumentId);
@@ -207,8 +206,7 @@ public class EntityController {
         return instrumentPicture;
     }
 
-    // Adds new reparation
-    // Commits the entry
+    // Creates a new Reparation and adds it to database
     public ReparationsEntity addReparation(Integer personId, String description, String type) {
         session.beginTransaction();
         Integer errandNumber = generateErrandNumber();
@@ -218,8 +216,7 @@ public class EntityController {
         return reparation;
     }
 
-    // Adds new reservation
-    // Commits the entry
+    // Creates a new Reservation and adds it to database
     public ReservationEntity addReservation(Integer instrumentId, Integer personId) {
         session.beginTransaction();
         Integer reservationNumber = generateReservationNumber();
@@ -229,6 +226,7 @@ public class EntityController {
         return reservation;
     }
 
+    // Creates a new Log and adds it to database
     public LogEntity addLog(int personID, String text){
         session.beginTransaction();
         long now = System.currentTimeMillis();
@@ -239,6 +237,7 @@ public class EntityController {
         return logEntity;
     }
 
+    // Creates a new kalender and adds it to database
     public CalendarEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
         session.beginTransaction();
         CalendarEntity calendar = new CalendarEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
@@ -252,11 +251,7 @@ public class EntityController {
 
     // <!-- PUBLIC GET METHODS, For retrieving data from database ///////////////////////////////////////////////// --!>
 
-    // Adds new calendar entry
-    // Commits the entry
-
-
-    // Returns the customer with the exact customer number.
+    // Returns the customer with the given customer number.
     public PersonEntity getCustomer(String customerNumber){
         String hql = "SELECT E FROM PersonEntity E WHERE E.customerNumber = :customerNumber";
         Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
@@ -269,7 +264,7 @@ public class EntityController {
         return p;
     }
 
-    // Fetches all imageURLs for one instrument
+    // Fetches all imageURLs for one instrument with the given instrumentID
     public ArrayList<String> getImagesFromInstrumentId(Integer instrumentId) {
         String hql = "SELECT E.imageUrl FROM InstrumentPicturesEntity E WHERE E.instrumentId = :instrumentId";
         Query query = session.createQuery(hql).setParameter("instrumentId", instrumentId);
