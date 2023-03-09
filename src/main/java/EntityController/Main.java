@@ -11,14 +11,6 @@ public class Main {
 
         // TESTING
         EntityController ec = new EntityController();
-        /*
-        ArrayList<LogEntity> e = ec.getLogWithID(4);
-
-        for(LogEntity i: e){
-            System.out.println(i.getText());
-        }
-        */
-
 
     }
 }
