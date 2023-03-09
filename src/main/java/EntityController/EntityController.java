@@ -37,12 +37,15 @@ public class EntityController {
     private PersonEntity getPersonWithID(int personID){
         String hql = "FROM PersonEntity p WHERE p.id = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
-        List<PersonEntity> result = query.list();
-        if(result.isEmpty()){
-            System.err.println("No person was found with id: " + personID);
-            return null;
-        }
-        return result.get(0);
+
+        // Throws error if no instrument was found with this ID
+        PersonEntity person = new PersonEntity();
+        try {
+            person = (PersonEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no person with this ID: " + personID);
+        };
+        return person;
     }
 
     // Returns the chatID for a chat that has the person as a member;
@@ -64,12 +67,14 @@ public class EntityController {
         // SELECT * FROM Chatmember INNER JOIN CHAT C ON CHATMEMBER.CHAT_ID=C.ID WHERE PERSON_ID=2 AND SUBJECT='Reservation';
         String hql = "SELECT member.chatId FROM ChatmemberEntity member JOIN ChatEntity chat ON member.chatId=chat.id WHERE member.personId = :personID AND chat.subject = :subject";
         Query query = session.createQuery(hql).setParameter("personID", personID).setParameter("subject",subject);
-        List result = query.list();
-        if(result.isEmpty()){
-            System.err.println("No chat exists for personID " + personID + " and subject " + subject);
-            return null;
-        }
-        return (Integer) result.get(0);
+
+        Integer chatID = 0;
+        try {
+            chatID = (Integer) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no chat for person with ID: " + personID + " and chat subject: " + subject);
+        };
+        return chatID;
     }
 
     // Generates a random customer number with 6 digits.
