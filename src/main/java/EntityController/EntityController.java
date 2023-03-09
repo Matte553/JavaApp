@@ -23,7 +23,7 @@ public class EntityController {
     Session session;
     Integer AdminID = 1;
 
-
+    //
     /* Constructor that initiates a connection to DB. A new connection to DB is created when a
        new EntityController is created. */
     public EntityController() throws Exception {
