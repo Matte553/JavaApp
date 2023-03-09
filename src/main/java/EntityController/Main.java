@@ -11,6 +11,8 @@ public class Main {
 
         // TESTING
         EntityController ec = new EntityController();
+        PersonEntity p = ec.getAdmin();
+        System.out.println(p.getFirstname());
 
     }
 }
