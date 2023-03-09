@@ -80,7 +80,7 @@ create table RESERVATION
             references PERSON(ID)
 );
 
-create table CALENDAR
+create table CALENDAR_EVENT
 (
     ID               INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     START_TIME       time        not null,

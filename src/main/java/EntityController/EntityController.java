@@ -223,12 +223,71 @@ public class EntityController {
     }
 
     // Creates a new kalender and adds it to database
-    public CalendarEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+    public CalendarEventEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
         session.beginTransaction();
-        CalendarEntity calendar = new CalendarEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
+        CalendarEventEntity calendar = new CalendarEventEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
         session.persist(calendar);
         session.getTransaction().commit();
         return calendar;
+    }
+
+    public void updateReparation(int personId, int reparationID, String newDescription, String newType){
+        String hql = "FROM ReparationsEntity r WHERE r.personId = :personId AND r.errandNumber= :reparationID";
+        Query query = session.createQuery(hql).setParameter("personId", personId).setParameter("reparationID", reparationID);
+        List e = query.getResultList();
+
+        if(!e.isEmpty()){
+            session.getTransaction().begin();
+            String hql2 = "UPDATE ReparationsEntity r SET r.personId= :personId,r.description= :newDescription, r.type= :newType  WHERE r.personId = :personId AND r.errandNumber= :reparationID";
+            Query query2 = session.createQuery(hql2).setParameter("personId", personId).setParameter("newDescription", newDescription).setParameter("newType", newType).setParameter("reparationID", reparationID);
+            query2.executeUpdate();
+            System.out.println("Updated table");
+            session.getTransaction().commit();
+        }
+        else {
+            System.err.println("There is no reparation for person: " + personId + " and reparationID: " + reparationID);
+        }
+    }
+
+    public void updateReservation(Integer personId, int reservationNumber, Integer newinstrumentID){
+        String hql = "FROM ReservationEntity r WHERE r.personId = :personId AND r.reservationNumber= :reservationNumber";
+        Query query = session.createQuery(hql).setParameter("personId", personId).setParameter("reservationNumber", reservationNumber);
+        List e = query.getResultList();
+
+        if(!e.isEmpty()){
+            session.getTransaction().begin();
+            String hql2 = "UPDATE ReservationEntity r SET r.personId= :personId,r.instrumentId= :newinstrumentID WHERE r.personId = :personId AND r.reservationNumber= :reservationNumber";
+            Query query2 = session.createQuery(hql2).setParameter("personId", personId).setParameter("newinstrumentID", newinstrumentID).setParameter("reservationNumber", reservationNumber);
+            query2.executeUpdate();
+            System.out.println("Updated table");
+            session.getTransaction().commit();
+        }
+        else {
+            System.err.println("There is no Reservation for person: " + personId + " and reservationNumber: " + reservationNumber);
+        }
+    }
+
+    public void updateLog(int personID, int messageID, String newText){
+        String hql = "FROM LogEntity l WHERE l.personId = :personID AND l.id= :messageID";
+        Query query = session.createQuery(hql).setParameter("personID", personID).setParameter("messageID", messageID);
+        List e = query.getResultList();
+
+        if(!e.isEmpty()){
+            long now = System.currentTimeMillis();
+            Timestamp timestamp = new Timestamp(now);
+            session.getTransaction().begin();
+            String hql2 = "UPDATE LogEntity l SET l.personId= :personID, l.text= :newText, l.logTimestamp = :timestamp WHERE l.personId = :personID AND l.id= : messageID";
+            Query query2 = session.createQuery(hql2).setParameter("personID", personID).setParameter("newText", newText).setParameter("timestamp", timestamp).setParameter("messageID", messageID);
+            query2.executeUpdate();
+            System.out.println("Updated table");
+            session.getTransaction().commit();
+        }
+        else {
+            System.err.println("There is no log for person: " + personID + " and messageID: " + messageID);
+        }
+
+
+
     }
 
 
@@ -364,7 +423,7 @@ public class EntityController {
 
     // Fetches reparation with errand number that matches the reference number of a booking
     public ReparationsEntity getReparationFromReferenceNumber(Integer referenceNumber) {
-        String hql = "SELECT E FROM ReparationsEntity E WHERE E.errandNumber = :referenceNumber";
+        String hql = "FROM ReparationsEntity E WHERE E.errandNumber = :referenceNumber";
         Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
         ReparationsEntity reparation = new ReparationsEntity();
         try {
@@ -377,7 +436,7 @@ public class EntityController {
 
     // Fetches reservation with reservation number that matches the reference number of a booking
     public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
-        String hql = "SELECT E FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
+        String hql = "FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
         Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
         ReservationEntity reservation = new ReservationEntity();
         try {
@@ -386,6 +445,20 @@ public class EntityController {
             System.err.println("There is no reservation with this reservation number: " + referenceNumber);
         };
         return reservation;
+    }
+
+    // Returns list of all events in a given month. Returns empty list if no events that month
+    // 1 = January, 2 = February, etc.
+    public ArrayList<CalendarEventEntity> getEventsWithinMonth(Integer month){
+        String hql = "FROM CalendarEventEntity E WHERE month(E.startDate) = :month";
+        Query query = session.createQuery(hql).setParameter("month", month);
+        List<CalendarEventEntity> result = null;
+        try {
+            result = query.list();
+        }catch (NoResultException e){
+            System.err.println("There are no bookings in this month: " + month);
+        };
+        return (ArrayList<CalendarEventEntity>) result;
     }
 
 
@@ -473,10 +546,10 @@ public class EntityController {
     }
     
     // Returns an arraylist with all Calendar entries from database
-    public ArrayList<CalendarEntity> getCalendar() {
-        Query query = session.createQuery(("from CalendarEntity"));
+    public ArrayList<CalendarEventEntity> getCalendarEvent() {
+    Query query = session.createQuery(("from CalendarEventEntity"));
         List list = query.list();
-        return (ArrayList<CalendarEntity>) list;
+        return (ArrayList<CalendarEventEntity>) list;
     }
 
     // Returns true if given customerNumber is the Admin
