@@ -1,6 +1,6 @@
 package api.model;
 
-public class Person {
+public class PersonModel {
     private int id;
     private String fname;
     private String lname;
@@ -8,10 +8,10 @@ public class Person {
     private String phone;
     private String customerNumber;
 
-    public Person() {
+    public PersonModel() {
     }
 
-    public Person(int id, String fname, String lname, String email, String phone, String customerNumber) {
+    public PersonModel(int id, String fname, String lname, String email, String phone, String customerNumber) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;

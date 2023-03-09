@@ -5,7 +5,7 @@ create table PERSON
     LASTNAME        VARCHAR(255),
     MAIL            VARCHAR(255),
     PHONE           VARCHAR(30),
-    CUSTOMER_NUMBER INTEGER
+    CUSTOMER_NUMBER VARCHAR(255)
 );
 
 create table CHAT
@@ -96,4 +96,13 @@ create table CALENDAR
     PERSON_ID        INTEGER     not null
         constraint "CALENDAR_PERSON_ID_fk"
             references PERSON(ID)
+);
+create table LOG
+(
+    ID                INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
+    TEXT              VARCHAR(5000),
+    PERSON_ID         INTEGER
+        constraint "LOG_PERSON_ID_fk"
+            references PERSON(ID),
+    LOG_TIMESTAMP     TIMESTAMP
 );

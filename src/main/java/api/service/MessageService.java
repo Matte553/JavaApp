@@ -1,11 +1,12 @@
 package api.service;
 
-import api.model.Message;
+import api.model.MessageModel;
 import Entities.MessageEntity;
 import EntityController.EntityController;
 import api.model.MessageModelPost;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MessageService {
@@ -14,30 +15,39 @@ public class MessageService {
     public MessageService() throws Exception {
     }
 
-    public ArrayList<Message> getMessages(int id1) throws Exception {
-        ArrayList<MessageEntity> dblist = ec.getMessages(id1);
-        //
-        ArrayList<Message> MessageList = new ArrayList<>();
-        for (MessageEntity m : dblist) {
-            MessageList.add(new Message(
-                    m.getId(), 
-                    m.getChatId(), 
-                    m.getPersonId(), 
-                    m.getText(), 
-                    m.getImage(), 
-                    m.getMessageTimestamp()));
-        }
-        return MessageList;
+
+    private MessageModel convertMessageEntity(MessageEntity value) {
+        return new MessageModel(
+                value.getId(),
+                value.getChatId(),
+                value.getPersonId(),
+                value.getText(),
+                value.getImage(),
+                value.getMessageTimestamp());
     }
 
-    /*
-    public void addMessage(Integer persId, String text, String picUrl) {
-        //ec.addMessage(persId, text, picUrl);
+    private List<MessageModel> convertListEntity(ArrayList<MessageEntity> dbList) {
+        List<MessageModel> apiList = new ArrayList<>();
+
+        for (MessageEntity entity : dbList) {
+            apiList.add( this.convertMessageEntity(entity) );
+        }
+        return apiList;
     }
-    */
+
+    public List<MessageModel> getMessages(int id1) throws Exception {
+        ArrayList<MessageEntity> dbList = ec.getMessages(id1);
+        return this.convertListEntity(dbList);
+    }
+
+    public List<MessageModel> getAllMessages() throws Exception {
+        ArrayList<MessageEntity> dbList = ec.getMessages();
+        return this.convertListEntity(dbList);
+    }
 
     public MessageModelPost addMessage(MessageModelPost postMessage) {
-        ec.addMessage(postMessage.getFromID(), postMessage.getToID(), postMessage.getText(), postMessage.getImageUrl());
+        MessageEntity message = ec.addMessage(postMessage.getFromID(), postMessage.getToID(), postMessage.getText(), postMessage.getImageUrl());
+        // Blev lite pannkaka här med att returnera MessageEntity -> MessageModel eftersom det är ju MessageModelPost som ska ges tillbaka till klienten.
         return postMessage;
     }
 }

@@ -3,8 +3,8 @@ package EntityController;
 import Entities.*;
 import java.util.ArrayList;
 
-// Log Tabell i DB: LOG(kundid, text, pictures, datetime);
-// Kalender Tabell i DB: CALENDAR(starttid, sluttid, startdatum, slutdatum, ämne, fritext);
+// Kalender Tabell i DB: KALENDER(id, starttid, sluttid, startdatum, slutdatum, errandNumber, ämne, fritext);
+
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -12,6 +12,5 @@ public class Main {
         // TESTING
         EntityController ec = new EntityController();
 
-        ec.addReservation(4, 3);
     }
 }
