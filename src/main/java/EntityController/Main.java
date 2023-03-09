@@ -10,5 +10,6 @@ public class Main {
 
         // TESTING
         EntityController ec = new EntityController();
+        ec.addLog(2, "Detta är min log för Anton");
     }
 }
