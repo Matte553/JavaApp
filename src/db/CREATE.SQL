@@ -97,6 +97,7 @@ create table CALENDAR
         constraint "CALENDAR_PERSON_ID_fk"
             references PERSON(ID)
 );
+
 create table LOG
 (
     ID                INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
