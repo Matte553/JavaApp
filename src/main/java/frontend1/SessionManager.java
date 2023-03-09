@@ -1,8 +1,7 @@
-package chat;
+package frontend1;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
 

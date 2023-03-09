@@ -1,4 +1,4 @@
-package chat;
+package frontend1;
 
 import jakarta.faces.application.ResourceHandler;
 import jakarta.servlet.*;

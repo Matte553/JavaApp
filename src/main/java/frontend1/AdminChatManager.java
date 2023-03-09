@@ -1,4 +1,4 @@
-package chat;
+package frontend1;
 
 import Entities.*;
 import EntityController.EntityController;

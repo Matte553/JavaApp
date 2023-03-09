@@ -1,8 +1,7 @@
-package chat;
+package frontend1;
 
 import Entities.*;
 import EntityController.EntityController;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.push.Push;
 import jakarta.faces.push.PushContext;

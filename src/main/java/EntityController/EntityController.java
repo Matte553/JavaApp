@@ -233,7 +233,7 @@ public class EntityController implements Serializable {
     // Returns all chats ID that belong to a given subject
     private Integer getChatWithSubject(int personID, String subject){
         // SELECT * FROM Chatmember INNER JOIN CHAT C ON CHATMEMBER.CHAT_ID=C.ID WHERE PERSON_ID=2 AND SUBJECT='Reservation';
-        String hql = "SELECT member.chatId FROM ChatmemberEntity member JOIN ChatEntity chat ON member.chatId=chat.id WHERE member.personId = :personID AND chat.subject = :subject";
+        String hql = "SELECT member.chatId FROM ChatmemberEntity member JOIN ChatEntity chat ON member.chatId=frontend1.id WHERE member.personId = :personID AND frontend1.subject = :subject";
         Query query = session.createQuery(hql).setParameter("personID", personID).setParameter("subject",subject);
         List result = query.list();
         if(result.isEmpty()){
@@ -257,7 +257,7 @@ public class EntityController implements Serializable {
 
     // Return an ArrayList with Persons that have a chat with the given subject name.
     public ArrayList<PersonEntity> getCustomersWithSubject(String subject){
-        String hql = "SELECT member.personId FROM ChatmemberEntity member JOIN ChatEntity chat ON member.chatId=chat.id WHERE chat.subject = :subject AND member.personId!=1";
+        String hql = "SELECT member.personId FROM ChatmemberEntity member JOIN ChatEntity chat ON member.chatId=frontend1.id WHERE frontend1.subject = :subject AND member.personId!=1";
         Query query = session.createQuery(hql).setParameter("subject", subject).setParameter("subject",subject);
         List<Integer> result = query.list();
 

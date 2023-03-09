@@ -1,8 +1,8 @@
-package frontend;
+package frontend1;
 
 import Entities.InstrumentEntity;
 import EntityController.EntityController;
-import chat.FileUpload;
+import frontend1.FileUpload;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
