@@ -3,17 +3,19 @@ package EntityController;
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
 import jakarta.persistence.NoResultException;
-import org.apache.commons.logging.Log;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import Entities.*;
+
 
 // This Class is used for Retrieving all data from database and also inserting data into database.
 public class EntityController {
@@ -216,7 +218,7 @@ public class EntityController {
         return reparation;
     }
 
-    // Adds new reservations
+    // Adds new reservation
     // Commits the entry
     public ReservationEntity addReservation(Integer instrumentId, Integer personId) {
         session.beginTransaction();
@@ -237,12 +239,22 @@ public class EntityController {
         return logEntity;
     }
 
-
+    public CalendarEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+        session.beginTransaction();
+        CalendarEntity calendar = new CalendarEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
+        session.persist(calendar);
+        session.getTransaction().commit();
+        return calendar;
+    }
 
 
 
 
     // <!-- PUBLIC GET METHODS, For retrieving data from database ///////////////////////////////////////////////// --!>
+
+    // Adds new calendar entry
+    // Commits the entry
+
 
     // Returns the customer with the exact customer number.
     public PersonEntity getCustomer(String customerNumber){
@@ -355,6 +367,32 @@ public class EntityController {
         return (ArrayList) list;
     }
 
+    // Fetches reparation with errand number that matches the reference number of a booking
+    public ReparationsEntity getReparationFromReferenceNumber(Integer referenceNumber) {
+        String hql = "SELECT E FROM ReparationsEntity E WHERE E.errandNumber = :referenceNumber";
+        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
+        ReparationsEntity reparation = new ReparationsEntity();
+        try {
+            reparation = (ReparationsEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no reparation with this errand number: " + referenceNumber);
+        };
+        return reparation;
+    }
+
+    // Fetches reservation with reservation number that matches the reference number of a booking
+    public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
+        String hql = "SELECT E FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
+        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
+        ReservationEntity reservation = new ReservationEntity();
+        try {
+            reservation = (ReservationEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no reservation with this reservation number: " + referenceNumber);
+        };
+        return reservation;
+    }
+
 
 
     // Returns an arraylist with all Persons from database
@@ -428,15 +466,22 @@ public class EntityController {
         return (ArrayList<InstrumentPicturesEntity>) list;
     }
 
-    public ArrayList<LogEntity> getLogWithID(int personID){
+    public ArrayList<LogEntity> getLogWithID(int personID) {
         String hql = "FROM LogEntity WHERE personId= :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
         ArrayList<LogEntity> result = (ArrayList<LogEntity>) query.getResultList();
-        if(result.isEmpty()){
+        if (result.isEmpty()) {
             System.err.println("There is no log for person ID: " + personID);
             return null;
         }
         return result;
+    }
+    
+    // Returns an arraylist with all Calendar entries from database
+    public ArrayList<CalendarEntity> getCalendar() {
+        Query query = session.createQuery(("from CalendarEntity"));
+        List list = query.list();
+        return (ArrayList<CalendarEntity>) list;
     }
 
     // Returns true if given customerNumber is the Admin
