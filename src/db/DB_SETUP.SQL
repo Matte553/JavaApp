@@ -25,24 +25,22 @@ create table INSTRUMENT
 
 create table INSTRUMENT_PICTURES
 (
+    ID            INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     IMAGE_URL     VARCHAR(1600) not null,
     INSTRUMENT_ID INTEGER       not null
         constraint "INSTRUMENT_PICTURES_INSTRUMENT_ID_fk"
-            references INSTRUMENT(ID),
-    constraint "INSTRUMENT_PICTURES_pk"
-        primary key (IMAGE_URL, INSTRUMENT_ID)
+            references INSTRUMENT(ID)
 );
 
 create table CHATMEMBER
 (
+    ID        INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     CHAT_ID   INTEGER not null
         constraint "CHATMEMBER_CHAT_ID_fk"
             references CHAT(ID),
     PERSON_ID INTEGER not null
         constraint "CHATMEMBER_PERSON_ID_fk"
-            references PERSON(ID),
-    constraint "CHATMEMBER_pk"
-        primary key (PERSON_ID, CHAT_ID)
+            references PERSON(ID)
 );
 
 create table MESSAGE
@@ -61,26 +59,25 @@ create table MESSAGE
 
 create table REPARATIONS
 (
+    ID            INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     ERRAND_NUMBER INTEGER not null,
     PERSON_ID     INTEGER not null
         constraint "REPARATIONS_PERSON_ID_fk"
             references PERSON(ID),
     DESCRIPTION   VARCHAR(3600),
-    TYPE          VARCHAR(255),
-    primary key (ERRAND_NUMBER, PERSON_ID)
+    TYPE          VARCHAR(255)
 );
 
 create table RESERVATION
 (
+    ID                 INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1),
     RESERVATION_NUMBER INTEGER not null,
     INSTRUMENT_ID      INTEGER not null
         constraint "RESERVATION_INSTRUMENT_ID_fk"
             references INSTRUMENT(ID),
     PERSON_ID          INTEGER not null
         constraint "RESERVATION_PERSON_ID_fk"
-            references PERSON(ID),
-    constraint "RESERVATION_pk"
-        primary key (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID)
+            references PERSON(ID)
 );
 
 create table CALENDAR
@@ -149,11 +146,14 @@ INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('keyboard_yam
 INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('classic_guitar_cort.jpg', 5);
 INSERT INTO INSTRUMENT_PICTURES (IMAGE_URL, INSTRUMENT_ID) VALUES ('fender.jpg', 6);
 
-INSERT INTO RESERVATION (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID) VALUES (1, 5, 2);
-INSERT INTO RESERVATION (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID) VALUES (2, 6, 3);
+INSERT INTO RESERVATION (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID) VALUES (6123, 5, 2);
+INSERT INTO RESERVATION (RESERVATION_NUMBER, INSTRUMENT_ID, PERSON_ID) VALUES (7123, 6, 3);
 
-INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (1, 2, 'Min ukulele saknar flera strängar och har spruckit lite.', 'Ukulele');
-INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (2, 3, 'En tangent på mitt keyboard funkar inte alls.', 'Keyboard');
+INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (1516, 2, 'Min ukulele saknar flera strängar och har spruckit lite.', 'Ukulele');
+INSERT INTO REPARATIONS (ERRAND_NUMBER, PERSON_ID, DESCRIPTION, TYPE) VALUES (3612, 3, 'En tangent på mitt keyboard funkar inte alls.', 'Keyboard');
 
 INSERT INTO LOG (TEXT, PERSON_ID, LOG_TIMESTAMP) VALUES ('Detta är min log för kund Lisa. ', 3, null);
 INSERT INTO LOG (TEXT, PERSON_ID, LOG_TIMESTAMP) VALUES ('Nu är jag klar med lisas arbete', 3, null);
+
+INSERT INTO CALENDAR(START_TIME, STOP_TIME, START_DATE, STOP_DATE, SUBJECT, FREE_TEXT, REFERENCE_NUMBER, PERSON_ID) VALUES ('14:00:00', '16:00:00', '2023-04-02', '2023-04-02', 'Reparation', null, 1516, 2);
+INSERT INTO CALENDAR(START_TIME, STOP_TIME, START_DATE, STOP_DATE, SUBJECT, FREE_TEXT, REFERENCE_NUMBER, PERSON_ID) VALUES ('16:00:00', '16:20:00', '2023-04-04', '2023-04-04', 'Reservation', null, 7123, 3);
