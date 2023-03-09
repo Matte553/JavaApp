@@ -10,6 +10,29 @@ public class Main {
 
         // TESTING
         EntityController ec = new EntityController();
-        ec.updateLog(3,1, "Detta är min log för lisa uppdaterad");
+
+        PersonEntity p = new PersonEntity("Torkel", "Token", "333", "TorkelToken@gmail.com", "14");
+        ec.addCustomer(p, "Övrigt");
+
+        PersonEntity person = ec.getPersonWithID(6);
+        ec.addChat(person, "Reservation");
+
+        //PersonEntity person = ec.getPersonWithID(3);
+        //ec.addChat(person, "Reservation");
+
+        //int i = ec.getChatWithSubject(3, "Övrigt");
+        //System.out.println(i);
+        //ec.addMessage(1,3, "Reparation","Hej", null);
+
+        /*
+        ArrayList<MessageEntity> e = ec.getMessagesWithSubject(3, "Reparation");
+        for (MessageEntity mess: e){
+            System.out.println(mess.getText());
+        }
+        */
+
+
+
+
     }
 }

@@ -52,7 +52,7 @@ public class EntityController {
     }
 
     // Returns all chats ID that belong to a given subject
-    private Integer getChatWithSubject(int personID, String subject){
+    public Integer getChatWithSubject(int personID, String subject){
         // SELECT * FROM Chatmember INNER JOIN CHAT C ON CHATMEMBER.CHAT_ID=C.ID WHERE PERSON_ID=2 AND SUBJECT='Reservation';
         String hql = "SELECT member.chatId FROM ChatmemberEntity member JOIN ChatEntity chat ON member.chatId=chat.id WHERE member.personId = :personID AND chat.subject = :subject";
         Query query = session.createQuery(hql).setParameter("personID", personID).setParameter("subject",subject);
@@ -134,7 +134,30 @@ public class EntityController {
 
         String customerNumber = generateCustomerNumber();
         PersonEntity newPerson = new PersonEntity(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail(), customerNumber);
-        session.persist(person);
+        session.persist(newPerson);
+
+        ChatEntity chat = new ChatEntity(subject);
+        session.persist(chat);
+
+        System.out.println("Chat id: " + chat.getId());
+        System.out.println("Person id: " + newPerson.getId());
+
+
+        ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), newPerson.getId());
+        session.persist(chatMember);
+
+        ChatmemberEntity chatMemberAdmin = new ChatmemberEntity(chat.getId(), AdminID);
+        session.persist(chatMemberAdmin);
+
+        session.getTransaction().commit();
+
+        addMessage(AdminID, newPerson.getId(), subject, "Hej kund! Vi har nu en chat", null);
+
+        return newPerson;
+    }
+
+    public ChatEntity addChat(PersonEntity person, String subject){
+        session.beginTransaction();
 
         ChatEntity chat = new ChatEntity(subject);
         session.persist(chat);
@@ -146,20 +169,25 @@ public class EntityController {
         session.persist(chatMemberAdmin);
 
         session.getTransaction().commit();
-        return person;
+
+        addMessage(AdminID, person.getId(), subject, "Hej kund! Du har nu reserverat eller bokat reparation.", null);
+
+        return chat;
     }
 
 
+
+
     // Creates a new message and adds it to database
-    public MessageEntity addMessage(Integer fromID, Integer toID, String text, String imageURL) {
+    public MessageEntity addMessage(Integer fromID, Integer toID, String subject, String text, String imageURL) {
 
         int chatID;
 
         if(fromID == AdminID){
-            chatID = getChat(toID);
+            chatID = getChatWithSubject(toID, subject);
         }
         else {
-            chatID = getChat(fromID);
+            chatID = getChatWithSubject(fromID, subject);
         }
 
         session.beginTransaction();
@@ -389,9 +417,9 @@ public class EntityController {
     }
 
     // Returns arraylist with all messages from the chat containing the given personID. This personID should be the customer.
-    public ArrayList<MessageEntity> getMessages(int personID){
+    public ArrayList<MessageEntity> getMessages(int personID, String subject){
 
-        Integer chatID = getChat(personID);
+        Integer chatID = getChatWithSubject(personID, subject);
         if(chatID == -1){
             System.err.println("There is no chat between these two persons");
             return null;
