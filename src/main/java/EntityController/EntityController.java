@@ -223,9 +223,9 @@ public class EntityController {
     }
 
     // Creates a new kalender and adds it to database
-    public CalendarEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+    public CalendarEventEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
         session.beginTransaction();
-        CalendarEntity calendar = new CalendarEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
+        CalendarEventEntity calendar = new CalendarEventEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
         session.persist(calendar);
         session.getTransaction().commit();
         return calendar;
@@ -364,7 +364,7 @@ public class EntityController {
 
     // Fetches reparation with errand number that matches the reference number of a booking
     public ReparationsEntity getReparationFromReferenceNumber(Integer referenceNumber) {
-        String hql = "SELECT E FROM ReparationsEntity E WHERE E.errandNumber = :referenceNumber";
+        String hql = "FROM ReparationsEntity E WHERE E.errandNumber = :referenceNumber";
         Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
         ReparationsEntity reparation = new ReparationsEntity();
         try {
@@ -377,7 +377,7 @@ public class EntityController {
 
     // Fetches reservation with reservation number that matches the reference number of a booking
     public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
-        String hql = "SELECT E FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
+        String hql = "FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
         Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
         ReservationEntity reservation = new ReservationEntity();
         try {
@@ -386,6 +386,20 @@ public class EntityController {
             System.err.println("There is no reservation with this reservation number: " + referenceNumber);
         };
         return reservation;
+    }
+
+    // Returns list of all events in a given month. Returns empty list if no events that month
+    // 1 = January, 2 = February, etc.
+    public ArrayList<CalendarEventEntity> getEventsWithinMonth(Integer month){
+        String hql = "FROM CalendarEventEntity E WHERE month(E.startDate) = :month";
+        Query query = session.createQuery(hql).setParameter("month", month);
+        List<CalendarEventEntity> result = null;
+        try {
+            result = query.list();
+        }catch (NoResultException e){
+            System.err.println("There are no bookings in this month: " + month);
+        };
+        return (ArrayList<CalendarEventEntity>) result;
     }
 
 
@@ -473,10 +487,10 @@ public class EntityController {
     }
     
     // Returns an arraylist with all Calendar entries from database
-    public ArrayList<CalendarEntity> getCalendar() {
-        Query query = session.createQuery(("from CalendarEntity"));
+    public ArrayList<CalendarEventEntity> getCalendarEvent() {
+    Query query = session.createQuery(("from CalendarEventEntity"));
         List list = query.list();
-        return (ArrayList<CalendarEntity>) list;
+        return (ArrayList<CalendarEventEntity>) list;
     }
 
     // Returns true if given customerNumber is the Admin
