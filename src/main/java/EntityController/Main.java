@@ -28,7 +28,7 @@ public class Main {
         ArrayList<MessageEntity> e = ec.getMessagesWithSubject(3, "Reparation");
         for (MessageEntity mess: e){
             System.out.println(mess.getText());
-        }
+        }.
         */
 
 

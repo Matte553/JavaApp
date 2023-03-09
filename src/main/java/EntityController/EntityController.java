@@ -51,7 +51,7 @@ public class EntityController {
         }
     }
 
-    // Returns all chats ID that belong to a given subject
+    // Returns all chats ID that belong to a given subject.
     public Integer getChatWithSubject(int personID, String subject){
         // SELECT * FROM Chatmember INNER JOIN CHAT C ON CHATMEMBER.CHAT_ID=C.ID WHERE PERSON_ID=2 AND SUBJECT='Reservation';
         String hql = "SELECT member.chatId FROM ChatmemberEntity member JOIN ChatEntity chat ON member.chatId=chat.id WHERE member.personId = :personID AND chat.subject = :subject";
