@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +16,16 @@ import java.util.Random;
 
 import Entities.*;
 
-// This Class is used for Retrieving all data from database and also inserting data into database..
+
+// This Class is used for Retrieving all data from database and also inserting data into database.
 public class EntityController {
     SessionFactory sessionFactory;
     Session session;
     Integer AdminID = 1;
 
-    // Constructor that initiates a connection to DB.
+    //
+    /* Constructor that initiates a connection to DB. A new connection to DB is created when a
+       new EntityController is created. */
     public EntityController() throws Exception {
         sessionFactory = HibernateSetup.getSessionFactory(); // Initiera en koppling för databasen.
         session = sessionFactory.openSession();             // Skapa en session för koppling.
@@ -32,19 +37,22 @@ public class EntityController {
 
     // <!-- PRIVATE METHODS. Used to retrieve or generate data needed for public functions /////////////////////////--!>
 
-    // Return Person with the given person ID.
+    // Returns the Person that has the given person ID.
     private PersonEntity getPersonWithID(int personID){
         String hql = "FROM PersonEntity p WHERE p.id = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
-        List<PersonEntity> result = query.list();
-        if(result.isEmpty()){
-            System.err.println("No person was found with id: " + personID);
-            return null;
-        }
-        return result.get(0);
+
+        // Throws error if no instrument was found with this ID
+        PersonEntity person = new PersonEntity();
+        try {
+            person = (PersonEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no person with this ID: " + personID);
+        };
+        return person;
     }
 
-    // Returns the chatID for a chat that has the person as a member;
+    // Returns the chatID for a chat that has the given person as a member;
     private int getChat(int personID){
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
@@ -63,12 +71,14 @@ public class EntityController {
         // SELECT * FROM Chatmember INNER JOIN CHAT C ON CHATMEMBER.CHAT_ID=C.ID WHERE PERSON_ID=2 AND SUBJECT='Reservation';
         String hql = "SELECT member.chatId FROM ChatmemberEntity member JOIN ChatEntity chat ON member.chatId=chat.id WHERE member.personId = :personID AND chat.subject = :subject";
         Query query = session.createQuery(hql).setParameter("personID", personID).setParameter("subject",subject);
-        List result = query.list();
-        if(result.isEmpty()){
-            System.err.println("No chat exists for personID " + personID + " and subject " + subject);
-            return null;
-        }
-        return (Integer) result.get(0);
+
+        Integer chatID = 0;
+        try {
+            chatID = (Integer) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no chat for person with ID: " + personID + " and chat subject: " + subject);
+        };
+        return chatID;
     }
 
     // Generates a random customer number with 6 digits.
@@ -132,7 +142,7 @@ public class EntityController {
 
     // <!-- PUBLIC ADD METHODS, For inserting data into database ///////////////////////////////////////////////// --!>
 
-    // Adds Customer to database and initiates a chat with Admin, Returns the customer //;
+    // Adds Customer to database and initiates a chat with Admin, Returns the customer;
     public PersonEntity addCustomer(PersonEntity person, String subject) throws Exception {
 
         session.beginTransaction();
@@ -155,8 +165,7 @@ public class EntityController {
     }
 
 
-    // Adds new messages to database
-    // Commits the entry
+    // Creates a new message and adds it to database
     public MessageEntity addMessage(Integer fromID, Integer toID, String text, String imageURL) {
 
         int chatID;
@@ -179,8 +188,7 @@ public class EntityController {
         return message;
     }
 
-    // Adds new instruments to the database
-    // Commits the entry
+    // Creates a new Instrument and adds it to database
     public InstrumentEntity addInstrument(String type, String name, Double price, String description) {
         session.beginTransaction();
         InstrumentEntity instrument = new InstrumentEntity(type, name, price, description);
@@ -189,8 +197,7 @@ public class EntityController {
         return instrument;
     }
 
-    // Adds new instrument images to the database
-    // Commits the entry
+    // Creates a new InstrumentPicture and adds it to database
     public InstrumentPicturesEntity addInstrumentPicture(String imageURL, Integer instrumentId) {
         session.beginTransaction();
         InstrumentPicturesEntity instrumentPicture = new InstrumentPicturesEntity(imageURL, instrumentId);
@@ -199,8 +206,7 @@ public class EntityController {
         return instrumentPicture;
     }
 
-    // Adds new reparation
-    // Commits the entry
+    // Creates a new Reparation and adds it to database
     public ReparationsEntity addReparation(Integer personId, String description, String type) {
         session.beginTransaction();
         Integer errandNumber = generateErrandNumber();
@@ -210,8 +216,7 @@ public class EntityController {
         return reparation;
     }
 
-    // Adds new reservations
-    // Commits the entry
+    // Creates a new Reservation and adds it to database
     public ReservationEntity addReservation(Integer instrumentId, Integer personId) {
         session.beginTransaction();
         Integer reservationNumber = generateReservationNumber();
@@ -221,6 +226,7 @@ public class EntityController {
         return reservation;
     }
 
+    // Creates a new Log and adds it to database
     public LogEntity addLog(int personID, String text){
         session.beginTransaction();
         long now = System.currentTimeMillis();
@@ -231,14 +237,21 @@ public class EntityController {
         return logEntity;
     }
 
-
+    // Creates a new kalender and adds it to database
+    public CalendarEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+        session.beginTransaction();
+        CalendarEntity calendar = new CalendarEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
+        session.persist(calendar);
+        session.getTransaction().commit();
+        return calendar;
+    }
 
 
 
 
     // <!-- PUBLIC GET METHODS, For retrieving data from database ///////////////////////////////////////////////// --!>
 
-    // Returns the customer with the exact customer number.
+    // Returns the customer with the given customer number.
     public PersonEntity getCustomer(String customerNumber){
         String hql = "SELECT E FROM PersonEntity E WHERE E.customerNumber = :customerNumber";
         Query query = session.createQuery(hql).setParameter("customerNumber", customerNumber);
@@ -251,7 +264,7 @@ public class EntityController {
         return p;
     }
 
-    // Fetches all imageURLs for one instrument
+    // Fetches all imageURLs for one instrument with the given instrumentID
     public ArrayList<String> getImagesFromInstrumentId(Integer instrumentId) {
         String hql = "SELECT E.imageUrl FROM InstrumentPicturesEntity E WHERE E.instrumentId = :instrumentId";
         Query query = session.createQuery(hql).setParameter("instrumentId", instrumentId);
@@ -349,6 +362,32 @@ public class EntityController {
         return (ArrayList) list;
     }
 
+    // Fetches reparation with errand number that matches the reference number of a booking
+    public ReparationsEntity getReparationFromReferenceNumber(Integer referenceNumber) {
+        String hql = "SELECT E FROM ReparationsEntity E WHERE E.errandNumber = :referenceNumber";
+        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
+        ReparationsEntity reparation = new ReparationsEntity();
+        try {
+            reparation = (ReparationsEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no reparation with this errand number: " + referenceNumber);
+        };
+        return reparation;
+    }
+
+    // Fetches reservation with reservation number that matches the reference number of a booking
+    public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
+        String hql = "SELECT E FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
+        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
+        ReservationEntity reservation = new ReservationEntity();
+        try {
+            reservation = (ReservationEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no reservation with this reservation number: " + referenceNumber);
+        };
+        return reservation;
+    }
+
 
 
     // Returns an arraylist with all Persons from database
@@ -422,15 +461,22 @@ public class EntityController {
         return (ArrayList<InstrumentPicturesEntity>) list;
     }
 
-    public ArrayList<LogEntity> getLogWithID(int personID){
+    public ArrayList<LogEntity> getLogWithID(int personID) {
         String hql = "FROM LogEntity WHERE personId= :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
         ArrayList<LogEntity> result = (ArrayList<LogEntity>) query.getResultList();
-        if(result.isEmpty()){
+        if (result.isEmpty()) {
             System.err.println("There is no log for person ID: " + personID);
             return null;
         }
         return result;
+    }
+    
+    // Returns an arraylist with all Calendar entries from database
+    public ArrayList<CalendarEntity> getCalendar() {
+        Query query = session.createQuery(("from CalendarEntity"));
+        List list = query.list();
+        return (ArrayList<CalendarEntity>) list;
     }
 
     // Returns true if given customerNumber is the Admin
