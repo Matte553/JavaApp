@@ -1,7 +1,7 @@
 //API
 package api.service;
 
-import Entities.CalendarEntity;
+import Entities.CalendarEventEntity;
 import EntityController.EntityController;
 import api.model.CalenderModel;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class CalenderService {
 
     }
 
-    private CalenderModel convertCalenderEntity(CalendarEntity value) {
+    private CalenderModel convertCalenderEntity(CalendarEventEntity value) {
         return new CalenderModel(
                 value.getStartTime(),
                 value.getStopTime(),
@@ -29,22 +29,22 @@ public class CalenderService {
                 value.getPersonId());
     }
 
-    private List<CalenderModel> convertListEntity(ArrayList<CalendarEntity> dbList) {
+    private List<CalenderModel> convertListEntity(ArrayList<CalendarEventEntity> dbList) {
         List<CalenderModel> apiList = new ArrayList<>();
 
-        for (CalendarEntity entity : dbList) {
+        for (CalendarEventEntity entity : dbList) {
             apiList.add( this.convertCalenderEntity(entity));
         }
         return apiList;
     }
 
     public List<CalenderModel> getAllCalenderEvent() {
-        ArrayList<CalendarEntity> dbList = ec.getCalendar();
+        ArrayList<CalendarEventEntity> dbList = ec.getCalendarEvent();
         return this.convertListEntity(dbList);
     }
 
     public CalenderModel addCalenderEvent(CalenderModel event) {
-        CalendarEntity eventEntity = ec.addCalendar(
+        CalendarEventEntity eventEntity = ec.addCalendar(
                 event.getStartTime(),
                 event.getStopTime(),
                 event.getStartDate(),

@@ -36,8 +36,8 @@ public class MessageService {
         return apiList;
     }
 
-    public List<MessageModel> getMessages(int id1) throws Exception {
-        ArrayList<MessageEntity> dbList = ec.getMessages(id1);
+    public List<MessageModel> getMessages(int id1, String subject) throws Exception {
+        ArrayList<MessageEntity> dbList = ec.getMessages(id1, subject);
         return this.convertListEntity(dbList);
     }
 

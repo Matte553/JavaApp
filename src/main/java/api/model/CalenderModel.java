@@ -1,6 +1,6 @@
 package api.model;
 //API
-import Entities.CalendarEntity;
+import Entities.CalendarEventEntity;
 import jakarta.persistence.*;
 
 import java.sql.Date;
