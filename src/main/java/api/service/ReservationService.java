@@ -54,6 +54,11 @@ public class ReservationService {
         return p;
     }
 
+    public ReservationModel updateReservation(ReservationModel p) {
+        ec.updateReservation(p.getPersonId(), p.getReservationNumber(), p.getInstrumentId());
+        return p;
+    }
+
     /*//  PUT
     public ReservationModel updateReservation(ReservationModel resToChange) {
         ReservationModel r = new ReservationModel(resToChange.getReservationNumber(), resToChange.getInstrumentId(), resToChange.getPersonId());

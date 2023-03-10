@@ -14,7 +14,7 @@ public class PersonService {
 
     public PersonService() throws Exception {
     }
-
+    //Converts DB-teams Entities to API-teams Models, Useful in the case that Frontend-team and App-team wants differently styled objects
     private PersonModel convertPersonEntity(PersonEntity value) {
         return new PersonModel(
                 value.getId(),
@@ -25,6 +25,7 @@ public class PersonService {
                 value.getCustomerNumber());
     }
 
+    //Object
     private List<PersonModel> convertListEntity(ArrayList<PersonEntity> dbList) {
         List<PersonModel> apiList = new ArrayList<>();
 

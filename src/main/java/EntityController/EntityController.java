@@ -283,6 +283,7 @@ public class EntityController {
         List e = query.getResultList();
 
         if(!e.isEmpty()){
+            //System.out.println(personId);System.out.println(reservationNumber);System.out.println(newinstrumentID);
             session.getTransaction().begin();
             String hql2 = "UPDATE ReservationEntity r SET r.personId= :personId,r.instrumentId= :newinstrumentID WHERE r.personId = :personId AND r.reservationNumber= :reservationNumber";
             Query query2 = session.createQuery(hql2).setParameter("personId", personId).setParameter("newinstrumentID", newinstrumentID).setParameter("reservationNumber", reservationNumber);

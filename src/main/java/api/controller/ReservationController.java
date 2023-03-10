@@ -29,4 +29,9 @@ public class ReservationController {
     ReservationModel addReservation(@RequestBody ReservationModel p) throws Exception {
         return service.addReservation(p);
     }
+
+    @PutMapping("reservation/update")
+    ReservationModel updateReservation(@RequestBody ReservationModel p) throws Exception {
+        return service.updateReservation(p);
+    }
 }

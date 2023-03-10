@@ -24,20 +24,10 @@ public class main {
         Session session = sessionFactory.openSession();                     // Skapa en session för koppling.
         session.beginTransaction();
 
-        Query query = session.createQuery(("from PersonEntity "));
-        List<PersonEntity> list=query.list();
-        list.forEach(System.out::println);
-
-        for(PersonEntity person: list ) {
-            person.getId();//Loadsa stuff
-        };
-        EntityController ec = new EntityController();
-        //ArrayList<MessageEntity> testList = ec.getMessagesFromPersonID(1,2);
-        //for(MessageEntity message: testList ) {
-          //  System.out.println(message); //Loadsa stuff
-        //};
+        //Quick access-tests to database by looking for persons
+        //Query query = session.createQuery(("from PersonEntity "));List<PersonEntity> list=query.list();list.forEach(System.out::println);
+        //for(PersonEntity person: list ) {person.getId();}
     }
-
 
     @Bean
     ApplicationRunner applicationRunner(){
