@@ -1,8 +1,7 @@
-package chat;
+package frontend1;
 
 import Entities.*;
 import EntityController.EntityController;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.push.Push;
 import jakarta.faces.push.PushContext;
@@ -25,6 +24,8 @@ public class MessageManager implements Serializable {
     private PersonEntity sender = null;
     private PersonEntity receiver = null;
 
+    private FileUpload file = new FileUpload();
+
     @Inject
     @Push(channel = "updateMessages")
     private PushContext pushUpdate;
@@ -33,6 +34,14 @@ public class MessageManager implements Serializable {
 
     @Inject
     private EntityController entityController;
+
+    public FileUpload getFile() {
+        return file;
+    }
+
+    public void setFile(FileUpload file) {
+        this.file = file;
+    }
 
     public String getSubject() {
         return subject;
@@ -83,10 +92,31 @@ public class MessageManager implements Serializable {
         return new ArrayList<>();
     }
 
+    private void saveInstrument() {
+        Integer instrumentID = (Integer) SessionManager.getValue("instrumentID");
+        if (instrumentID != null && SessionManager.getValue("customer") != null) {
+            entityController.addReservation(instrumentID, sender.getId());
+            String url = "http://localhost:8080/test-1.0-SNAPSHOT/instrument.xhtml?instrumentID=";
+            message.setText("Du har reserverat instrument\n: " + url + Integer.toString(instrumentID));
+            entityController.addMessage(
+                    sender.getId(), receiver.getId(), this.subject, message.getText(), null);
+            message = new MessageEntity();
+            SessionManager.setObjectAttribute("instrumentID", null);
+        }
+    }
+
+    public void initChat() {
+        if (this.subject.equals("Reservation")) {
+            saveInstrument();
+        }
+    }
+
     public void submit() {
-        entityController.addMessage(sender.getId(), receiver.getId(),message.getText(), message.getImage());
+        message.setImage(file.getServerFileName());
+        entityController.addMessage(sender.getId(), receiver.getId(), this.subject, message.getText(), message.getImage());
         pushUpdate.send("update");
         // reset values
         message = new MessageEntity();
+        file.reset();
     }
 }

@@ -1,10 +1,10 @@
 package EntityController;
 
 import Entities.HibernateSetup;
-import Entities.PersonEntity;
-import jakarta.persistence.NoResultException;
 import Entities.*;
 import jakarta.ejb.Stateless;
+import Entities.PersonEntity;
+import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 import Entities.*;
+
 
 // This Class is used for Retrieving all data from database and also inserting data into database.
 @Stateless
@@ -54,8 +55,8 @@ public class EntityController implements Serializable {
         }
     }
 
-    // Returns all chats ID that belong to a given subject
-    private Integer getChatWithSubject(int personID, String subject){
+    // Returns all chats ID that belong to a given subject.
+    public Integer getChatWithSubject(int personID, String subject){
         // SELECT * FROM Chatmember INNER JOIN CHAT C ON CHATMEMBER.CHAT_ID=C.ID WHERE PERSON_ID=2 AND SUBJECT='Reservation';
         String hql = "SELECT member.chatId FROM ChatmemberEntity member JOIN ChatEntity chat ON member.chatId=chat.id WHERE member.personId = :personID AND chat.subject = :subject";
         Query query = session.createQuery(hql).setParameter("personID", personID).setParameter("subject",subject);
@@ -138,6 +139,8 @@ public class EntityController implements Serializable {
         String customerNumber = generateCustomerNumber();
         PersonEntity newPerson = new PersonEntity(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail(), customerNumber);
         session.persist(person);
+        PersonEntity newPerson = new PersonEntity(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail(), customerNumber);
+        session.persist(newPerson);
 
         ChatEntity chat = new ChatEntity(subject);
         session.persist(chat);
@@ -163,6 +166,42 @@ public class EntityController implements Serializable {
         }
         else {
             chatID = getChat(fromID);
+        }
+
+        session.beginTransaction();
+
+    public ChatEntity addChat(PersonEntity person, String subject){
+        session.beginTransaction();
+
+        ChatEntity chat = new ChatEntity(subject);
+        session.persist(chat);
+
+        ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), person.getId());
+        session.persist(chatMember);
+
+        ChatmemberEntity chatMemberAdmin = new ChatmemberEntity(chat.getId(), AdminID);
+        session.persist(chatMemberAdmin);
+
+        session.getTransaction().commit();
+
+        addMessage(AdminID, person.getId(), subject, "Hej kund! Du har nu reserverat eller bokat reparation.", null);
+
+        return chat;
+    }
+
+
+
+
+    // Creates a new message and adds it to database
+    public MessageEntity addMessage(Integer fromID, Integer toID, String subject, String text, String imageURL) {
+
+        int chatID;
+
+        if(fromID == AdminID){
+            chatID = getChatWithSubject(toID, subject);
+        }
+        else {
+            chatID = getChatWithSubject(fromID, subject);
         }
 
         session.beginTransaction();
@@ -392,9 +431,9 @@ public class EntityController implements Serializable {
     }
 
     // Returns arraylist with all messages from the chat containing the given personID. This personID should be the customer.
-    public ArrayList<MessageEntity> getMessages(int personID){
+    public ArrayList<MessageEntity> getMessages(int personID, String subject){
 
-        Integer chatID = getChat(personID);
+        Integer chatID = getChatWithSubject(personID, subject);
         if(chatID == -1){
             System.err.println("There is no chat between these two persons");
             return null;
@@ -423,6 +462,51 @@ public class EntityController implements Serializable {
         }
         return (ArrayList) list;
     }
+
+    // Fetches reparation with errand number that matches the reference number of a booking
+    public ReparationsEntity getReparationFromReferenceNumber(Integer referenceNumber) {
+        String hql = "FROM ReparationsEntity E WHERE E.errandNumber = :referenceNumber";
+        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
+        ReparationsEntity reparation = new ReparationsEntity();
+        try {
+            reparation = (ReparationsEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no reparation with this errand number: " + referenceNumber);
+        };
+        return reparation;
+    }
+
+    // Fetches reservation with reservation number that matches the reference number of a booking
+    public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
+        String hql = "FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
+        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
+        ReservationEntity reservation = new ReservationEntity();
+        try {
+            reservation = (ReservationEntity) query.getSingleResult();
+        }catch (NoResultException e){
+            System.err.println("There is no reservation with this reservation number: " + referenceNumber);
+        };
+        return reservation;
+    }
+
+    // Returns list of all events in a given month. Returns empty list if no events that month
+    // 1 = January, 2 = February, etc.
+    public ArrayList<CalendarEventEntity> getEventsWithinMonth(Integer month){
+        String hql = "FROM CalendarEventEntity E WHERE month(E.startDate) = :month";
+        Query query = session.createQuery(hql).setParameter("month", month);
+        List<CalendarEventEntity> result = null;
+        try {
+            result = query.list();
+        }catch (NoResultException e){
+            System.err.println("There are no bookings in this month: " + month);
+        };
+        return (ArrayList<CalendarEventEntity>) result;
+    }
+
+    public Boolean hasChat(int personID, String subject){
+        return true;
+    }
+
 
     // Fetches reparation with errand number that matches the reference number of a booking
     public ReparationsEntity getReparationFromReferenceNumber(Integer referenceNumber) {

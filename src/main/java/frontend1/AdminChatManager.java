@@ -1,4 +1,4 @@
-package chat;
+package frontend1;
 
 import Entities.*;
 import EntityController.EntityController;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @Named
 @SessionScoped
-public class LogManager implements Serializable {
+public class AdminChatManager implements Serializable {
 
     private ArrayList<PersonEntity> customers;
 
@@ -40,6 +40,6 @@ public class LogManager implements Serializable {
 
     public void getCustomersBySubject() throws IOException {
         customers = entityController.getCustomersWithSubject(messageManager.getSubject());
-        FacesContext.getCurrentInstance().getExternalContext().redirect("admin-chat-log.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("admin-chatt.xhtml");
     }
 }

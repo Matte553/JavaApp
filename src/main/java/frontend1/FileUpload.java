@@ -1,34 +1,30 @@
-package chat;
+package frontend1;
 
-import Entities.*;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
 import jakarta.servlet.http.Part;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-@Named
-@RequestScoped
-public class FileUpload implements Serializable {
+
+public class FileUpload{
 
     // Change PROJECT_PATH to your project absolute path
     private static final String PROJECT_PATH = "/home/adde/Desktop/apppro";
     private static final String UPLOADS_DIR_PATH = PROJECT_PATH + "/src/main/webapp/resources/uploads/";
     private static final String SNAPSHOT_UPLOADS = PROJECT_PATH + "/target/test-1.0-SNAPSHOT/resources/uploads/";
     private String originalFileName;
+
+    private String serverFileName;
+
     private Part fileToUpload;
 
     /**
      * Creates unique image name and save images inside uploads directory on server.
-     * Set image name in message reference
-     *
-     * @param message object
      */
-    public void onFileUpload(MessageEntity message) {
+    public void onFileUpload() {
         if (this.fileToUpload != null) {
             String filename = fileToUpload.getSubmittedFileName();
             originalFileName = filename;
@@ -48,7 +44,7 @@ public class FileUpload implements Serializable {
                 Path copied = Path.of(SNAPSHOT_UPLOADS + filePath.getFileName().toString());
                 Files.copy(filePath, copied, StandardCopyOption.REPLACE_EXISTING);
                 // End
-                message.setImage(filePath.getFileName().toString());
+                serverFileName = filePath.getFileName().toString();
             } catch (IOException e) {
                 System.out.println("===Error While uploading the file");
             }
@@ -71,4 +67,15 @@ public class FileUpload implements Serializable {
     public String getOriginalFileName() {
         return originalFileName;
     }
+
+    public String getServerFileName() {
+        return serverFileName;
+    }
+
+    public void reset() {
+        this.fileToUpload = null;
+        this.serverFileName = "";
+        this.originalFileName = "";
+    }
+
 }

@@ -1,4 +1,4 @@
-package chat;
+package frontend1;
 
 import jakarta.faces.application.ResourceHandler;
 import jakarta.servlet.*;
@@ -24,13 +24,13 @@ public class ChatWebFilter implements Filter {
         if (!request.getRequestURI().startsWith(resourcePath)) {
             response.setHeader("Cache-Control", "no-store, must-revalidate");
         }
-        if (request.getRequestURI().endsWith("chat.xhtml")) {
+        if (request.getRequestURI().contains("chat.xhtml")) {
             try {
                 if (request.getSession().getAttribute("customer") == null) {
                     response.sendRedirect(request.getContextPath() + "/chat-login.xhtml");
                 }
             } catch (IllegalStateException e) {
-                System.out.println(e.toString());
+                System.out.println(e);
             }
         }
         filterChain.doFilter(request, response);

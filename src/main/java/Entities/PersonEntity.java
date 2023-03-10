@@ -2,8 +2,6 @@ package Entities;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-
 @Entity
 @Table(name = "PERSON", schema = "APP")
 public class PersonEntity {
