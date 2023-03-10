@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <div class="main-chat-container" id="main-chat-container">
+        <div id="logout-link"><h:link value="Logga ut" outcome="logout.xhtml"/></div>
+        <div class="message-container" jsf:id="message-container">
+            <ui:repeat value="#{messageManager.messages}" var="messageItem">
+                <c:set var="isCustomer" value="#{messageManager.sender.id==messageItem.personId}"/>
+                <div>
+                    <div class="message-user-name  #{isCustomer? '':'float-right'}">
+                        <h:panelGroup>#{(isCustomer)? messageManager.senderFullName:messageManager.receiverFullName}</h:panelGroup>
+                    </div>
+                    <div class="user-message #{isCustomer? '':'message-darker'}">
+                        <h:panelGroup>#{messageItem.text}</h:panelGroup>
+                        <h:outputLink
+                                value="http://localhost:8080/test-1.0-SNAPSHOT/jakarta.faces.resource/#{messageItem.image}.xhtml?ln=uploads"
+                                rendered="#{not empty messageItem.image}">
+                            <!--<h:graphicImage library="uploads" name="#{messageItem.image}" styleClass="img-message"/> -->
+                        </h:outputLink>
+                    </div>
+                    <div class="message-time">
+                        <h:panelGroup>sent #{messageItem.messageTimestamp.toString()}</h:panelGroup>
+                    </div>
+                </div>
+            </ui:repeat>
+            <h:outputScript>scrollToBottom('message-container');</h:outputScript>
+        </div>
+
+
+        <h:form id="chat-form" styleClass="chat-form" enctype="multipart/form-data">
+            <div class="message-input" jsf:id="message-input">
+                <h:message for="messageText" id="m_messageText" errorClass="error"/>
+                <h:inputTextarea
+                        id="messageText"
+                        a:placeholder="Skriv meddelande..."
+                        value="#{messageManager.message.text}"
+                        validatorMessage="Skriv nåt i text fält"
+                        onfocus="clearErrorMessages('#chat-form\\:messageText')">
+                    <f:validateLength minimum="1" for="messageText"/>
+                </h:inputTextarea>
+            </div>
+            <div id="file-upload">
+                <h:outputText id="originalFileName" value="#{fileUpload.originalFileName}"/>
+                <h:outputLabel for="fileToUpload">
+                    <h:graphicImage library="images" name="upload-icon.png"/>
+                </h:outputLabel>
+                <h:inputFile id="fileToUpload" value="#{fileUpload.fileToUpload}">
+                    <f:ajax listener="#{fileUpload.onFileUpload(messageManager.message)}"
+                            render="originalFileName"/>
+                </h:inputFile>
+            </div>
+            <div>
+                <h:commandButton
+                        id="messageSubmit"
+                        value="Skicka"
+                        styleClass="btn success" action="#{messageManager.submit}">
+                    <f:ajax execute="@form" render="message-input originalFileName :message-container"
+                            resetValues="true"/>
+                </h:commandButton>
+            </div>
+        </h:form>
+        <h:form>
+            <!--<f:websocket id="updateMessages" channel="updateMessages">
+                <f:ajax event="update" render=":message-container"/>
+            </f:websocket> -->
+        </h:form>
+    </div>
+</ui:composition>

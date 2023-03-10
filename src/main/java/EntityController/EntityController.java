@@ -3,12 +3,15 @@ package EntityController;
 import Entities.HibernateSetup;
 import Entities.PersonEntity;
 import jakarta.persistence.NoResultException;
+import Entities.*;
+import jakarta.ejb.Stateless;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +19,9 @@ import java.util.Random;
 
 import Entities.*;
 
-
 // This Class is used for Retrieving all data from database and also inserting data into database.
-public class EntityController {
+@Stateless
+public class EntityController implements Serializable {
     SessionFactory sessionFactory;
     Session session;
     Integer AdminID = 1;
@@ -544,7 +547,7 @@ public class EntityController {
         }
         return result;
     }
-    
+
     // Returns an arraylist with all Calendar entries from database
     public ArrayList<CalendarEventEntity> getCalendarEvent() {
     Query query = session.createQuery(("from CalendarEventEntity"));

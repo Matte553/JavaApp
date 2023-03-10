@@ -2,11 +2,12 @@ package Entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "MESSAGE", schema = "APP")
-public class MessageEntity {
+public class MessageEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")

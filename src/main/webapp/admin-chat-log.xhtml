@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Admin-chat-log</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+    <h:outputScript library="scripts" name="script.js"/>
+</h:head>
+<h:body>
+    <ui:include src="header.xhtml"/>
+    <div jsf:id="log-container" class="main-container">
+        <ui:include src="template/components/chatBox.xhtml"/>
+        <div jsf:id="subject-container">
+            <h:form id="form">
+                <div id="select-btn-group">
+                    <strong><h:outputLabel for="selectedSubject"
+                                           id="l_selectedSubject">Subject </h:outputLabel></strong>
+                    <h:message for="selectedSubject" id="m_selectedSubject" errorClass="error"/>
+                    <h:selectOneMenu
+                            id="selectedSubject"
+                            value="#{messageManager.subject}"
+                            validator="#{chatFormValidatorBean.validateSubjectSelection}"
+                            onfocus="clearErrorMessages('#form\\:selectedSubject','change')">
+                        <f:selectItem itemValue="Reparation" itemLabel="Reparation"/>
+                        <f:selectItem itemValue="Bookning" itemLabel="Bookning"/>
+                        <f:selectItem itemValue="Reservation" itemLabel="Reservation"/>
+                        <f:ajax
+                                listener="#{logManager.getCustomersBySubject}"
+                                render="m_selectedSubject :subject-list-container"/>
+                    </h:selectOneMenu>
+                </div>
+            </h:form>
+
+            <h:form id="subject-list-container">
+                <ul id="subject-list">
+                    <ui:repeat value="#{logManager.customers}" var="customer">
+                        <li>
+                            <h:commandLink
+                                    value="#{customer.firstname} #{customer.lastname}"
+                                    action="#{logManager.setReceiver(customer.customerNumber)}">
+                                <f:ajax render=":message-container " execute="@this"/>
+                            </h:commandLink>
+                        </li>
+                    </ui:repeat>
+                </ul>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

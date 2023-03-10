@@ -1,10 +1,12 @@
 package EntityController;
 
 import Entities.*;
+
 import java.util.ArrayList;
 // Kalender Tabell i DB: KALENDER(id, starttid, sluttid, startdatum, slutdatum, errandNumber, ämne, fritext);;
 
 
+//Irrelevant to the API-team
 public class Main {
     public static void main(String[] args) throws Exception {
 
