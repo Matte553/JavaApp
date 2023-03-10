@@ -37,9 +37,9 @@ public class MessageController {
     List<MessageModel> getAllMessages() throws Exception {
         return messageService.getAllMessages();
     }
-/*
+
     @PostMapping("/messages/add")
     private MessageModelPost addMessage(@RequestBody MessageModelPost postMessages) {
         return messageService.addMessage(postMessages);
-    }*/
+    }
 }

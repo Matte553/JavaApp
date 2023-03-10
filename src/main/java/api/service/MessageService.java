@@ -47,7 +47,7 @@ public class MessageService {
     }
 
     public MessageModelPost addMessage(MessageModelPost postMessage) {
-        MessageEntity message = ec.addMessage(postMessage.getFromID(), postMessage.getToID(), postMessage.getText(), postMessage.getImageUrl());
+        MessageEntity message = ec.addMessageLegacy(postMessage.getFromID(), postMessage.getToID(), postMessage.getText(), postMessage.getImageUrl());
         // Blev lite pannkaka här med att returnera MessageEntity -> MessageModel eftersom det är ju MessageModelPost som ska ges tillbaka till klienten.
         return postMessage;
     }

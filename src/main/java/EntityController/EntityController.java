@@ -616,6 +616,29 @@ public class EntityController {
         List list = query.list();
         return (ArrayList) list;
     }
+    // Creates a new message and adds it to database
+    public MessageEntity addMessageLegacy(Integer fromID, Integer toID, String text, String imageURL) {
+
+        int chatID;
+
+        if(fromID == AdminID){
+            chatID = getChat(toID);
+        }
+        else {
+            chatID = getChat(fromID);
+        }
+
+        session.beginTransaction();
+
+        long now = System.currentTimeMillis();
+        Timestamp sqlTimestamp = new Timestamp(now);
+        MessageEntity message = new MessageEntity(fromID, chatID, text, sqlTimestamp, imageURL);
+        session.persist(message);
+
+        session.getTransaction().commit();
+        return message;
+    }
+    //End of Legacy Code
 
 
 }
