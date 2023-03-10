@@ -10,13 +10,19 @@ import org.hibernate.query.Query;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
+import javax.swing.*;
 import java.util.List;
 
 @SpringBootApplication
-public class main {
-
+public class main extends SpringBootServletInitializer {
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
+        return builder.sources(main.class);
+    }
     public static void main(String[] args) throws Exception {
 
         SpringApplication.run(main.class, args);
