@@ -35,12 +35,12 @@ public class CalendarHandler implements Serializable {
         this.test2 = test2;
     }
 
-    public String getNameOfWeekdayInWeek(int week, int year) {
+    /*public String getNameOfWeekdayInWeek(int week, int year) {
         Date temp = getWeekInYear(week, year);
         int number = dateToInt(temp);
 
         return intToWeekOfDay(number);
-    }
+    }*/
 
     public int getFirstWeekdayOfWeek(int week, int year) {
         Date temp = getWeekInYear(week, year);
@@ -75,6 +75,15 @@ public class CalendarHandler implements Serializable {
         this.test = test;
     }
 
+    public int getMonthFromWeekOfYear(int week, int year) {
+        Calendar temp = Calendar.getInstance();
+        temp.clear();
+        temp.set(Calendar.YEAR,year);
+        temp.set(Calendar.WEEK_OF_YEAR,week);
+
+        return temp.get(Calendar.MONTH);
+    }
+
     CalendarHandler() throws Exception {
         this.calendar           = Calendar.getInstance();
         this.currentYear        = getYear();
@@ -83,7 +92,7 @@ public class CalendarHandler implements Serializable {
         this.currentDay         = getDay();
         this.firstDaysEachMonth = fillWithFirstDays();
         this.months             = createArrayList();
-        this.test               = getFirstWeekdayOfWeek(this.currentWeek, this.currentYear);
+        this.test               = getMonthFromWeekOfYear(this.currentWeek, this.currentYear);
         this.test2              = getWeekInYear(this.currentWeek, this.currentYear);
 
     }

@@ -14,7 +14,7 @@ public class Main {
         Service test = new Service(list.get(0));
         //System.out.println(test);
 
-        Month test2 = new Month(4,2023,6);
+        Month test2 = new Month(3,2023,3);
         ArrayList<Day> list2 = test2.getDays();
         System.out.println(test2.getName());
         for (Day d : list2) {

@@ -100,7 +100,7 @@ public class Service implements Serializable {
     }
 
     public String getTypeSwedish(String type) {
-        if(type.equals("repair")) return "Reparation";
+        if(type.equals("reparation")) return "Reparation";
         if(type.equals("reservation")) return "Reservation";
         if(type.equals("blocked")) return "Blockerad";
 
