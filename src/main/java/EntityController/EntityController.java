@@ -602,5 +602,20 @@ public class EntityController {
             return (PersonEntity) query.getSingleResult();
         }
     }
+    //Legacy af, do not touch
+    // Returns arraylist with all messages from the chat containing the given personID. This personID should be the customer.
+    public ArrayList<MessageEntity> getMessagesLegacy(int personID){
+
+        Integer chatID = getChat(personID);
+        if(chatID == -1){
+            System.err.println("There is no chat between these two persons");
+            return null;
+        }
+        String hql = "SELECT E FROM MessageEntity E WHERE E.chatId = :chatID";
+        Query query = session.createQuery(hql).setParameter("chatID", chatID);
+        List list = query.list();
+        return (ArrayList) list;
+    }
+
 
 }

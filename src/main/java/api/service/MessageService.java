@@ -36,8 +36,8 @@ public class MessageService {
         return apiList;
     }
 
-    public List<MessageModel> getMessages(int id1, String subject) throws Exception {
-        ArrayList<MessageEntity> dbList = ec.getMessages(id1, subject);
+    public List<MessageModel> getMessages(int id1) throws Exception {
+        ArrayList<MessageEntity> dbList = ec.getMessagesLegacy(id1);
         return this.convertListEntity(dbList);
     }
 
@@ -45,10 +45,10 @@ public class MessageService {
         ArrayList<MessageEntity> dbList = ec.getMessages();
         return this.convertListEntity(dbList);
     }
-/*
+
     public MessageModelPost addMessage(MessageModelPost postMessage) {
         MessageEntity message = ec.addMessage(postMessage.getFromID(), postMessage.getToID(), postMessage.getText(), postMessage.getImageUrl());
         // Blev lite pannkaka här med att returnera MessageEntity -> MessageModel eftersom det är ju MessageModelPost som ska ges tillbaka till klienten.
         return postMessage;
-    }*/
+    }
 }

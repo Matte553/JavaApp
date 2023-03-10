@@ -26,12 +26,12 @@ public class MessageController {
                 .orElseThrow(() -> new MessageNotFoundException(id));
     }*/
 
-    /*
-    //In Postman, GET localhost:8080/messages/1/2   for messages between person 1 and 2
+
+    //In Postman, GET localhost:8080/messages/2   for messages between Anders and person 2
     @GetMapping("/messages/{id1}")
     List<MessageModel> allBetweenTwoPeople(@PathVariable("id1") Integer id1) throws Exception {
         return messageService.getMessages(id1);
-    }*/
+    }
 
     @GetMapping("/messages/all")
     List<MessageModel> getAllMessages() throws Exception {
