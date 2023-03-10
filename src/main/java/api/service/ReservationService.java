@@ -15,6 +15,7 @@ public class ReservationService {
 
     private ReservationModel convertReservationEntity(ReservationEntity value) {
         return new ReservationModel(
+                value.getId(),
                 value.getReservationNumber(),
                 value.getInstrumentId(),
                 value.getPersonId());

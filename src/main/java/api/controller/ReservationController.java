@@ -21,8 +21,8 @@ public class ReservationController {
     }
     //in Postman, GET localhost:8080/reservation?id=2   [for all reservations made by person with id 2]
     @GetMapping("/reservation")
-    List<ReservationModel> getReservationByPersonId(@RequestParam Integer id) {
-        return service.getReservationByPersonId(id);
+    List<ReservationModel> getReservationByPersonId(@RequestParam Integer persId) {
+        return service.getReservationByPersonId(persId);
     }
 
     @PostMapping("reservation/add")
