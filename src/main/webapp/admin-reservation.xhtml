@@ -21,13 +21,10 @@
         <div class="main-chat-container" id="main-chat-container">
             <h3 id="reservation-title">Reservationer</h3>
             <div class="message-container" jsf:id="message-container">
-                <ui:repeat value="#{logManager.allLogs}" var="logItem">
-                    <div>
-                        <div class="user-message">
-                            <h:panelGroup>#{logItem.text}</h:panelGroup>
-                        </div>
-                        <div class="message-time" style="margin-bottom: 10px">
-                            <h:panelGroup>datum #{logItem.logTimestamp.toString()}</h:panelGroup>
+                <ui:repeat value="#{reservationManager.links()}" var="linkItem" varStatus="status">
+                    <div style="margin-bottom: 10px">
+                        <div class="user-message" style="border: none">
+                            <h:panelGroup>#{status.index + 1 }) <a href="#{linkItem}">#{linkItem}</a></h:panelGroup>
                         </div>
                     </div>
                 </ui:repeat>
@@ -41,11 +38,11 @@
             </div>
             <h:form id="subject-list-container">
                 <ul id="subject-list">
-                    <ui:repeat value="#{logManager.customers}" var="customer" varStatus="currentIndex">
+                    <ui:repeat value="#{reservationManager.customers}" var="customer" varStatus="currentIndex">
                         <li>
                             <h:commandLink
                                     value="#{currentIndex.index}# #{customer.firstname} #{customer.lastname}"
-                                    action="#{logManager.setPersonId(customer.id)}">
+                                    action="#{reservationManager.setPersonId(customer.id)}">
                                 <f:ajax render=":message-container " execute="@this"/>
                             </h:commandLink>
                         </li>
