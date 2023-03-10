@@ -21,9 +21,8 @@ public class Day implements Serializable {
         this.number = number;
         this.weekday= weekday;
         this.name = enumToString(intToEnum(weekday));
-        this.services = createArrayList();
-        /*addService(new Service(8,10));
-        addService(new Service(13,17));*/
+        //this.services = createArrayList();
+        this.services = new ArrayList<>();
     }
 
     public int getNumber() {
@@ -127,8 +126,8 @@ public class Day implements Serializable {
         ArrayList<Service> result = new ArrayList<>();
         ArrayList<String> types = new ArrayList<>();
             types.add("repair");
-            types.add("customer");
-            types.add("writing");
+            types.add("reservation");
+            types.add("blocked");
         ArrayList<Person> persons = new ArrayList<>();
         persons.add(new Person(1, "Peter", "Stegeby", "+467271341", "peter.stegeby@gmail.com"));
         persons.add(new Person(2, "Brutus", "Frazze", "+461372151", "brutus.frazze@gmail.com"));
@@ -143,7 +142,7 @@ public class Day implements Serializable {
 
         for (int i = 8; i < 18; i += 1) {
             if (i != 12) {
-                Service temp = new Service(i, i+1, (i*2.15),types.get(i%3),persons.get(i%3),descriptions.get(i%4));
+                Service temp = new Service(i, i+1, (i*200),types.get(i%3),persons.get(i%3),descriptions.get(i%4), 1234);
                 result.add(temp);
             }
         }

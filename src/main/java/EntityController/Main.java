@@ -10,7 +10,12 @@ public class Main {
 
         // TESTING
         EntityController ec = new EntityController();
-        ec.addLog(2, "Detta är min log för Anton");
+
+        ArrayList<CalendarEventEntity> test = ec.getCalendarEvent();
+
+        for (CalendarEventEntity ce : test) {
+            System.out.println(ce.getId() + "@" + ce.getPersonId() + ":" + ce.getStartDate() + "-" + ce.getStopTime() + "/" + ce.getReferenceNumber());
+        }
 
         ArrayList<CalendarEventEntity> list = ec.getEventsWithinMonth(5);
         for (int i = 0 ; i < list.size(); i++) {

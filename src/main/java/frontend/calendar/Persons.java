@@ -40,12 +40,7 @@ public class Persons implements Serializable {
         ArrayList<PersonEntity> privateList = ec.getPersons();
         ArrayList<Person> result = new ArrayList<>();
         for (PersonEntity pe : privateList) {
-            int id          = pe.getId();
-            String fname    = pe.getFirstname();
-            String lname    = pe.getLastname();
-            String phone    = pe.getPhone();
-            String email    = pe.getMail();
-            Person temp     = new Person(id, fname, lname, phone, email);
+            Person temp = new Person(pe);
             result.add(temp);
 
         }

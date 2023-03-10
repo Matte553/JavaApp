@@ -17,45 +17,10 @@
     <h:outputStylesheet library="css" name="week.scss"/>
     <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
     <h:outputScript library="scripts" name="calendar.js"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <h:outputScript library="scripts" name="bootstrap.js"/>
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"/>
 
-        <!--<div class="month">
-            <ul>
-                <f:metadata>
-                    <f:viewParam name="weekID"/>
-                </f:metadata>
-                <h:form>
-                    <li class="prev"><a href="calendar_week.xhtml?weekID=#{weekID-1}">Prev</a></li>
-                    <li class="next"><a href="calendar_week.xhtml?weekID=#{weekID+1}">Next</a></li>
-                </h:form>
-
-                <li>
-                    <h2>Vecka #{weekID}</h2>
-                </li>
-            </ul>
-        </div>
-
-        <ul class="weekdays">
-            <li>Mån</li>
-            <li>Tis</li>
-            <li>Ons</li>
-            <li>Tor</li>
-            <li>Fre</li>
-            <li>Lör</li>
-            <li>Sön</li>
-        </ul>
-        <div class="days">
-            <div class="weeks">
-                <c:forEach items="#{calendarHandler.months[2].days[0].services}" var="ser">
-                    <li>#{ser.active}: #{ser.startTime} #{ser.endTime} #{ser.cost} </li>
-                </c:forEach>
-            </div>
-
-        </div>-->
     <f:metadata>
         <f:viewParam name="weekID"/>
     </f:metadata>
@@ -85,125 +50,46 @@
             <div class="time-marker">16:00</div>
             <div class="time-marker">17:00</div>
         </div>
-        <div class="days">
-            <c:forEach items="#{calendarHandler.getList(weekID, 2023)}" var="day">
-                <div class="day #{day.getValue()}">
-                    <div class="date">
-                        <p class="date-num">#{day.getKey()}</p>
-                        <p class="date-day">#{day.getValue()}</p>
-                    </div>
-                    <div class="events">
-                        <c:forEach items="#{calendarHandler.months[2].days[0].services}" var="ser">
-                            <ui:param name="serID" value="#{day.getKey()}#{ser.startTime}"/>
-                            <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime} #{ser.type}" onclick="alterService(#{serID})">
-                                <p class="title">#{ser.customer.firstName}</p>
-                                <p class="time">#{ser.startTime}:00 - #{ser.endTime}:00</p>
-                                <p class="description">#{ser.description}</p>
-                                <div class="btn">
-                                    <p class="move">Ändra</p>
-                                    <p class="delete">Ta Bort</p>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-            </c:forEach>
-            <!--<div class="day mon">
+
+    <div class="days">
+        <c:forEach items="#{calendarHandler.getList(weekID, 2023)}" var="day">
+            <div class="day #{day.getValue()}">
                 <div class="date">
-                    <p class="date-num">9</p>
-                    <p class="date-day">Mån</p>
+                    <p class="date-num">#{day.getKey()}</p>
+                    <p class="date-day">#{day.getValue()}</p>
                 </div>
+
                 <div class="events">
-                    <div class="event start-14 end-17 blocked">
-                        <p class="title">Securities Regulation</p>
-                        <p class="time">2 PM - 5 PM</p>
-                    </div>
-                </div>
-            </div>
-            <div class="day tues">
-                <div class="date">
-                    <p class="date-num">10</p>
-                    <p class="date-day">Tis</p>
-                </div>
-                <div class="events">
-                    <div class="event start-10 end-12 repair">
-                        <p class="title">Corporate Finance</p>
-                        <p class="time">10 AM - 12 PM</p>
-                    </div>
-                    <div class="event start-13 end-16 customer">
-                        <p class="title">Entertainment Law</p>
-                        <p class="time">1PM - 4PM</p>
-                    </div>
-                </div>
-            </div>
-            <div class="day wed">
-                <div class="date">
-                    <p class="date-num">11</p>
-                    <p class="date-day">Ons</p>
-                </div>
-                <div class="events">
-                    <div class="event start-11 end-12 writing">
-                        <p class="title">Writing Seminar</p>
-                        <p class="time">11 AM - 12 PM</p>
-                    </div>
-                    <div class="event start-14 end-17 blocked">
-                        <p class="title">Securities Regulation</p>
-                        <p class="time">2 PM - 5 PM</p>
-                    </div>
-                </div>
-            </div>
-            <div class="day thurs">
-                <div class="date">
-                    <p class="date-num">12</p>
-                    <p class="date-day">Tor</p>
-                </div>
-                <div class="events">
-                    <div class="event start-10 end-12 customer">
-                        <p class="title">Corporate Finance</p>
-                        <p class="time">10 AM - 12 PM</p>
-                    </div>
-                    <div class="event start-13 end-16 repair">
-                        <p class="title">Entertainment Law</p>
-                        <p class="time">1PM - 4PM</p>
-                    </div>
-                </div>
-            </div>
-            <div class="day fri">
-                <div class="date">
-                    <p class="date-num">13</p>
-                    <p class="date-day">Fre</p>
-                </div>
-                <div class="events">
-                    <c:forEach items="#{calendarHandler.months[2].days[0].services}" var="ser">
-                        <ui:param name="serID" value="#{ser.startTime}"/>
-                        <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime} repair" onclick="alterService(#{serID})">
-                            <p class="title">#{ser.customer.firstName}</p>
-                            <p class="time">#{ser.startTime}:00 - #{ser.endTime}:00</p>
-                            <p class="description">#{ser.description}</p>
-                        </div>
+                    <c:forEach items="#{calendarHandler.months[3].days[day.getKey()].services}" var="ser">
+                        <ui:param name="serID" value="#{day.getKey()}#{ser.startTime}"/>
+                        <c:choose>
+                                <c:when test="#{ser.endTime eq ser.startTime}">
+                                    <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime+1} #{ser.type}" onclick="alterService(#{serID})">
+                                        <p class="type">[#{ser.getTypeSwedish(ser.type)}]</p>
+                                        <p class="title">#{ser.customer.firstName} #{ser.customer.lastName}</p>
+                                        <p class="time">#{ser.startTime}:00 - #{ser.endTime+1}:00</p>
+                                        <p class="cost">Kostnad: #{ser.cost}:-</p>
+                                        <p class="description">#{ser.description}</p>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime} #{ser.type}" onclick="alterService(#{serID})">
+                                        <p class="type">[#{ser.getTypeSwedish(ser.type)}]</p>
+                                        <p class="title">#{ser.customer.firstName} #{ser.customer.lastName}</p>
+                                        <p class="time">#{ser.startTime}:00 - #{ser.endTime}:00</p>
+                                        <p class="cost">Kostnad: #{ser.cost}:-</p>
+                                        <p class="description">#{ser.description}</p>
+                                    </div>
+                                    </c:otherwise>
+                        </c:choose>
+                        <!--<div class="btn">
+                            <p class="delete">Ta Bort</p>
+                        </div>-->
                     </c:forEach>
-                </div>
-            </div>-->
-           <!-- <div class="day sat">
-                <div class="date">
-                    <p class="date-num">14</p>
-                    <p class="date-day">Lör</p>
-                </div>
-                <div class="events">
-                    <div class="event start-8 end-17 customer">
-                        <p class="title">Test1</p>
-                        <p class="time">9:00 - 17:00</p>
                     </div>
-                </div>
             </div>
-            <div class="day sun">
-                <div class="date">
-                    <p class="date-num">15</p>
-                    <p class="date-day">Sön</p>
-                </div>
-                <div class="events">
-                </div>
-            </div>-->
+        </c:forEach>
+
         </div>
     </div>
 

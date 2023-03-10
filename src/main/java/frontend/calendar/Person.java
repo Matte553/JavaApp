@@ -1,6 +1,7 @@
 package frontend.calendar;
 
 
+import Entities.PersonEntity;
 import jakarta.inject.Named;
 import java.io.Serializable;
 
@@ -26,6 +27,14 @@ public class Person implements Serializable {
         this.lastName   = lastName;
         this.phoneNumber= phoneNumber;
         this.mail       = mail;
+    }
+
+    public Person(PersonEntity pe) {
+        this.id         = pe.getId();
+        this.firstName  = pe.getFirstname();
+        this.lastName   = pe.getLastname();
+        this.phoneNumber= pe.getPhone();
+        this.mail       = pe.getMail();
     }
 
     public int getId() {
@@ -66,5 +75,10 @@ public class Person implements Serializable {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    @Override
+    public String toString() {
+        return "\t"+id + "@" + firstName + "_" + lastName + "\n\t//" + phoneNumber + "\n\t//" + mail;
     }
 }

@@ -75,7 +75,7 @@ public class CalendarHandler implements Serializable {
         this.test = test;
     }
 
-    CalendarHandler() {
+    CalendarHandler() throws Exception {
         this.calendar           = Calendar.getInstance();
         this.currentYear        = getYear();
         this.currentMonth       = getMonth();
@@ -177,7 +177,7 @@ public class CalendarHandler implements Serializable {
         return "-1";
     }
 
-    private ArrayList<Month> createArrayList() {
+    private ArrayList<Month> createArrayList() throws Exception {
         ArrayList<Month> result = new ArrayList<>();
         for (int i = 1; i < 13; i++) {
             Month temp = new Month(i, this.currentYear, this.firstDaysEachMonth.get(i-1));

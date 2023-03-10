@@ -4,6 +4,10 @@ package frontend.calendar;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+
+import EntityController.EntityController;
+import Entities.CalendarEventEntity;
 
 @Named
 public class Month implements Serializable {
@@ -12,16 +16,17 @@ public class Month implements Serializable {
     private ArrayList<Day> days;
     private int year;
     private int firstWeekday;
+    // paddedDays exists so that I can get the first day under the correct day of the week during the month view.
     private int paddedDays;
 
-    public Month() {
+    public Month() throws Exception {
         this.number         = 1;
         this.name           = enumToString(intToEnum(number));
         this.days           = createArrayList();
         this.year           = 2023;
         this.firstWeekday   = 1;
     }
-    public Month(int number, int year, int firstWeekday) {
+    public Month(int number, int year, int firstWeekday) throws Exception {
         this.number         = number;
         this.name           = enumToString(intToEnum(number));
         this.firstWeekday   = firstWeekday;
@@ -34,7 +39,7 @@ public class Month implements Serializable {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(int number) throws Exception {
         this.number = number;
         this.name   = enumToString(intToEnum(number));
         this.days   = createArrayList();
@@ -80,17 +85,37 @@ public class Month implements Serializable {
         this.paddedDays = paddedDays;
     }
 
-    private ArrayList<Day> createArrayList() {
+    private int ecDateToInt(Date date) {
+        String subString = date.toString().substring(8,10);
+        return Integer.parseInt(subString);
+    }
+
+    private ArrayList<Day> createArrayList() throws Exception {
         ArrayList<Day> result = new ArrayList<>();
+        EntityController ec = new EntityController();
         /*  FEB = 28
         *   JAN, MAR, MAY, JUL, AUG, OKT, DEC = 31
         *   APR, JUN, SEP, NOV = 30
         */
-
+        ArrayList<CalendarEventEntity> list = ec.getEventsWithinMonth(this.number);
         int maxDays = number == 2 ? 28 : number % 2 == 0 && number < 7 || number % 2 == 1 && number > 8 ? 30 : 31;
         int weekday = firstWeekday;
         for (int i = 1; i <= maxDays; i++) {
             Day temp = new Day(i, weekday);
+            for (int service = 0; service < list.size(); service++) {
+                Date date = list.get(service).getStartDate();
+                if (ecDateToInt(date) == i) {
+                    Service serv_temp = new Service(list.get(service));
+                    System.out.println(serv_temp);
+                    System.out.println("i: " + i);
+                    temp.addService(serv_temp);
+                    if (!list.isEmpty()) {
+                        list.remove(service);
+                    } else {
+                        break;
+                    }
+                }
+            }
             weekday++;
             weekday = weekday % 8 == 0 ? 1 : weekday;
             result.add(temp);

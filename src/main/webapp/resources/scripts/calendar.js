@@ -11,18 +11,25 @@ function alterService(id) {
     let usable_id = "#"+id;
     let check = $(usable_id).css('transform');
     let check_phrase = "matrix("+zoom_in+", 0, 0, "+zoom_in+", 0, 0)"
-    /*let test = $(usable_id).css('margin-right');
-    console.log("test: "+test)*/
+    let test = $(usable_id).css('transform');
+    console.log("test: "+test)
     console.log("openService: "+usable_id)
 
     if (check !== check_phrase) {
-        $(usable_id).css({'transform' : 'scale('+ zoom_in +')',
-                                'min-height' : '25vh',
-                                'position' : 'flexed',
-                                'margin-right': '50%',
+        $(usable_id).css({'transform' : 'scale('+zoom_in+')',
+                                'position' : 'fixed',
+                                'top' : '50%',
+                                'left' : '30%',
+                                '-webkit-transform': 'scale('+zoom_in+')',
         });
         $('.description', $(usable_id)).css({ 'visibility': 'visible',
                                                     'overflow' : 'auto'
+        });
+        $('.type', $(usable_id)).css({ 'visibility': 'visible',
+
+        });
+        $('.cost', $(usable_id)).css({ 'visibility': 'visible',
+
         });
         $('.btn', $(usable_id)).css({ 'visibility': 'visible',
 
@@ -31,11 +38,18 @@ function alterService(id) {
     } else {
         $(usable_id).css({'transform' : 'initial',
                                 'min-height' : 'auto',
+                                'min-width' : 'auto',
                                 'position' : 'initial',
-                                'margin-right': '8px'
+                                'margin-left': '8px'
         });
         $('.description', $(usable_id)).css({ 'visibility' : 'collapse',
                                                     'overflow' : 'hidden'
+        });
+        $('.type', $(usable_id)).css({ 'visibility': 'collapse',
+
+        });
+        $('.cost', $(usable_id)).css({ 'visibility': 'collapse',
+
         });
         $('.btn', $(usable_id)).css({ 'visibility': 'collapse',
 
