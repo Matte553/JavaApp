@@ -1,5 +1,5 @@
 package api.model;
-//API
+//API :)
 import jakarta.json.bind.annotation.JsonbCreator;
 import jakarta.json.bind.annotation.JsonbProperty;
 
