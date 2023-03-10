@@ -4,15 +4,16 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "INSTRUMENT_PICTURES", schema = "APP")
-@IdClass(InstrumentPicturesEntityPK.class)
 public class InstrumentPicturesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "IMAGE_URL")
+    @Column(name = "ID", nullable = false)
+    private int id;
+    @Basic
+    @Column(name = "IMAGE_URL", nullable = false, length = 1600)
     private String imageUrl;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "INSTRUMENT_ID")
+    @Basic
+    @Column(name = "INSTRUMENT_ID", nullable = false)
     private int instrumentId;
 
     public InstrumentPicturesEntity() {
@@ -21,6 +22,14 @@ public class InstrumentPicturesEntity {
     public InstrumentPicturesEntity(String imageUrl, Integer instrumentId) {
         setImageUrl(imageUrl);
         setInstrumentId(instrumentId);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getImageUrl() {

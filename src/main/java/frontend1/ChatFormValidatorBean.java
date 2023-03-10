@@ -28,7 +28,7 @@ public class ChatFormValidatorBean implements Serializable {
 
     private static final String EMPTY_ERRRO_MSG = "Fyll i fälten";
     private static final String EMAIL_ERRRO_MSG = "Ogiltig e-postadress";
-    private static final String TELEPHONE_ERRRO_MSG = "Ogiltig telefonnummer,Måste utformas som 07X.... eller 07X-xxx...";
+    private static final String TELEPHONE_ERRRO_MSG = "Ogiltig telefonnummer, valid format 07X eller 07X-xxx";
     private static final String CUSTOMERID_ERRRO_MSG = "Ogiltig Kund id, Måste vara 6 siffror";
 
     private static final String SELECT_SUBJECT_ERRRO_MSG = "Välj subject";

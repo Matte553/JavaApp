@@ -28,7 +28,7 @@
         <mapping class="Entities.InstrumentEntity"/>
         <mapping class="Entities.InstrumentPicturesEntity"/>
         <mapping class="Entities.LogEntity"/>
-
+        <mapping class="Entities.CalendarEventEntity"/>
 
     </session-factory>
 </hibernate-configuration>

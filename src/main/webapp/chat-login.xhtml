@@ -4,8 +4,11 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
->
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:metadata>
+    <f:viewParam id="subject" name="subject" value="#{messageManager.subject}"/>
+    <f:viewAction action="#{customerManager.redirect}"/>
+</f:metadata>
 <h:head>
     <title>Chatta med Anders</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,21 +23,6 @@
             <div>
                 <h3>Starta Chatt med Anders</h3>
             </div>
-
-            <div>
-                <h:selectOneMenu
-                        id="selectedSubject"
-                        value="#{messageManager.subject}"
-                        validator="#{chatFormValidatorBean.validateSubjectSelection}"
-                        onfocus="clearErrorMessages('#form\\:selectedSubject','change')">
-                    <f:selectItem itemValue="#{null}" itemLabel="-- select subject --"/>
-                    <f:selectItem itemValue="Reparation" itemLabel="Reparation"/>
-                    <f:selectItem itemValue="Bookning" itemLabel="Bookning"/>
-                    <f:selectItem itemValue="Reservation" itemLabel="Reservation"/>
-                </h:selectOneMenu>
-                <h:message for="selectedSubject" id="m_selectedSubject" errorClass="error"/>
-            </div>
-
             <div>
                 <h:outputLabel for="customerId" styleClass="input-lables">
                     Kund Id:

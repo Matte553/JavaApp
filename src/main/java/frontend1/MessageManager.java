@@ -92,9 +92,28 @@ public class MessageManager implements Serializable {
         return new ArrayList<>();
     }
 
+    private void saveInstrument() {
+        Integer instrumentID = (Integer) SessionManager.getValue("instrumentID");
+        if (instrumentID != null && SessionManager.getValue("customer") != null) {
+            entityController.addReservation(instrumentID, sender.getId());
+            String url = "http://localhost:8080/test-1.0-SNAPSHOT/instrument.xhtml?instrumentID=";
+            message.setText("Du har reserverat instrument\n: " + url + Integer.toString(instrumentID));
+            entityController.addMessage(
+                    sender.getId(), receiver.getId(), this.subject, message.getText(), null);
+            message = new MessageEntity();
+            SessionManager.setObjectAttribute("instrumentID", null);
+        }
+    }
+
+    public void initChat() {
+        if (this.subject.equals("Reservation")) {
+            saveInstrument();
+        }
+    }
+
     public void submit() {
         message.setImage(file.getServerFileName());
-        entityController.addMessage(sender.getId(), receiver.getId(),message.getText(), message.getImage());
+        entityController.addMessage(sender.getId(), receiver.getId(), this.subject, message.getText(), message.getImage());
         pushUpdate.send("update");
         // reset values
         message = new MessageEntity();

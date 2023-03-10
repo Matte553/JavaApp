@@ -16,8 +16,9 @@ import java.io.Serializable;
 @SessionScoped
 public class CustomerManager implements Serializable {
 
-    private static final String CLIENT_CHAT_PAGE = "chat.xhtml?faces-redirect=true";
+    private static final String CLIENT_CHAT_PAGE = "chat.xhtml?subject=";
     private static final String ADMIN_CHAT_PAGE = "admin-chatt.xhtml?faces-redirect=true";
+
     private PersonEntity person = new PersonEntity();
 
     @Inject
@@ -34,7 +35,16 @@ public class CustomerManager implements Serializable {
         this.person = person;
     }
 
+    public void redirect() throws IOException {
+        if (SessionManager.getValue("customer") != null) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("chat.xhtml?subject=" + messageManager.getSubject());
+        }
+    }
+
     public void submit() throws IOException {
+        if (messageManager.getSubject() == null || messageManager.getSubject().isEmpty()) {
+            messageManager.setSubject("Other");
+        }
         String customerNum = person.getCustomerNumber();
         if (!customerNum.isEmpty()) { // if try to log in by customer number
             // Check if customer is authorised
@@ -49,6 +59,9 @@ public class CustomerManager implements Serializable {
                 if (person.equals(entityController.getAdmin())) { // if logged as Admin, redirect to admin page
                     FacesContext.getCurrentInstance().getExternalContext().redirect(ADMIN_CHAT_PAGE);
                 }
+                if (!entityController.hasChat(person.getId(), messageManager.getSubject())) {
+                    entityController.addChat(person, messageManager.getSubject());
+                }
             }
         } else { // create new customer
             try {
@@ -60,6 +73,6 @@ public class CustomerManager implements Serializable {
         SessionManager.setObjectAttribute("customer", person);
         messageManager.setSender(person);
         messageManager.setReceiver(entityController.getAdmin());
-        FacesContext.getCurrentInstance().getExternalContext().redirect(CLIENT_CHAT_PAGE);
+        FacesContext.getCurrentInstance().getExternalContext().redirect(CLIENT_CHAT_PAGE + messageManager.getSubject());
     }
 }

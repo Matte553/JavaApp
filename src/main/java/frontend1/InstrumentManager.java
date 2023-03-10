@@ -3,8 +3,11 @@ package frontend1;
 import Entities.InstrumentEntity;
 import EntityController.EntityController;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -55,4 +58,11 @@ public class InstrumentManager implements Serializable {
         instrument = entityController.getInstrumentWithID(this.instrumentID);
     }
 
+    public void submit() throws IOException {
+        SessionManager.setObjectAttribute("instrumentID", instrumentID);
+        if (SessionManager.getValue("customer") != null) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("chat.xhtml?subject=Reservation");
+        }
+        FacesContext.getCurrentInstance().getExternalContext().redirect("chat-login.xhtml?subject=Reservation");
+    }
 }

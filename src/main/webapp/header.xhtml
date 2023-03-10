@@ -5,40 +5,41 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
->
+      >
 <h:head>
-    <h:outputStylesheet library="css" name="style.css"/>
+      <h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 <body>
 <div class="header">
 
-    <div class="row">
-        <div class="column_img">
-            <h:graphicImage id="img_logo" value="resources/images/logo.png"/>
-        </div>
-
-        <div class="column" id="phoneNr">
-            <h3>060-XXXXXX</h3>
-        </div>
-
-        <div class="column" id="header_chat">
-            <a href="chat-login.xhtml">Chatta</a>
-            <!--<a href="frontend1.xhtml">Chatta</a>-->
-        </div>
-
-        <div class="column_menu">
-            <div class="dropdown">
-                <button class="dropbtn">Meny</button>
-                <div class="dropdown-content">
-                    <a href="index.xhtml">Hem</a>
-                    <a href="#">Verkstad</a>
-                    <a href="#">Lager</a>
-                    <a href="#">Boka</a>
-                </div>
+      <div class="row">
+            <div class="column_img">
+                  <h:graphicImage id="img_logo"  value="resources/images/logo.png"/>
             </div>
-        </div>
 
-    </div>
+            <div class="column" id="phoneNr">
+                  <h3>060-XXXXXX</h3>
+            </div>
+
+            <div class="column" id="header_chat">
+                  <a href="chat-login.xhtml">Chatta</a>
+                  <!--<a href="chat.xhtml">Chatta</a>-->
+            </div>
+
+            <div class="column_menu">
+                  <div class="dropdown">
+                        <button class="dropbtn">Meny</button>
+                        <div class="dropdown-content">
+                              <a href="index.xhtml">Hem</a>
+                              <a href="#">Verkstad</a>
+                              <a href="shop.xhtml">Lager</a>
+                              <a href="calendar_overview.xhtml">Boka</a>
+                              <a href="calendar_week.xhtml">Test</a>
+                        </div>
+                  </div>
+            </div>
+
+      </div>
 </div>
 <br/>
 </body>
