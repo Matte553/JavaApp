@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+
+<!-- LÄNKAR:
+ https://www.w3schools.com/howto/howto_css_calendar.asp // CALENDAR LAYOUT
+ https://stackoverflow.com/questions/6377798/what-can-fmetadata-fviewparam-and-fviewaction-be-used-for/6377957#6377957 // BEAN
+ https://stackoverflow.com/questions/3342984/jstl-in-jsf2-facelets-makes-sense // EXPLAIN JSTL vs JSF2
+ -->
+<h:head>
+<title>Calendar</title>
+    <h:outputStylesheet library="css" name="calendar.css"/>
+</h:head>
+<h:body>
+    <ui:include src="header.xhtml"/>
+
+        <div class="month">
+            <ul>
+                <f:metadata>
+                    <f:viewParam name="monthID"/>
+                </f:metadata>
+                <h:form>
+                    <!--    Fixa en block så att man inte kan gå längre till vänster än calendarHandler.currentMonth
+                            och inte längre till höger än 2 månader! -->
+                    <li class="prev"><a href="calendar_month.xhtml?monthID=#{monthID-1}">Prev</a></li>
+                    <li class="next"><a href="calendar_month.xhtml?monthID=#{monthID+1}">Next</a></li>
+                </h:form>
+
+                <li>
+                    <h:outputText value="#{calendarHandler.months[monthID-1].name}" />
+                    <br/>
+                    <span style="font-size:18px">2023</span>
+                </li>
+            </ul>
+        </div>
+
+        <ul class="weekdays">
+            <li>Mo</li>
+            <li>Tu</li>
+            <li>We</li>
+            <li>Th</li>
+            <li>Fr</li>
+            <li>Sa</li>
+            <li>Su</li>
+        </ul>
+
+        <ul class="days">
+            <ui:param name="currentDay" value="#{calendarHandler.currentDay}"/>
+            <ui:param name="currentMonth" value="#{calendarHandler.currentMonth}"/>
+            <ui:param name="currentWeek" value="#{calendarHandler.currentWeek}" />
+
+            <!--<c:forEach items="#{calendarHandler.months[monthID-1].days}" var="day">
+                <c:choose>
+                    <c:when test="#{monthID eq currentMonth and currentDay eq day.number}">
+                        <li><span class="active"><a href="calendar_week.xhtml?monthID=#{monthID}day=#{day.number}">#{day.number}</a></span></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="calendar_week.xhtml?monthID=#{monthID}day=#{day.number}">#{day.number}</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>-->
+            <c:forEach items="#{persons.list}" var="pers">
+                <li>#{pers.id}: #{pers.firstName} #{pers.lastName} #{pers.phoneNumber} </li>
+            </c:forEach>
+        </ul>
+
+</h:body>
+</html>

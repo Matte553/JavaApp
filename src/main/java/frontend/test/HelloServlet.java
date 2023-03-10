@@ -1,6 +1,6 @@
-package se.miun.dt170g.test;
+package frontend.test;
 
-import java.io.*;
+/*import java.io.*;
 
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -25,4 +25,4 @@ public class HelloServlet extends HttpServlet {
 
     public void destroy() {
     }
-}
+}*/

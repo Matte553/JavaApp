@@ -4,15 +4,16 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "REPARATIONS", schema = "APP")
-@IdClass(ReparationsEntityPK.class)
 public class ReparationsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ERRAND_NUMBER")
+    @Column(name = "ID", nullable = false)
+    private int id;
+    @Basic
+    @Column(name = "ERRAND_NUMBER", nullable = false)
     private int errandNumber;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "PERSON_ID")
+    @Basic
+    @Column(name = "PERSON_ID", nullable = false)
     private int personId;
     @Basic
     @Column(name = "DESCRIPTION")
@@ -29,6 +30,14 @@ public class ReparationsEntity {
         setPersonId(personId);
         setDescription(description);
         setType(type);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getErrandNumber() {

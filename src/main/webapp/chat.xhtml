@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf" 
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      >
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+        <h:outputScript library="scripts" name="script.js"/>
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml"/>
+
+        <div class="main-chat-container">
+            <div class="message-container">
+                <div>
+                    <div class="message-user-name float-left">
+                        <h:panelGroup>Anders</h:panelGroup>
+                    </div>
+                    <div class="user-message">
+                        <h:panelGroup>Meddelande</h:panelGroup>
+                    </div>
+                    <div class="message-time" >
+                        <h:panelGroup>sent 2023-01-2 22:22</h:panelGroup>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="message-user-name float-right">
+                        <h:panelGroup>Adnan</h:panelGroup>
+                    </div>
+                    <div class="user-message message-darker ">
+                        <h:panelGroup>Meddelande</h:panelGroup>
+                    </div>
+                    <div class="message-time" >
+                        <h:panelGroup>sent 2023-01-2 22:22</h:panelGroup>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <h:form id="chat-form" enctype="multipart/form-data">
+                <div class="message-input">
+                    <h:inputTextarea a:placeholder="Skriv Meddelande..."></h:inputTextarea>
+<!--                    <h:inputFile id="file" value="#{null}" />-->
+                </div>
+                <h:commandButton value="Skicka" styleClass="btn success"></h:commandButton>
+            </h:form>
+
+        </div>
+
+
+
+
+
+    </h:body>
+</html>

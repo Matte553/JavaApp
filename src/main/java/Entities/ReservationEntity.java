@@ -4,19 +4,19 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "RESERVATION", schema = "APP")
-@IdClass(ReservationEntityPK.class)
 public class ReservationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "RESERVATION_NUMBER")
+    @Column(name = "ID", nullable = false)
+    private int id;
+    @Basic
+    @Column(name = "RESERVATION_NUMBER", nullable = false)
     private int reservationNumber;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "INSTRUMENT_ID")
+    @Basic
+    @Column(name = "INSTRUMENT_ID", nullable = false)
     private int instrumentId;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "PERSON_ID")
+    @Basic
+    @Column(name = "PERSON_ID", nullable = false)
     private int personId;
 
     public ReservationEntity() {
@@ -26,6 +26,14 @@ public class ReservationEntity {
         setReservationNumber(reservationNumber);
         setInstrumentId(instrumentId);
         setPersonId(personId);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getReservationNumber() {
