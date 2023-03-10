@@ -36,9 +36,6 @@ public class EntityController implements Serializable {
     }
 
 
-
-
-
     // <!-- PRIVATE METHODS. Used to retrieve or generate data needed for public functions /////////////////////////--!>
 
     // Returns the chatID for a chat that has the given person as a member;
@@ -120,15 +117,6 @@ public class EntityController implements Serializable {
         return number;
     }
 
-
-
-
-
-
-
-
-
-
     // <!-- PUBLIC ADD METHODS, For inserting data into database ///////////////////////////////////////////////// --!>
 
     // Adds Customer to database and initiates a chat with Admin, Returns the customer;
@@ -139,8 +127,6 @@ public class EntityController implements Serializable {
         String customerNumber = generateCustomerNumber();
         PersonEntity newPerson = new PersonEntity(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail(), customerNumber);
         session.persist(person);
-        PersonEntity newPerson = new PersonEntity(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail(), customerNumber);
-        session.persist(newPerson);
 
         ChatEntity chat = new ChatEntity(subject);
         session.persist(chat);
@@ -161,14 +147,15 @@ public class EntityController implements Serializable {
 
         int chatID;
 
-        if(fromID == AdminID){
+        if (fromID == AdminID) {
             chatID = getChat(toID);
-        }
-        else {
+        } else {
             chatID = getChat(fromID);
         }
 
         session.beginTransaction();
+        return null;
+    }
 
     public ChatEntity addChat(PersonEntity person, String subject){
         session.beginTransaction();
@@ -476,7 +463,8 @@ public class EntityController implements Serializable {
         return reparation;
     }
 
-    // Fetches reservation with reservation number that matches the reference number of a booking
+    // SÄGER ATT DE REDAN ÄR DEFINIERADE!!
+    /*// Fetches reservation with reservation number that matches the reference number of a booking
     public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
         String hql = "FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
         Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
@@ -519,7 +507,7 @@ public class EntityController implements Serializable {
             System.err.println("There is no reparation with this errand number: " + referenceNumber);
         };
         return reparation;
-    }
+    }*/
 
     // Fetches reservation with reservation number that matches the reference number of a booking
     public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
