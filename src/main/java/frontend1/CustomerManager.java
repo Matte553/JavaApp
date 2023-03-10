@@ -59,9 +59,9 @@ public class CustomerManager implements Serializable {
                 if (person.equals(entityController.getAdmin())) { // if logged as Admin, redirect to admin page
                     FacesContext.getCurrentInstance().getExternalContext().redirect(ADMIN_CHAT_PAGE);
                 }
-                if (!entityController.hasChat(person.getId(), messageManager.getSubject())) {
+                /*if (!entityController.hasChat(person.getId(), messageManager.getSubject())) {
                     entityController.addChat(person, messageManager.getSubject());
-                }
+                }*/
             }
         } else { // create new customer
             try {
