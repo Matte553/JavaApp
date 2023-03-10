@@ -1,5 +1,5 @@
 package api.model;
-
+//API
 public class ChatMember {
     private int id;
     private int chat_id;

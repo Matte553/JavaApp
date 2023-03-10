@@ -1,5 +1,5 @@
 package api.model;
-
+//API
 public class Chat {
     private int id;
     private String subject;

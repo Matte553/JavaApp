@@ -1,5 +1,5 @@
 package api.model;
-
+//API
 import java.sql.Timestamp;
 
 public class MessageModel {
