@@ -9,6 +9,7 @@ import java.sql.Time;
 
 @Named
 public class Service implements Serializable {
+    int id;
     int startTime;
     int endTime;
     double cost;
@@ -21,27 +22,30 @@ public class Service implements Serializable {
     }
 
     public Service(int startTime, int endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.cost = 0;
-        this.type = "noType";
-        this.customer = new Person();
-        this.description = "Vi testar med en mycket längre description än tidigare och ser vad som händer";
-        this.referenceNumber = 0;
+        this.id             = 0;
+        this.startTime      = startTime;
+        this.endTime        = endTime;
+        this.cost           = 0;
+        this.type           = "noType";
+        this.customer       = new Person();
+        this.description    = "Vi testar med en mycket längre description än tidigare och ser vad som händer";
+        this.referenceNumber= 0;
     }
 
-    public Service(int startTime, int endTime, double cost, String type, Person customer, String description, int referenceNumber) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.cost = cost;
-        this.type = type;
-        this.customer = customer;
-        this.description = description;
-        this.referenceNumber   = referenceNumber;
+    public Service(int id, int startTime, int endTime, double cost, String type, Person customer, String description, int referenceNumber) {
+        this.id             = id;
+        this.startTime      = startTime;
+        this.endTime        = endTime;
+        this.cost           = cost;
+        this.type           = type;
+        this.customer       = customer;
+        this.description    = description;
+        this.referenceNumber= referenceNumber;
     }
 
     public Service(CalendarEventEntity ce) throws Exception {
         EntityController ec = new EntityController();
+        this.id             = ce.getId();
         this.startTime      = ceTimeToInt(ce.getStartTime());
         this.endTime        = ceTimeToInt(ce.getStopTime());
         this.cost           = 150;

@@ -25,8 +25,8 @@
         <f:viewParam name="weekID"/>
     </f:metadata>
     <h:form>
-        <li style='float:left'><a href="calendar_week.xhtml?weekID=#{weekID-1}">Prev</a></li>
-        <li style='float:right'><a href="calendar_week.xhtml?weekID=#{weekID+1}">Next</a></li>
+        <li class="week-prev"><a href="calendar_week.xhtml?weekID=#{weekID-1}">Prev</a></li>
+        <li class="week-next"><a href="calendar_week.xhtml?weekID=#{weekID+1}">Next</a></li>
     </h:form>
 
     <!--
@@ -66,6 +66,7 @@
                         <ui:param name="serID" value="#{day.getKey()}#{ser.startTime}"/>
                         <c:choose>
                                 <c:when test="#{ser.endTime eq ser.startTime}">
+                                    a#{ser.startTime}
                                     <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime+1} #{ser.type}" onclick="alterService(#{serID})">
                                         <p class="type">[#{ser.getTypeSwedish(ser.type)}]</p>
                                         <p class="title">#{ser.customer.firstName} #{ser.customer.lastName}</p>
@@ -75,6 +76,7 @@
                                     </div>
                                 </c:when>
                                 <c:otherwise>
+                                    h#{ser.startTime}
                                     <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime} #{ser.type}" onclick="alterService(#{serID})">
                                         <p class="type">[#{ser.getTypeSwedish(ser.type)}]</p>
                                         <p class="title">#{ser.customer.firstName} #{ser.customer.lastName}</p>

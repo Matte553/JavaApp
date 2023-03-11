@@ -18,6 +18,16 @@
     margin: 2rem;
 }
 
+.week-prev {
+    float: left;
+    padding-top: 10px;
+}
+
+.week-next {
+    float: right;
+    padding-top: 10px;
+}
+
 .timeline {
     display: grid;
     grid-template-rows: repeat(var(--numHours), var(--timeHeight));

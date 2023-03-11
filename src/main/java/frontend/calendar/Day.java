@@ -142,7 +142,7 @@ public class Day implements Serializable {
 
         for (int i = 8; i < 18; i += 1) {
             if (i != 12) {
-                Service temp = new Service(i, i+1, (i*200),types.get(i%3),persons.get(i%3),descriptions.get(i%4), 1234);
+                Service temp = new Service(i, i, i+1, (i*200),types.get(i%3),persons.get(i%3),descriptions.get(i%4), 1234);
                 result.add(temp);
             }
         }
