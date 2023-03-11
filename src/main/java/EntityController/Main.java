@@ -11,20 +11,9 @@ public class Main {
         // TESTING
         EntityController ec = new EntityController();
 
-/*
-        PersonEntity p = new PersonEntity("Torkel", "Token", "333", "TorkelToken@gmail.com", "14");
-        ec.addCustomer(p, "Övrigt");
 
-
- */
-        //PersonEntity person = ec.getPersonWithID(4);
-        //ec.addChat(person, "Reservation");
-/*
-        ArrayList<MessageEntity> m = ec.getMessages(4, "Reservation");
-        for (MessageEntity mess: m){
-            System.out.println(mess.getText());
-        }
-*/
+        PersonEntity p = ec.getPersonWithID(3);
+        ec.addChat(p, "Övrigt");
 
     }
 }

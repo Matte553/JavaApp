@@ -159,20 +159,25 @@ public class EntityController {
     public ChatEntity addChat(PersonEntity person, String subject){
         session.beginTransaction();
 
+        Integer i = getChatWithSubject(person.getId(), subject);
         ChatEntity chat = new ChatEntity(subject);
-        session.persist(chat);
+        if(i == 0){
+            session.persist(chat);
 
-        ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), person.getId());
-        session.persist(chatMember);
+            ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), person.getId());
+            session.persist(chatMember);
 
-        ChatmemberEntity chatMemberAdmin = new ChatmemberEntity(chat.getId(), AdminID);
-        session.persist(chatMemberAdmin);
+            ChatmemberEntity chatMemberAdmin = new ChatmemberEntity(chat.getId(), AdminID);
+            session.persist(chatMemberAdmin);
 
-        session.getTransaction().commit();
-
-        addMessage(AdminID, person.getId(), subject, "Hej kund! Du har nu reserverat eller bokat reparation.", null);
-
-        return chat;
+            session.getTransaction().commit();
+            System.out.println("Chat was successfully added");
+            addMessage(AdminID, person.getId(), subject, "Hej kund! Du har nu reserverat eller bokat reparation.", null);
+        }
+        else {
+            System.err.println("There is already a chat for person: " + person.getId() + " with subject: " + subject);
+        }
+        return null;
     }
 
 
