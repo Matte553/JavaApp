@@ -12,7 +12,7 @@ public class Main {
         EntityController ec = new EntityController();
         ArrayList<CalendarEventEntity> list = ec.getCalendarEvent();
         Service test = new Service(list.get(0));
-        System.out.println(test);
+        //System.out.println(test);
 
         Month test2 = new Month(3,2023,3);
         ArrayList<Day> list2 = test2.getDays();

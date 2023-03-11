@@ -62,6 +62,7 @@ public class Day implements Serializable {
         for (Service added : this.services) {
             if (newSer.startTime <= added.startTime && newSer.endTime <= added.endTime || newSer.startTime == 12) {
                 same = true;
+                System.err.println("This even clashes with another event!");
                 break;
             }
         }

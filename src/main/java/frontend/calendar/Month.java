@@ -97,29 +97,23 @@ public class Month implements Serializable {
         *   JAN, MAR, MAY, JUL, AUG, OKT, DEC = 31
         *   APR, JUN, SEP, NOV = 30
         */
-        ArrayList<CalendarEventEntity> list = ec.getEventsWithinMonth(this.number);
         int maxDays = number == 2 ? 28 : number % 2 == 0 && number < 7 || number % 2 == 1 && number > 8 ? 30 : 31;
         int weekday = firstWeekday;
         for (int i = 1; i <= maxDays; i++) {
             Day temp = new Day(i, weekday);
-            for (int service = 0; service < list.size(); service++) {
-                Date date = list.get(service).getStartDate();
-                if (ecDateToInt(date) == i) {
-                    Service serv_temp = new Service(list.get(service));
-                    System.out.println(serv_temp);
-                    System.out.println("i: " + i);
-                    temp.addService(serv_temp);
-                    if (!list.isEmpty()) {
-                        list.remove(service);
-                    } else {
-                        break;
-                    }
-                }
-            }
             weekday++;
             weekday = weekday % 8 == 0 ? 1 : weekday;
             result.add(temp);
         }
+
+        // Fill days with Services
+        ArrayList<CalendarEventEntity> list = ec.getEventsWithinMonth(this.number);
+        for (CalendarEventEntity cee : list) {
+            Date date = cee.getStartDate();
+            Service serv_temp = new Service(cee);
+            result.get(ecDateToInt(date)-1).addService(serv_temp);
+        }
+
         return result;
     }
     private String enumToString(MonthDays month) {
