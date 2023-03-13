@@ -12,8 +12,10 @@ public class Main {
         EntityController ec = new EntityController();
 
 
-        PersonEntity p = ec.getPersonWithID(3);
-        ec.addChat(p, "Övrigt");
+        //PersonEntity p = ec.getPersonWithID(3);
+        //ec.addChat(p, "Övrigt");
+
+        ec.removeCalender(2);
 
     }
 }

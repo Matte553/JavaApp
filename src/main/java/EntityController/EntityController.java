@@ -256,12 +256,26 @@ public class EntityController {
     }
 
     // Creates a new kalender and adds it to database
-    public CalendarEventEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+    public CalendarEventEntity addCalendarEvent(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
         session.beginTransaction();
         CalendarEventEntity calendar = new CalendarEventEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
         session.persist(calendar);
         session.getTransaction().commit();
         return calendar;
+    }
+
+    // Removes a table entry for CalenderEvent where the row id matches with the given id. Is used to remove a calender event.
+    public void removeCalenderEvent(Integer id){
+        try {
+            session.getTransaction().begin();
+            String hql = "DELETE FROM CalendarEventEntity e WHERE e.id=: id";
+            Query query = session.createQuery(hql).setParameter("id", id);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.err.println("Could not delete calender entry with id: " + id);
+        }
     }
 
     public void updateReparation(int personId, int reparationID, String newDescription, String newType){
