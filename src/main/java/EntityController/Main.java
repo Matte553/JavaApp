@@ -10,6 +10,5 @@ public class Main {
 
         // TESTING
         EntityController ec = new EntityController();
-
     }
 }
