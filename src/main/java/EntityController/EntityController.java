@@ -1,8 +1,6 @@
 package EntityController;
 
 import Entities.HibernateSetup;
-import Entities.*;
-import jakarta.ejb.Stateless;
 import Entities.PersonEntity;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
@@ -11,7 +9,6 @@ import org.hibernate.query.Query;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +18,7 @@ import Entities.*;
 
 
 // This Class is used for Retrieving all data from database and also inserting data into database.
-@Stateless
-public class EntityController implements Serializable {
+public class EntityController {
     SessionFactory sessionFactory;
     Session session;
     Integer AdminID = 1;
@@ -36,9 +32,12 @@ public class EntityController implements Serializable {
     }
 
 
+
+
+
     // <!-- PRIVATE METHODS. Used to retrieve or generate data needed for public functions /////////////////////////--!>
 
-    // Returns the chatID for a chat that has the given person as a member;
+    // Returns the chatID for a chat that has the given person as a member; // TO REMOVE
     private int getChat(int personID){
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
@@ -117,6 +116,15 @@ public class EntityController implements Serializable {
         return number;
     }
 
+
+
+
+
+
+
+
+
+
     // <!-- PUBLIC ADD METHODS, For inserting data into database ///////////////////////////////////////////////// --!>
 
     // Adds Customer to database and initiates a chat with Admin, Returns the customer;
@@ -126,54 +134,50 @@ public class EntityController implements Serializable {
 
         String customerNumber = generateCustomerNumber();
         PersonEntity newPerson = new PersonEntity(person.getFirstname(), person.getLastname(), person.getPhone(), person.getMail(), customerNumber);
-        session.persist(person);
+        session.persist(newPerson);
 
         ChatEntity chat = new ChatEntity(subject);
         session.persist(chat);
 
-        ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), person.getId());
+        System.out.println("Chat id: " + chat.getId());
+        System.out.println("Person id: " + newPerson.getId());
+
+
+        ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), newPerson.getId());
         session.persist(chatMember);
 
         ChatmemberEntity chatMemberAdmin = new ChatmemberEntity(chat.getId(), AdminID);
         session.persist(chatMemberAdmin);
 
         session.getTransaction().commit();
-        return person;
-    }
 
+        addMessage(AdminID, newPerson.getId(), subject, "Hej kund! Vi har nu en chat", null);
 
-    // Creates a new message and adds it to database
-    public MessageEntity addMessage(Integer fromID, Integer toID, String text, String imageURL) {
-
-        int chatID;
-
-        if (fromID == AdminID) {
-            chatID = getChat(toID);
-        } else {
-            chatID = getChat(fromID);
-        }
-
-        session.beginTransaction();
-        return null;
+        return newPerson;
     }
 
     public ChatEntity addChat(PersonEntity person, String subject){
         session.beginTransaction();
 
+        Integer i = getChatWithSubject(person.getId(), subject);
         ChatEntity chat = new ChatEntity(subject);
-        session.persist(chat);
+        if(i == 0){
+            session.persist(chat);
 
-        ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), person.getId());
-        session.persist(chatMember);
+            ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), person.getId());
+            session.persist(chatMember);
 
-        ChatmemberEntity chatMemberAdmin = new ChatmemberEntity(chat.getId(), AdminID);
-        session.persist(chatMemberAdmin);
+            ChatmemberEntity chatMemberAdmin = new ChatmemberEntity(chat.getId(), AdminID);
+            session.persist(chatMemberAdmin);
 
-        session.getTransaction().commit();
-
-        addMessage(AdminID, person.getId(), subject, "Hej kund! Du har nu reserverat eller bokat reparation.", null);
-
-        return chat;
+            session.getTransaction().commit();
+            System.out.println("Chat was successfully added");
+            addMessage(AdminID, person.getId(), subject, "Hej kund! Du har nu reserverat eller bokat reparation.", null);
+        }
+        else {
+            System.err.println("There is already a chat for person: " + person.getId() + " with subject: " + subject);
+        }
+        return null;
     }
 
 
@@ -252,12 +256,26 @@ public class EntityController implements Serializable {
     }
 
     // Creates a new kalender and adds it to database
-    public CalendarEventEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+    public CalendarEventEntity addCalendarEvent(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
         session.beginTransaction();
         CalendarEventEntity calendar = new CalendarEventEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
         session.persist(calendar);
         session.getTransaction().commit();
         return calendar;
+    }
+
+    // Removes a table entry for CalenderEvent where the row id matches with the given id. Is used to remove a calender event.
+    public void removeCalenderEvent(Integer id){
+        try {
+            session.getTransaction().begin();
+            String hql = "DELETE FROM CalendarEventEntity e WHERE e.id=: id";
+            Query query = session.createQuery(hql).setParameter("id", id);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.err.println("Could not delete calender entry with id: " + id);
+        }
     }
 
     public void updateReparation(int personId, int reparationID, String newDescription, String newType){
@@ -463,52 +481,6 @@ public class EntityController implements Serializable {
         return reparation;
     }
 
-    // SÄGER ATT DE REDAN ÄR DEFINIERADE!!
-    /*// Fetches reservation with reservation number that matches the reference number of a booking
-    public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
-        String hql = "FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
-        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
-        ReservationEntity reservation = new ReservationEntity();
-        try {
-            reservation = (ReservationEntity) query.getSingleResult();
-        }catch (NoResultException e){
-            System.err.println("There is no reservation with this reservation number: " + referenceNumber);
-        };
-        return reservation;
-    }
-
-    // Returns list of all events in a given month. Returns empty list if no events that month
-    // 1 = January, 2 = February, etc.
-    public ArrayList<CalendarEventEntity> getEventsWithinMonth(Integer month){
-        String hql = "FROM CalendarEventEntity E WHERE month(E.startDate) = :month";
-        Query query = session.createQuery(hql).setParameter("month", month);
-        List<CalendarEventEntity> result = null;
-        try {
-            result = query.list();
-        }catch (NoResultException e){
-            System.err.println("There are no bookings in this month: " + month);
-        };
-        return (ArrayList<CalendarEventEntity>) result;
-    }
-
-    public Boolean hasChat(int personID, String subject){
-        return true;
-    }
-
-
-    // Fetches reparation with errand number that matches the reference number of a booking
-    public ReparationsEntity getReparationFromReferenceNumber(Integer referenceNumber) {
-        String hql = "FROM ReparationsEntity E WHERE E.errandNumber = :referenceNumber";
-        Query query = session.createQuery(hql).setParameter("referenceNumber", referenceNumber);
-        ReparationsEntity reparation = new ReparationsEntity();
-        try {
-            reparation = (ReparationsEntity) query.getSingleResult();
-        }catch (NoResultException e){
-            System.err.println("There is no reparation with this errand number: " + referenceNumber);
-        };
-        return reparation;
-    }*/
-
     // Fetches reservation with reservation number that matches the reference number of a booking
     public ReservationEntity getReservationFromReferenceNumber(Integer referenceNumber) {
         String hql = "FROM ReservationEntity E WHERE E.reservationNumber = :referenceNumber";
@@ -619,7 +591,7 @@ public class EntityController implements Serializable {
         }
         return result;
     }
-
+    
     // Returns an arraylist with all Calendar entries from database
     public ArrayList<CalendarEventEntity> getCalendarEvent() {
     Query query = session.createQuery(("from CalendarEventEntity"));
