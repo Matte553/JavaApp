@@ -9,18 +9,21 @@ public class Day implements Serializable {
     int number;
     int weekday;
     String name;
+    String shortName;
     ArrayList<Service> services;
 
     public Day() {
         this.number = 1;
         this.weekday= 1;
         this.name = enumToString(intToEnum(weekday));
+        this.shortName = nameToShortName(name);
         this.services = createArrayList();
     }
     public Day(int number, int weekday) {
         this.number = number;
         this.weekday= weekday;
         this.name = enumToString(intToEnum(weekday));
+        this.shortName = nameToShortName(name);
         //this.services = createArrayList();
         this.services = new ArrayList<>();
     }
@@ -31,6 +34,14 @@ public class Day implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public ArrayList<Service> getServices() {
@@ -122,6 +133,18 @@ public class Day implements Serializable {
                 break;
         }
         return result;
+    }
+
+    private String nameToShortName(String name) {
+        if (name.equals("Måndag")) return "Mån";
+        if (name.equals("Tisdag")) return "Tis";
+        if (name.equals("Onsdag")) return "Ons";
+        if (name.equals("Torsdag")) return "Tor";
+        if (name.equals("Fredag")) return "Fre";
+        if (name.equals("Lördag")) return "Lör";
+        if (name.equals("Söndag")) return "Sön";
+        return "-1";
+
     }
     private ArrayList<Service> createArrayList() {
         ArrayList<Service> result = new ArrayList<>();
