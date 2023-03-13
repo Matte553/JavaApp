@@ -24,7 +24,8 @@ public class Main {
         CalendarHandler ch = new CalendarHandler();
         Person peter = new Person("Peter", "Stegeby", "0737271341", "peter.stegeby@gmail.com");
         String subject = "Reservation";
-        ec.addCustomer(Person.personToPersonEntity(peter), subject);
+        //ec.addCustomer(Person.personToPersonEntity(peter), subject);
+        ch.removeEvent(8);
         /*Month m = new Month(2, 2023, 3);
         Day d = m.getDays().get(12);
         Service s = new Service(8, 10, 200, subject, peter, "Testar, testar", 2234);
