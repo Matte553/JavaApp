@@ -37,7 +37,7 @@ public class EntityController {
 
     // <!-- PRIVATE METHODS. Used to retrieve or generate data needed for public functions /////////////////////////--!>
 
-    // Returns the chatID for a chat that has the given person as a member;
+    // Returns the chatID for a chat that has the given person as a member; // TO REMOVE
     private int getChat(int personID){
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
