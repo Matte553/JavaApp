@@ -2,12 +2,15 @@ package frontend1;
 
 import Entities.*;
 import EntityController.EntityController;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.push.Push;
 import jakarta.faces.push.PushContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -17,11 +20,14 @@ import java.util.ArrayList;
 public class MessageManager implements Serializable {
     private String subject;
 
+    private Integer instrumentID;
+
     private String senderFullName;
 
     private String receiverFullName;
 
     private PersonEntity sender = null;
+
     private PersonEntity receiver = null;
 
     private FileUpload file = new FileUpload();
@@ -59,9 +65,6 @@ public class MessageManager implements Serializable {
         this.sender = sender;
     }
 
-    public PersonEntity getReceiver() {
-        return receiver;
-    }
 
     public void setReceiver(PersonEntity receiver) {
         this.receiver = receiver;
@@ -79,6 +82,14 @@ public class MessageManager implements Serializable {
         return senderFullName;
     }
 
+    public Integer getInstrumentID() {
+        return instrumentID;
+    }
+
+    public void setInstrumentID(Integer instrumentID) {
+        this.instrumentID = instrumentID;
+    }
+
     public ArrayList<MessageEntity> getMessages() {
         if (receiver != null && sender != null) {
             this.senderFullName = sender.getFirstname() + " " + sender.getLastname();
@@ -92,22 +103,16 @@ public class MessageManager implements Serializable {
         return new ArrayList<>();
     }
 
-    private void saveInstrument() {
-        Integer instrumentID = (Integer) SessionManager.getValue("instrumentID");
+    public void saveInstrument() {
         if (instrumentID != null && SessionManager.getValue("customer") != null) {
             entityController.addReservation(instrumentID, sender.getId());
             String url = "http://localhost:8080/test-1.0-SNAPSHOT/instrument.xhtml?instrumentID=";
-            message.setText("Du har reserverat instrument\n: " + url + Integer.toString(instrumentID));
+            message.setText("Hejsan!" + sender.getFirstname() + " du har reserverat instrument: " + url + instrumentID);
+            String img = entityController.getImagesFromInstrumentId(this.instrumentID).get(0);
             entityController.addMessage(
-                    sender.getId(), receiver.getId(), this.subject, message.getText(), null);
+                    receiver.getId(), sender.getId(), this.subject, message.getText(), img);
             message = new MessageEntity();
-            SessionManager.setObjectAttribute("instrumentID", null);
-        }
-    }
-
-    public void initChat() {
-        if (this.subject.equals("Reservation")) {
-            saveInstrument();
+            instrumentID = null;
         }
     }
 

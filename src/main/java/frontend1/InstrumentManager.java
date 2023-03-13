@@ -3,6 +3,7 @@ package frontend1;
 import Entities.InstrumentEntity;
 import EntityController.EntityController;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 public class InstrumentManager implements Serializable {
 
     private InstrumentEntity instrument;
+
+    private static final String CHAT_LINK = "chat-login.xhtml?subject=Reservation&instrumentID=";
 
     private int instrumentID;
 
@@ -59,10 +62,6 @@ public class InstrumentManager implements Serializable {
     }
 
     public void submit() throws IOException {
-        SessionManager.setObjectAttribute("instrumentID", instrumentID);
-        if (SessionManager.getValue("customer") != null) {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("chat.xhtml?subject=Reservation");
-        }
-        FacesContext.getCurrentInstance().getExternalContext().redirect("chat-login.xhtml?subject=Reservation");
+        FacesContext.getCurrentInstance().getExternalContext().redirect(CHAT_LINK + instrumentID);
     }
 }

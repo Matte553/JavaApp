@@ -16,7 +16,7 @@ import java.io.Serializable;
 @SessionScoped
 public class CustomerManager implements Serializable {
 
-    private static final String CLIENT_CHAT_PAGE = "chat.xhtml?subject=";
+    private static final String CLIENT_CHAT_PAGE = "chat.xhtml?faces-redirect=true";
     private static final String ADMIN_CHAT_PAGE = "admin-chatt.xhtml?faces-redirect=true";
 
     private PersonEntity person = new PersonEntity();
@@ -37,7 +37,7 @@ public class CustomerManager implements Serializable {
 
     public void redirect() throws IOException {
         if (SessionManager.getValue("customer") != null) {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("chat.xhtml?subject=" + messageManager.getSubject());
+            FacesContext.getCurrentInstance().getExternalContext().redirect(CLIENT_CHAT_PAGE);
         }
     }
 
@@ -71,6 +71,6 @@ public class CustomerManager implements Serializable {
         SessionManager.setObjectAttribute("customer", person);
         messageManager.setSender(person);
         messageManager.setReceiver(entityController.getAdmin());
-        FacesContext.getCurrentInstance().getExternalContext().redirect(CLIENT_CHAT_PAGE + messageManager.getSubject());
+        FacesContext.getCurrentInstance().getExternalContext().redirect(CLIENT_CHAT_PAGE);
     }
 }

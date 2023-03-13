@@ -4,12 +4,13 @@ import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 
-public class FileUpload{
+public class FileUpload implements Serializable {
 
     // Change PROJECT_PATH to your project absolute path
     private static final String PROJECT_PATH = "/home/adde/Desktop/apppro";

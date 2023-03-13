@@ -13,31 +13,35 @@ import java.util.ArrayList;
 @Named
 @SessionScoped
 public class LogManager implements Serializable {
-    private LogEntity log;
+    private String text;
 
     private int personId;
 
     @Inject
     private EntityController entityController;
 
-    public int getPersonId() {
-        return personId;
-    }
-
     public void setPersonId(int personId) {
         this.personId = personId;
     }
 
-    public LogEntity getLog() {
-        return log;
+    public String getText() {
+        return text;
     }
 
-    public void setLog(LogEntity log) {
-        this.log = log;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public ArrayList<PersonEntity> getCustomers() throws Exception {
-        return entityController.getPersons();
+        ArrayList<PersonEntity> persons = entityController.getPersons();
+        PersonEntity admin = entityController.getAdmin();
+        for (int index = 0; index < persons.size(); index++) {
+            if (persons.get(index).equals(admin)) {
+                persons.remove(index);
+                break;
+            }
+        }
+        return persons;
     }
 
     public ArrayList<LogEntity> getAllLogs() {
@@ -45,7 +49,7 @@ public class LogManager implements Serializable {
     }
 
     public void save() {
-        entityController.addLog(personId, log.getText());
-        log.setText(""); // Reset log text
+        entityController.addLog(personId, text);
+        text = ""; // Reset log text
     }
 }

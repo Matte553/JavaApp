@@ -11,6 +11,8 @@ import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Named
 @RequestScoped
@@ -27,8 +29,8 @@ public class ReservationManager implements Serializable {
         reservations = entityController.getReservations();
     }
 
-    public ArrayList<PersonEntity> getCustomers() {
-        ArrayList<PersonEntity> customers = new ArrayList<>();
+    public Set<PersonEntity> getCustomers() {
+        Set<PersonEntity> customers = new HashSet<>();
         reservations.forEach(reservation -> customers.add(entityController.getPersonWithID(reservation.getPersonId())));
         return customers;
     }

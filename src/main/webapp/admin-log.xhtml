@@ -38,7 +38,7 @@
                     <h:inputTextarea
                             id="messageText"
                             a:placeholder="Skriv log..."
-                            value="#{logManager.log.text}"
+                            value="#{logManager.text}"
                             validatorMessage="Skriv nåt i text fält"
                             onfocus="clearErrorMessages('#chat-form\\:messageText')">
                         <f:validateLength minimum="1" for="messageText"/>

@@ -19,7 +19,7 @@
                         <h:outputLink
                                 value="http://localhost:8080/test-1.0-SNAPSHOT/jakarta.faces.resource/#{messageItem.image}.xhtml?ln=uploads"
                                 rendered="#{not empty messageItem.image}">
-                            <!--<h:graphicImage library="uploads" name="#{messageItem.image}" styleClass="img-message"/> -->
+                            <h:graphicImage library="uploads" name="#{messageItem.image}" styleClass="img-message"/>
                         </h:outputLink>
                     </div>
                     <div class="message-time">
@@ -64,9 +64,9 @@
             </div>
         </h:form>
         <h:form>
-            <!--<f:websocket id="updateMessages" channel="updateMessages">
+            <f:websocket id="updateMessages" channel="updateMessages">
                 <f:ajax event="update" render=":message-container"/>
-            </f:websocket> -->
+            </f:websocket>
         </h:form>
     </div>
 </ui:composition>

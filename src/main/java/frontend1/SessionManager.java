@@ -5,9 +5,11 @@ import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
 
+import java.io.Serializable;
+
 @Named
 @RequestScoped
-public class SessionManager {
+public class SessionManager implements Serializable {
     public static HttpSession getSession() {
         return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
     }
