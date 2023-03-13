@@ -40,9 +40,12 @@ public class LogManager implements Serializable {
         return entityController.getPersons();
     }
 
-    public ArrayList<LogEntity> getAllLogs(){
+    public ArrayList<LogEntity> getAllLogs() {
         return entityController.getLogWithID(this.personId);
     }
 
-    public void save(){}
+    public void save() {
+        entityController.addLog(personId, log.getText());
+        log.setText(""); // Reset log text
+    }
 }
