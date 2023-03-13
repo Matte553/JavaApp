@@ -55,15 +55,15 @@
 
     <div class="days">
         <c:forEach items="#{calendarHandler.getList(weekID, currentYear)}" var="day">
-            <div class="day #{day.getValue()}">
+            <div class="day #{day.number}">
                 <div class="date">
-                    <p class="date-num">#{day.getKey()}</p>
-                    <p class="date-day">#{day.getValue()}</p>
+                    <p class="date-num">#{day.number}</p>
+                    <p class="date-day">#{day.shortName}</p>
                 </div>
 
                 <div class="events">
-                    <c:forEach items="#{calendarHandler.months[currentMonth].days[day.getKey()-1].services}" var="ser">
-                        <ui:param name="serID" value="#{day.getKey()}#{ser.startTime}"/>
+                    <c:forEach items="#{calendarHandler.months[currentMonth].days[day.number-1].services}" var="ser">
+                        <ui:param name="serID" value="#{day.number}#{ser.startTime}"/>
                         <c:choose>
                                 <c:when test="#{ser.endTime eq ser.startTime}">
                                     <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime+1} #{ser.type}" onclick="alterService(#{serID})">

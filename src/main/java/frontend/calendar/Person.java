@@ -7,11 +7,11 @@ import java.io.Serializable;
 
 @Named
 public class Person implements Serializable {
-    int id;
-    String firstName;
-    String lastName;
-    String phoneNumber;
-    String mail;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String mail;
 
     public Person() {
         this.id         = 1;
@@ -21,6 +21,13 @@ public class Person implements Serializable {
         this.mail       = "noname@nomail.no";
     }
 
+    public Person(String firstName, String lastName, String phoneNumber, String mail) {
+        this.id         = -1;
+        this.firstName  = firstName;
+        this.lastName   = lastName;
+        this.phoneNumber= phoneNumber;
+        this.mail       = mail;
+    }
     public Person(int id, String firstName, String lastName, String phoneNumber, String mail) {
         this.id         = id;
         this.firstName  = firstName;
@@ -77,6 +84,14 @@ public class Person implements Serializable {
         this.mail = mail;
     }
 
+    public static PersonEntity personToPersonEntity(Person per) {
+        PersonEntity result = new PersonEntity();
+        result.setFirstname(per.getFirstName());
+        result.setLastname(per.getLastName());
+        result.setPhone(per.getPhoneNumber());
+        result.setMail(per.getMail());
+        return result;
+    }
     @Override
     public String toString() {
         return "\t"+id + "@" + firstName + "_" + lastName + "\n\t//" + phoneNumber + "\n\t//" + mail;

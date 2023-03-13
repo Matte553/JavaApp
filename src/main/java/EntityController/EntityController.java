@@ -21,7 +21,7 @@ import Entities.*;
 
 // This Class is used for Retrieving all data from database and also inserting data into database.
 @Stateless
-public class EntityController implements Serializable {
+public class EntityController {
     SessionFactory sessionFactory;
     Session session;
     Integer AdminID = 1;
@@ -594,7 +594,7 @@ public class EntityController implements Serializable {
         }
         return result;
     }
-
+    
     // Returns an arraylist with all Calendar entries from database
     public ArrayList<CalendarEventEntity> getCalendarEvent() {
     Query query = session.createQuery(("from CalendarEventEntity"));

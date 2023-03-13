@@ -6,21 +6,24 @@ import java.util.ArrayList;
 
 @Named
 public class Day implements Serializable {
-    int number;
-    int weekday;
-    String name;
-    ArrayList<Service> services;
+    private int number;
+    private int weekday;
+    private String name;
+    private String shortName;
+    private ArrayList<Service> services;
 
     public Day() {
         this.number = 1;
         this.weekday= 1;
         this.name = enumToString(intToEnum(weekday));
+        this.shortName = nameToShortName(name);
         this.services = createArrayList();
     }
     public Day(int number, int weekday) {
         this.number = number;
         this.weekday= weekday;
         this.name = enumToString(intToEnum(weekday));
+        this.shortName = nameToShortName(name);
         //this.services = createArrayList();
         this.services = new ArrayList<>();
     }
@@ -31,6 +34,14 @@ public class Day implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public ArrayList<Service> getServices() {
@@ -60,7 +71,7 @@ public class Day implements Serializable {
     public void addService(Service newSer) {
         boolean same = false;
         for (Service added : this.services) {
-            if (newSer.startTime <= added.startTime && newSer.endTime <= added.endTime || newSer.startTime == 12) {
+            if (newSer.getStartTime() <= added.getStartTime() && newSer.getEndTime() <= added.getEndTime() || newSer.getStartTime() == 12) {
                 same = true;
                 System.err.println("This even clashes with another event!");
                 break;
@@ -123,6 +134,18 @@ public class Day implements Serializable {
         }
         return result;
     }
+
+    private String nameToShortName(String name) {
+        if (name.equals("Måndag")) return "Mån";
+        if (name.equals("Tisdag")) return "Tis";
+        if (name.equals("Onsdag")) return "Ons";
+        if (name.equals("Torsdag")) return "Tor";
+        if (name.equals("Fredag")) return "Fre";
+        if (name.equals("Lördag")) return "Lör";
+        if (name.equals("Söndag")) return "Sön";
+        return "-1";
+
+    }
     private ArrayList<Service> createArrayList() {
         ArrayList<Service> result = new ArrayList<>();
         ArrayList<String> types = new ArrayList<>();
@@ -143,7 +166,7 @@ public class Day implements Serializable {
 
         for (int i = 8; i < 18; i += 1) {
             if (i != 12) {
-                Service temp = new Service(i, i, i+1, (i*200),types.get(i%3),persons.get(i%3),descriptions.get(i%4), 1234);
+                Service temp = new Service(i, i+1, (i*200),types.get(i%3),persons.get(i%3),descriptions.get(i%4), 1234);
                 result.add(temp);
             }
         }

@@ -1,9 +1,11 @@
 package frontend.calendar;
 
 
+import EntityController.EntityController;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.*;
 
 /* LÄNKAR
@@ -22,7 +24,6 @@ public class CalendarHandler implements Serializable {
     private int currentWeek;
     private int currentDay;
     private ArrayList<Month> months;
-    private ArrayList<Week> weeks;
 
     private int test;
     private Date test2;
@@ -42,6 +43,8 @@ public class CalendarHandler implements Serializable {
         return intToWeekOfDay(number);
     }*/
 
+
+
     public int getFirstWeekdayOfWeek(int week, int year) {
         Date temp = getWeekInYear(week, year);
         String sub = temp.toString().substring(8,10);
@@ -49,13 +52,14 @@ public class CalendarHandler implements Serializable {
         return Integer.parseInt(sub);
     }
 
-    public HashMap<Integer, String> getList(int week, int year) {
-        HashMap<Integer, String> result = new HashMap<>();
+    public ArrayList<Day> getList(int week, int year) {
+        ArrayList<Day> result = new ArrayList<>();
         int value = getFirstWeekdayOfWeek(week, year);
-        for (int i = 0; i<5; i++) {
-            result.put(value+i, intToWeekOfDay(i+1));
+        int month = getMonthFromWeekOfYear(week, year);
+        for (int i=0; i<5; i++) {
+            Day temp = getMonths().get(month).getDays().get((value + i) - 1);
+            result.add(temp);
         }
-
         return result;
     }
 
@@ -97,6 +101,19 @@ public class CalendarHandler implements Serializable {
 
     }
 
+    public void addEvent(Month m, Day d, Service s) throws Exception {
+        EntityController ec = new EntityController();
+        Time startTime = Service.intToTime(s.getStartTime());
+        Time endTime = Service.intToTime(s.getEndTime());
+        java.sql.Date date = Month.intToDate(this.currentYear, m.getNumber(), d.getNumber());
+        ec.addCalendarEvent(startTime, endTime, date, date, s.getType(), s.getDescription(), s.getReferenceNumber(), s.getCustomer().getId());
+    }
+
+    public void removeEvent(int id) throws Exception {
+        EntityController ec = new EntityController();
+        ec.removeCalenderEvent(id);
+    }
+
     public Calendar getCalendar() {
         return calendar;
     }
@@ -113,6 +130,10 @@ public class CalendarHandler implements Serializable {
         this.firstDaysEachMonth = firstDaysEachMonth;
     }
 
+    /**
+     * Function is used to know which weekday is the first day of each month
+     * @return ArrayList with the first weekday of each month.
+     */
     private ArrayList<Integer> fillWithFirstDays() {
         ArrayList<Integer> result = new ArrayList<>();
 
@@ -160,6 +181,9 @@ public class CalendarHandler implements Serializable {
         this.currentWeek = currentWeek;
     }
 
+
+
+    /* PRIVATE FUNCTIONS */
     private int dateToInt(Date date) {
         String day = date.toString().substring(0,3);
 
@@ -174,22 +198,15 @@ public class CalendarHandler implements Serializable {
         return -1;
     }
 
-    private String intToWeekOfDay(int number) {
-        if (number == 1 ) return "Mån";
-        if (number == 2) return "Tis";
-        if (number == 3) return "Ons";
-        if (number == 4) return "Tor";
-        if (number == 5) return "Fre";
-        if (number == 6) return "Lör";
-        if (number == 7) return "Sön";
-
-        return "-1";
-    }
-
+    /**
+     * Function is used to hold all the data from the database so that the data can be displayed on the frontend.
+     * @return ArrayList with all the Months of the year
+     * @throws Exception because month.createList() uses EntityController which throws an exception because it is connected to a database.
+     */
     private ArrayList<Month> createArrayList() throws Exception {
         ArrayList<Month> result = new ArrayList<>();
         for (int i = 1; i < 13; i++) {
-            Month temp = new Month(i, this.currentYear, this.firstDaysEachMonth.get(i-1));
+            Month temp = new Month(i, this.currentYear, this.firstDaysEachMonth.get(i - 1));
             result.add(temp);
         }
         return result;
