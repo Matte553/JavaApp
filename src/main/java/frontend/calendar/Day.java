@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 @Named
 public class Day implements Serializable {
-    int number;
-    int weekday;
-    String name;
-    String shortName;
-    ArrayList<Service> services;
+    private int number;
+    private int weekday;
+    private String name;
+    private String shortName;
+    private ArrayList<Service> services;
 
     public Day() {
         this.number = 1;
@@ -71,7 +71,7 @@ public class Day implements Serializable {
     public void addService(Service newSer) {
         boolean same = false;
         for (Service added : this.services) {
-            if (newSer.startTime <= added.startTime && newSer.endTime <= added.endTime || newSer.startTime == 12) {
+            if (newSer.getStartTime() <= added.getStartTime() && newSer.getEndTime() <= added.getEndTime() || newSer.getStartTime() == 12) {
                 same = true;
                 System.err.println("This even clashes with another event!");
                 break;
@@ -166,7 +166,7 @@ public class Day implements Serializable {
 
         for (int i = 8; i < 18; i += 1) {
             if (i != 12) {
-                Service temp = new Service(i, i, i+1, (i*200),types.get(i%3),persons.get(i%3),descriptions.get(i%4), 1234);
+                Service temp = new Service(i, i+1, (i*200),types.get(i%3),persons.get(i%3),descriptions.get(i%4), 1234);
                 result.add(temp);
             }
         }

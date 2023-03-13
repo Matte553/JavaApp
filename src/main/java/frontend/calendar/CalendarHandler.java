@@ -5,6 +5,7 @@ import EntityController.EntityController;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.*;
 
 /* LÄNKAR
@@ -100,12 +101,17 @@ public class CalendarHandler implements Serializable {
 
     }
 
-    public void addEvent(Service service) throws Exception {
+    public void addEvent(Month m, Day d, Service s) throws Exception {
         EntityController ec = new EntityController();
+        Time startTime = Service.intToTime(s.getStartTime());
+        Time endTime = Service.intToTime(s.getEndTime());
+        java.sql.Date date = Month.intToDate(this.currentYear, m.getNumber(), d.getNumber());
+        ec.addCalendarEvent(startTime, endTime, date, date, s.getType(), s.getDescription(), s.getReferenceNumber(), s.getCustomer().getId());
     }
 
     public void removeEvent(int id) throws Exception {
         EntityController ec = new EntityController();
+        ec.removeCalenderEvent(id);
     }
 
     public Calendar getCalendar() {

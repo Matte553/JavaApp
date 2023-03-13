@@ -2,21 +2,20 @@ package frontend.calendar;
 
 import Entities.CalendarEventEntity;
 import EntityController.EntityController;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.sql.Time;
 
 @Named
 public class Service implements Serializable {
-    int id;
-    int startTime;
-    int endTime;
-    double cost;
-    Person customer;
-    String description;
-    String type;
-    int referenceNumber;
+    private int id;
+    private int startTime;
+    private int endTime;
+    private double cost;
+    private Person customer;
+    private String description;
+    private String type;
+    private int referenceNumber;
 
     public Service() {
     }
@@ -32,12 +31,12 @@ public class Service implements Serializable {
         this.referenceNumber= 0;
     }
 
-    public Service(int id, int startTime, int endTime, double cost, String type, Person customer, String description, int referenceNumber) {
-        this.id             = id;
+    public Service(int startTime, int endTime, double cost, String type, Person customer, String description, int referenceNumber) {
+        this.id             = -1;
         this.startTime      = startTime;
         this.endTime        = endTime;
         this.cost           = cost;
-        this.type           = type;
+        this.type           = type.toLowerCase();
         this.customer       = customer;
         this.description    = description;
         this.referenceNumber= referenceNumber;
@@ -53,11 +52,6 @@ public class Service implements Serializable {
         this.customer       = new Person(ec.getPersonWithID(ce.getPersonId()));
         this.description    = ce.getFreeText();
         this.referenceNumber= ce.getReferenceNumber();
-    }
-
-    private int ceTimeToInt(Time time) {
-        String subStr = time.toString().substring(0,2);
-        return Integer.parseInt(subStr);
     }
     public int getStartTime() {
         return startTime;
@@ -115,8 +109,35 @@ public class Service implements Serializable {
         this.type = type;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(int referenceNumber) {
+        this.referenceNumber = referenceNumber;
+    }
+
     @Override
     public String toString() {
         return "\t" + referenceNumber + "@" + type + "/" + startTime + ":00-" + endTime + ":00\n" + customer;
+    }
+
+    public static Time intToTime(int time) {
+        //Time result = new Time(time, 00, 00);
+
+        return new Time(time, 0, 0);
+    }
+
+    private int ceTimeToInt(Time time) {
+        String subStr = time.toString().substring(0,2);
+        return Integer.parseInt(subStr);
     }
 }

@@ -4,6 +4,7 @@ package frontend.calendar;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import EntityController.EntityController;
@@ -85,6 +86,11 @@ public class Month implements Serializable {
         this.paddedDays = paddedDays;
     }
 
+    public static java.sql.Date intToDate(int year, int month, int day) {
+        return new java.sql.Date(year-1900, month, day);
+    }
+
+    /* PRIVATE FUNCTIONS */
     private int ecDateToInt(Date date) {
         String subString = date.toString().substring(8,10);
         return Integer.parseInt(subString);
