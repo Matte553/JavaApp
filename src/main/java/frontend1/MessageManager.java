@@ -103,13 +103,13 @@ public class MessageManager implements Serializable {
         return new ArrayList<>();
     }
 
-    public void saveInstrument() {
+    public void saveInstrument() throws Exception {
         if (instrumentID != null && SessionManager.getValue("customer") != null) {
-            entityController.addReservation(instrumentID, sender.getId());
+            EntityController controller = new EntityController();
             String url = "http://localhost:8080/test-1.0-SNAPSHOT/instrument.xhtml?instrumentID=";
             message.setText("Hejsan!" + sender.getFirstname() + " du har reserverat instrument: " + url + instrumentID);
-            String img = entityController.getImagesFromInstrumentId(this.instrumentID).get(0);
-            entityController.addMessage(
+            String img = controller.getImagesFromInstrumentId(this.instrumentID).get(0);
+            controller.addMessage(
                     receiver.getId(), sender.getId(), this.subject, message.getText(), img);
             message = new MessageEntity();
             instrumentID = null;

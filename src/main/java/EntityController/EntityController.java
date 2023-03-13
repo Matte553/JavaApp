@@ -21,7 +21,7 @@ import Entities.*;
 
 // This Class is used for Retrieving all data from database and also inserting data into database.
 @Stateless
-public class EntityController {
+public class EntityController implements Serializable{
     SessionFactory sessionFactory;
     Session session;
     Integer AdminID = 1;
