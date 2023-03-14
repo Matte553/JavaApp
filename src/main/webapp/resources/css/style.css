@@ -299,6 +299,11 @@ a:link:hover, a:visited:hover {
     display: table;
 }
 
+.user-message a{
+    margin-top: 30px;
+    display: block;
+}
+
 .message-user-name {
     margin: 10px 10px 0 10px;
     color: #696464;
