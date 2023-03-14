@@ -1,0 +1,233 @@
+:root {
+    --numDays: 5;
+    --numHours: 10;
+    --timeHeight: 60px;
+    --calBgColor: #22aaff;
+    --eventBorderColor: #2244ff;
+    --eventColor1: #ffd6d1;
+    --eventColor2: #fafaa3;
+    --eventColor3: #e2f8ff;
+    --eventColor4: #ff0000;
+    --colorHover:  #55ffaa;
+}
+
+.calendar {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: auto 1fr;
+    margin: 2rem;
+}
+
+.week-prev {
+    float: left;
+    padding-top: 10px;
+}
+
+.week-next {
+    float: right;
+    padding-top: 10px;
+}
+
+.timeline {
+    display: grid;
+    grid-template-rows: repeat(var(--numHours), var(--timeHeight));
+}
+
+.days {
+    display: grid;
+    grid-column: 2;
+    gap: 5px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.events {
+    display: grid;
+    grid-template-rows: repeat(var(--numHours), var(--timeHeight));
+    border-radius: 5px;
+    background: var(--calBgColor);
+    cursor: cell;
+}
+
+.events:hover {
+    background: var(--colorHover);
+}
+
+// Place on Timeline
+.start-8 {
+ grid-row-start: 1;
+}
+
+.end-8 {
+    grid-row-end: 1;
+}
+
+.start-9 {
+    grid-row-start: 2;
+}
+
+.end-9 {
+    grid-row-end: 2;
+}
+
+.start-10 {
+    grid-row-start: 3;
+}
+
+.end-10 {
+    grid-row-end: 3;
+}
+
+.start-11 {
+    grid-row-start: 4;
+}
+
+.end-11 {
+    grid-row-end: 4;
+}
+
+.end-12 {
+    grid-row-end: 5;
+}
+
+.start-13 {
+    grid-row-start: 6;
+}
+
+.end-13 {
+    grid-row-end: 6;
+}
+
+.start-14 {
+    grid-row-start: 7;
+}
+
+.end-14 {
+    grid-row-end: 7;
+}
+
+.start-15 {
+    grid-row-start: 8;
+}
+.end-15 {
+    grid-row-end: 8;
+}
+
+.start-16 {
+    grid-row-start: 9;
+}
+.end-16 {
+    grid-row-end: 9;
+}
+
+.start-17 {
+    grid-row-start: 10;
+}
+.end-17 {
+    grid-row-end: 10;
+}
+
+.end-18 {
+    grid-row-end: 11;
+}
+
+// Event
+
+.title {
+    font-weight: 600;
+    overflow: clip;
+    margin-bottom: 0.25rem;
+    float: left;
+}
+
+.event {
+    border: 1px solid var(--eventBorderColor);
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    background: white;
+    cursor: pointer;
+}
+
+.event .description {
+    visibility: collapse;
+    width: 80%;
+    height: 100px;
+    border: 1px solid #000000;
+    overflow: hidden;
+}
+
+.event .type {
+    visibility: collapse;
+    float: right;
+    font-size: .7rem;
+    font-weight: 700;
+}
+
+.event .cost {
+    visibility: collapse;
+    float: right;
+    font-size: .7rem;
+    font-weight: 700;
+}
+
+.space,
+.date {
+    height: 60px
+}
+
+// Global / Etc
+
+body {
+    font-family: system-ui, sans-serif;
+}
+
+.reservation {
+    background: var(--eventColor1);
+}
+
+.reparation {
+    background: var(--eventColor2);
+}
+
+.blocked {
+    background: var(--eventColor4);
+}
+
+.date {
+    display: flex;
+    gap: 1em;
+}
+
+.date-num {
+    font-size: 3rem;
+    font-weight: 600;
+    display: inline;
+}
+
+.date-day {
+    display: inline;
+    font-size: 3rem;
+    font-weight: 100;
+}
+
+.btn {
+    background: gray;
+    height: 2rem;
+    width: 90%;
+    font-size: 5px;
+    color: #04AA6D;
+    visibility: collapse;
+    bottom: 2.5%;
+    position: fixed;
+    //margin-bottom: 2px;
+}
+
+.delete {
+    display: flex;
+    margin-left: 50%;
+    color: white;
+}
+
+.delete:hover {
+    background: darkred;
+}

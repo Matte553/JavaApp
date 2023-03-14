@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+    <title>Adnders logg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+    <h:outputScript library="scripts" name="script.js"/>
+</h:head>
+<h:body>
+    <ui:decorate template="template/layout/admin-header.xhtml"/>
+    <input type="hidden" value="log" id="currentPage"/>
+    <div jsf:id="log-container" class="main-container">
+        <div class="main-chat-container" id="main-chat-container">
+            <div class="message-container" jsf:id="message-container">
+                <ui:repeat value="#{logManager.allLogs}" var="logItem">
+                    <div>
+                        <div class="user-message">
+                            <h:panelGroup>#{logItem.text}</h:panelGroup>
+                        </div>
+                        <div class="message-time" style="margin-bottom: 10px">
+                            <h:panelGroup>datum #{logItem.logTimestamp.toString()}</h:panelGroup>
+                        </div>
+                    </div>
+                </ui:repeat>
+                <h:outputScript>scrollToBottom('message-container');</h:outputScript>
+            </div>
+            <h:form id="chat-form" styleClass="chat-form">
+                <div class="message-input" jsf:id="message-input">
+                    <h:message for="messageText" id="m_messageText" errorClass="error"/>
+                    <h:inputTextarea
+                            id="messageText"
+                            a:placeholder="Skriv log..."
+                            value="#{logManager.text}"
+                            validatorMessage="Skriv nåt i text fält"
+                            onfocus="clearErrorMessages('#chat-form\\:messageText')">
+                        <f:validateLength minimum="1" for="messageText"/>
+                    </h:inputTextarea>
+                </div>
+                <div>
+                    <h:commandButton
+                            id="messageSubmit"
+                            value="Spara"
+                            styleClass="btn success" action="#{logManager.save}">
+                        <f:ajax execute="@form" render="message-input :message-container"
+                                resetValues="true"/>
+                    </h:commandButton>
+                </div>
+            </h:form>
+        </div>
+        <div jsf:id="subject-container">
+            <div class="customer-lists">
+                <h3>Kund lista</h3>
+                <input type="text" id="Search-customer" placeholder="Sök" onkeyup="searchCustomer()"/>
+            </div>
+            <h:form id="subject-list-container">
+                <ul id="subject-list">
+                    <ui:repeat value="#{logManager.customers}" var="customer" varStatus="currentIndex">
+                        <li>
+                            <h:commandLink
+                                    value="#{currentIndex.index}# #{customer.firstname} #{customer.lastname}"
+                                    action="#{logManager.setPersonId(customer.id)}">
+                                <f:ajax render=":message-container " execute="@this"/>
+                            </h:commandLink>
+                        </li>
+                    </ui:repeat>
+                </ul>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

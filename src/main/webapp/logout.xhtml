@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>logout</title>
+    #{sessionManager.destroySession()}
+    <meta http-equiv="refresh" content="0;url=#{request.contextPath}/chat-login.xhtml"/>
+</head>
+<body>
+<h1>logga ut....</h1>
+<h3>Du kommer att omdirigeras till inloggningssidan</h3>
+<p>
+    <a href="#{request.contextPath}/chat-login.xhtml">
+        Klicka här om omdirigeringen inte fungerar
+    </a>
+</p>
+</body>
+</html>

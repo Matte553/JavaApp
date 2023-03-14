@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+    <title>instruments</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+    <h:outputScript library="scripts" name="script.js"/>
+</h:head>
+
+<h:body>
+    <ui:include src="header.xhtml"/>
+    <div class="main-container">
+        <ul class="breadcrumb">
+            <li><a href="index.xhtml">Hem</a></li>
+            <li>Shop</li>
+        </ul>
+        <div class="flex-instruments-container">
+            <ui:repeat value="#{instrumentManager.instruments}" var="item">
+                <div>
+                    <p><strong>#{item.type}</strong></p>
+                    <h:link outcome="/instrument.xhtml?instrumentID=#{item.id}" styleClass="instrument-link">
+                        <span class="instrument-cover">
+                            <h:graphicImage library="uploads" name="#{instrumentManager.oneImage(item.id)}"/>
+                        </span>
+                        <span><strong>#{item.name}</strong></span>
+                        <span><strong>#{item.price} Kr</strong></span>
+                    </h:link>
+                </div>
+            </ui:repeat>
+        </div>
+    </div>
+</h:body>
+</html>

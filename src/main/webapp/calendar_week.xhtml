@@ -9,51 +9,91 @@
 >
 
 <!-- LÄNKAR:
- https://www.w3schools.com/howto/howto_css_calendar.asp // CALENDAR LAYOUT
- https://stackoverflow.com/questions/6377798/what-can-fmetadata-fviewparam-and-fviewaction-be-used-for/6377957#6377957 // BEAN
+ https://www.w3schools.com/cssref/pr_class_cursor.php
+ https://codepen.io/alvarotrigo/pen/KKQzvdr
  -->
 <h:head>
 <title>Calendar</title>
-    <h:outputStylesheet library="css" name="calendar.css"/>
+    <h:outputStylesheet library="css" name="week.scss"/>
+    <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+    <h:outputScript library="scripts" name="calendar.js"/>
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"/>
 
-        <div class="month">
-            <ul>
-                <f:metadata>
-                    <f:viewParam name="monthID"/>
-                </f:metadata>
-                <h:form>
-                    <!--    Fixa en block så att man inte kan gå längre till vänster än calendarHandler.currentMonth
-                            och inte längre till höger än 2 månader! -->
-                    <li class="prev"><a href="calendar_month.xhtml?monthID=#{monthID-1}">Prev</a></li>
-                    <li class="next"><a href="calendar_month.xhtml?monthID=#{monthID+1}">Next</a></li>
-                </h:form>
+    <f:metadata>
+        <f:viewParam name="weekID"/>
+    </f:metadata>
+    <h:form>
+        <li class="week-prev"><a href="calendar_week.xhtml?weekID=#{weekID-1}">Prev</a></li>
+        <li class="week-next"><a href="calendar_week.xhtml?weekID=#{weekID+1}">Next</a></li>
+    </h:form>
 
-                <li>
-                    <h:outputText value="#{calendarHandler.months[monthID-1].name}" />
-                    <br/>
-                    <span style="font-size:18px">2023</span>
-                </li>
-            </ul>
+    <!--
+    Här kommer jag behöva fixa så att jag kan räkna upp en månad beroende på vilken vecka det blir!
+    -->
+    <ui:param name="currentYear" value="#{calendarHandler.currentYear}"/>
+    <ui:param name="currentMonth" value="#{calendarHandler.getMonthFromWeekOfYear(weekID,currentYear)}"/>
+    <h1 style="text-align: center">#{calendarHandler.months[currentMonth].name}</h1>
+    <h2 style="text-align: center">Vecka #{weekID}</h2>
+
+    <!--<h1 style="text-align: center">test2 #{calendarHandler.test2}</h1>-->
+    <div class="calendar">
+        <div class="timeline">
+            <div class="spacer"/>
+            <div class="time-marker">8:00</div>
+            <div class="time-marker">9:00</div>
+            <div class="time-marker">10:00</div>
+            <div class="time-marker">11:00</div>
+            <div class="time-marker">12:00</div>
+            <div class="time-marker">13:00</div>
+            <div class="time-marker">14:00</div>
+            <div class="time-marker">15:00</div>
+            <div class="time-marker">16:00</div>
+            <div class="time-marker">17:00</div>
         </div>
 
-        <!--<ul class="weekdays">
-            <li>Mo</li>
-            <li>Tu</li>
-            <li>We</li>
-            <li>Th</li>
-            <li>Fr</li>
-            <li>Sa</li>
-            <li>Su</li>
-        </ul> -->
-        <ul class="days">
-            Test: #{person.firstName}
-            <c:forEach items="#{persons.list}" var="pers">
-                <li>#{pers.id}: #{pers.firstName} #{pers.lastName} #{pers.phoneNumber} </li>
-            </c:forEach>
-        </ul>
+    <div class="days">
+        <c:forEach items="#{calendarHandler.getList(weekID, currentYear)}" var="day">
+            <div class="day #{day.number}">
+                <div class="date">
+                    <p class="date-num">#{day.number}</p>
+                    <p class="date-day">#{day.shortName}</p>
+                </div>
+
+                <div class="events">
+                    <c:forEach items="#{calendarHandler.months[currentMonth].days[day.number-1].services}" var="ser">
+                        <ui:param name="serID" value="#{day.number}#{ser.startTime}"/>
+                        <c:choose>
+                                <c:when test="#{ser.endTime eq ser.startTime}">
+                                    <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime+1} #{ser.type}" onclick="alterService(#{serID})">
+                                        <p class="type">[#{ser.getTypeSwedish(ser.type)}]</p>
+                                        <p class="title">#{ser.customer.firstName} #{ser.customer.lastName}</p>
+                                        <p class="time">#{ser.startTime}:00 - #{ser.endTime+1}:00</p>
+                                        <p class="cost">Kostnad: #{ser.cost}:-</p>
+                                        <p class="description">#{ser.description}</p>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime} #{ser.type}" onclick="alterService(#{serID})">
+                                        <p class="type">[#{ser.getTypeSwedish(ser.type)}]</p>
+                                        <p class="title">#{ser.customer.firstName} #{ser.customer.lastName}</p>
+                                        <p class="time">#{ser.startTime}:00 - #{ser.endTime}:00</p>
+                                        <p class="cost">Kostnad: #{ser.cost}:-</p>
+                                        <p class="description">#{ser.description}</p>
+                                    </div>
+                                    </c:otherwise>
+                        </c:choose>
+                        <!--<div class="btn">
+                            <p class="delete">Ta Bort</p>
+                        </div>-->
+                    </c:forEach>
+                    </div>
+            </div>
+        </c:forEach>
+
+        </div>
+    </div>
 
 </h:body>
 </html>

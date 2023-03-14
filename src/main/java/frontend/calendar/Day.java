@@ -6,22 +6,26 @@ import java.util.ArrayList;
 
 @Named
 public class Day implements Serializable {
-    int number;
-    int weekday;
-    String name;
-    ArrayList<Service> services;
+    private int number;
+    private int weekday;
+    private String name;
+    private String shortName;
+    private ArrayList<Service> services;
 
     public Day() {
         this.number = 1;
         this.weekday= 1;
         this.name = enumToString(intToEnum(weekday));
+        this.shortName = nameToShortName(name);
         this.services = createArrayList();
     }
     public Day(int number, int weekday) {
         this.number = number;
         this.weekday= weekday;
         this.name = enumToString(intToEnum(weekday));
-        this.services = createArrayList();
+        this.shortName = nameToShortName(name);
+        //this.services = createArrayList();
+        this.services = new ArrayList<>();
     }
 
     public int getNumber() {
@@ -30,6 +34,14 @@ public class Day implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public ArrayList<Service> getServices() {
@@ -56,6 +68,19 @@ public class Day implements Serializable {
         this.weekday = weekday;
     }
 
+    public void addService(Service newSer) {
+        boolean same = false;
+        for (Service added : this.services) {
+            if (newSer.getStartTime() <= added.getStartTime() && newSer.getEndTime() <= added.getEndTime() || newSer.getStartTime() == 12) {
+                same = true;
+                System.err.println("This even clashes with another event!");
+                break;
+            }
+        }
+        if (!same) {
+            this.services.add(newSer);
+        }
+    }
     private DayNames intToEnum(int dayNumber) {
         DayNames result = DayNames.MONDAY;
         switch (dayNumber) {
@@ -109,11 +134,39 @@ public class Day implements Serializable {
         }
         return result;
     }
+
+    private String nameToShortName(String name) {
+        if (name.equals("Måndag")) return "Mån";
+        if (name.equals("Tisdag")) return "Tis";
+        if (name.equals("Onsdag")) return "Ons";
+        if (name.equals("Torsdag")) return "Tor";
+        if (name.equals("Fredag")) return "Fre";
+        if (name.equals("Lördag")) return "Lör";
+        if (name.equals("Söndag")) return "Sön";
+        return "-1";
+
+    }
     private ArrayList<Service> createArrayList() {
         ArrayList<Service> result = new ArrayList<>();
-        for (int i = 10; i < 18; i++) {
+        ArrayList<String> types = new ArrayList<>();
+            types.add("repair");
+            types.add("reservation");
+            types.add("blocked");
+        ArrayList<Person> persons = new ArrayList<>();
+        persons.add(new Person(1, "Peter", "Stegeby", "+467271341", "peter.stegeby@gmail.com"));
+        persons.add(new Person(2, "Brutus", "Frazze", "+461372151", "brutus.frazze@gmail.com"));
+        persons.add(new Person(3, "Hans", "Klorén", "+101150123", "hasse.klo@gmail.com"));
+        ArrayList<String> descriptions = new ArrayList<>();
+            descriptions.add("Time to repair!");
+            descriptions.add("Having a customer over.");
+            descriptions.add("Writing on paper!");
+            descriptions.add("This is a very very long description so that I can show what happens when the description simply does NOT fit in the regular box of description, no! a scrollbar appears and so you can still read all of this without any problems! ;)");
+
+
+
+        for (int i = 8; i < 18; i += 1) {
             if (i != 12) {
-                Service temp = new Service(Integer.toString(i), Integer.toString(++i));
+                Service temp = new Service(i, i+1, (i*200),types.get(i%3),persons.get(i%3),descriptions.get(i%4), 1234);
                 result.add(temp);
             }
         }
