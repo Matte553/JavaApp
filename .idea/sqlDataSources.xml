@@ -8,21 +8,4 @@
       </scope>
     </mapping>
   </component>
-  <component name="SqlDataSourceStorage">
-    <option name="dataSources">
-      <list>
-        <State>
-          <option name="id" value="02e655cd-793f-48ee-9dbc-aedc0b8310ed" />
-          <option name="name" value="DerbyDB@localhost (DDL)" />
-          <option name="dbmsName" value="DERBY" />
-          <option name="urls">
-            <array>
-              <option value="file://$PROJECT_DIR$/src/db" />
-            </array>
-          </option>
-          <option name="outLayout" value="File per object by schema.groovy" />
-        </State>
-      </list>
-    </option>
-  </component>
 </project>

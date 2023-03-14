@@ -37,7 +37,7 @@ public class EntityController {
 
     // <!-- PRIVATE METHODS. Used to retrieve or generate data needed for public functions /////////////////////////--!>
 
-    // Returns the chatID for a chat that has the given person as a member;
+    // Returns the chatID for a chat that has the given person as a member; // TO REMOVE
     private int getChat(int personID){
         String hql = "SELECT c.chatId FROM ChatmemberEntity c WHERE c.personId = :personID";
         Query query = session.createQuery(hql).setParameter("personID", personID);
@@ -159,20 +159,25 @@ public class EntityController {
     public ChatEntity addChat(PersonEntity person, String subject){
         session.beginTransaction();
 
+        Integer i = getChatWithSubject(person.getId(), subject);
         ChatEntity chat = new ChatEntity(subject);
-        session.persist(chat);
+        if(i == 0){
+            session.persist(chat);
 
-        ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), person.getId());
-        session.persist(chatMember);
+            ChatmemberEntity chatMember = new ChatmemberEntity(chat.getId(), person.getId());
+            session.persist(chatMember);
 
-        ChatmemberEntity chatMemberAdmin = new ChatmemberEntity(chat.getId(), AdminID);
-        session.persist(chatMemberAdmin);
+            ChatmemberEntity chatMemberAdmin = new ChatmemberEntity(chat.getId(), AdminID);
+            session.persist(chatMemberAdmin);
 
-        session.getTransaction().commit();
-
-        addMessage(AdminID, person.getId(), subject, "Hej kund! Du har nu reserverat eller bokat reparation.", null);
-
-        return chat;
+            session.getTransaction().commit();
+            System.out.println("Chat was successfully added");
+            addMessage(AdminID, person.getId(), subject, "Hej kund! Du har nu reserverat eller bokat reparation.", null);
+        }
+        else {
+            System.err.println("There is already a chat for person: " + person.getId() + " with subject: " + subject);
+        }
+        return null;
     }
 
 
@@ -251,12 +256,26 @@ public class EntityController {
     }
 
     // Creates a new kalender and adds it to database
-    public CalendarEventEntity addCalendar(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+    public CalendarEventEntity addCalendarEvent(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
         session.beginTransaction();
         CalendarEventEntity calendar = new CalendarEventEntity(startTime, stopTime, startDate, stopDate, subject, freeText, referenceNumber, personId);
         session.persist(calendar);
         session.getTransaction().commit();
         return calendar;
+    }
+
+    // Removes a table entry for CalenderEvent where the row id matches with the given id. Is used to remove a calender event.
+    public void removeCalenderEvent(Integer id){
+        try {
+            session.getTransaction().begin();
+            String hql = "DELETE FROM CalendarEventEntity e WHERE e.id=: id";
+            Query query = session.createQuery(hql).setParameter("id", id);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.err.println("Could not delete calender entry with id: " + id);
+        }
     }
 
     public void updateReparation(int personId, int reparationID, String newDescription, String newType){
