@@ -714,3 +714,7 @@ ul.breadcrumb li a:hover {
     border: 2px solid #aaa;
     border-radius: 5px;
 }
+
+.bokning-container{
+    grid-column: 1/7;
+}
