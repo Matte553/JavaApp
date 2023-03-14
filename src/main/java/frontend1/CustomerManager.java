@@ -37,6 +37,7 @@ public class CustomerManager implements Serializable {
 
     public void redirect() throws IOException {
         if (SessionManager.getValue("customer") != null) {
+            entityController.addChat(person, messageManager.getSubject());
             FacesContext.getCurrentInstance().getExternalContext().redirect(CLIENT_CHAT_PAGE);
         }
     }
