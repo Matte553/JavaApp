@@ -27,13 +27,13 @@
             <ui:repeat value="#{instrumentManager.instruments}" var="item">
                 <div>
                     <p><strong>#{item.type}</strong></p>
-                    <h:link outcome="/instrument.xhtml?instrumentID=#{item.id}" styleClass="instrument-link">
-                        <span class="instrument-cover">
-                            <h:graphicImage library="uploads" name="#{instrumentManager.oneImage(item.id)}"/>
-                        </span>
-                        <span><strong>#{item.name}</strong></span>
-                        <span><strong>#{item.price} Kr</strong></span>
-                    </h:link>
+                     <h:link outcome="/instrument.xhtml?instrumentID=#{item.id}" styleClass="instrument-link">
+                         <span class="instrument-cover">
+                             <h:graphicImage library="uploads" name="#{instrumentManager.oneImage(item.id)}"/>
+                         </span>
+                         <span><strong>#{item.name}</strong></span>
+                         <span><strong>#{item.price} Kr</strong></span>
+                     </h:link>
                 </div>
             </ui:repeat>
         </div>
