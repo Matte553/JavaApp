@@ -6,10 +6,10 @@ import java.sql.Time;
 
 public class CalenderEventModel {
     private int id;
-    private Time startTime;
-    private Time stopTime;
-    private Date startDate;
-    private Date stopDate;
+    private String startTime;
+    private String stopTime;
+    private String startDate;
+    private String stopDate;
     private String subject;
     private String freeText;
     private int referenceNumber;
@@ -18,7 +18,7 @@ public class CalenderEventModel {
     public CalenderEventModel() {
     }
 
-    public CalenderEventModel(int id, Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+    public CalenderEventModel(Integer id, String startTime, String stopTime, String startDate, String stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
         setId(id);
         setStartTime(startTime);
         setStopTime(stopTime);
@@ -38,35 +38,35 @@ public class CalenderEventModel {
         this.id = id;
     }
 
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Time getStopTime() {
+    public String getStopTime() {
         return stopTime;
     }
 
-    public void setStopTime(Time stopTime) {
+    public void setStopTime(String stopTime) {
         this.stopTime = stopTime;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getStopDate() {
+    public String getStopDate() {
         return stopDate;
     }
 
-    public void setStopDate(Date stopDate) {
+    public void setStopDate(String stopDate) {
         this.stopDate = stopDate;
     }
 
