@@ -67,8 +67,8 @@
                         <c:choose>
                                 <c:when test="#{ser.endTime eq ser.startTime}">
                                     <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime+1} #{ser.type}" onclick="alterService(#{serID})">
+                                        <p class="title">#{ser.customer.firstName}</p> <p class="title">#{ser.customer.lastName}</p>
                                         <p class="type">[#{ser.getTypeSwedish(ser.type)}]</p>
-                                        <p class="title">#{ser.customer.firstName} #{ser.customer.lastName}</p>
                                         <p class="time">#{ser.startTime}:00 - #{ser.endTime+1}:00</p>
                                         <p class="cost">Kostnad: #{ser.cost}:-</p>
                                         <p class="description">#{ser.description}</p>
@@ -76,11 +76,11 @@
                                 </c:when>
                                 <c:otherwise>
                                     <div id="#{serID}" class="event start-#{ser.startTime} end-#{ser.endTime} #{ser.type}" onclick="alterService(#{serID})">
-                                        <p class="type">[#{ser.getTypeSwedish(ser.type)}]</p>
                                         <p class="title">#{ser.customer.firstName} #{ser.customer.lastName}</p>
-                                        <p class="time">#{ser.startTime}:00 - #{ser.endTime}:00</p>
+                                        <p class="type">[#{ser.getTypeSwedish(ser.type)}]</p>
+                                        <br /><p class="time">#{ser.startTime}:00 - #{ser.endTime}:00</p>
                                         <p class="cost">Kostnad: #{ser.cost}:-</p>
-                                        <p class="description">#{ser.description}</p>
+                                        <br /> <p class="description">#{ser.description}</p>
                                     </div>
                                     </c:otherwise>
                         </c:choose>

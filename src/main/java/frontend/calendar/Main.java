@@ -1,9 +1,11 @@
 package frontend.calendar;
 
 import Entities.CalendarEventEntity;
+import Entities.InstrumentEntity;
 import EntityController.EntityController;
 import Entities.PersonEntity;
 import Entities.CalendarEventEntity;
+import frontend1.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +27,12 @@ public class Main {
         Person peter = new Person("Peter", "Stegeby", "0737271341", "peter.stegeby@gmail.com");
         String subject = "Reservation";
         //ec.addCustomer(Person.personToPersonEntity(peter), subject);
-        ch.removeEvent(8);
+
+        ArrayList<InstrumentEntity> list3 = ec.getInstruments();
+        for( InstrumentEntity ie : list3) {
+            System.out.println(ie.getId() + " " + ie.getPrice() + " " + ie.getName());
+        }
+
         /*Month m = new Month(2, 2023, 3);
         Day d = m.getDays().get(12);
         Service s = new Service(8, 10, 200, subject, peter, "Testar, testar", 2234);
@@ -34,7 +41,6 @@ public class Main {
         for (Day d : list2) {
             System.out.println("date: " + d.getNumber() + " weekday: " + d.getName());
         }*/
-
-
+        //ch.removeEvent(8);
     }
 }
