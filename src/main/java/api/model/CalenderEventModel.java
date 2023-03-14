@@ -1,12 +1,10 @@
 package api.model;
 //API
-import Entities.CalendarEventEntity;
-import jakarta.persistence.*;
 
 import java.sql.Date;
 import java.sql.Time;
 
-public class CalenderModel {
+public class CalenderEventModel {
     private int id;
     private Time startTime;
     private Time stopTime;
@@ -17,10 +15,11 @@ public class CalenderModel {
     private int referenceNumber;
     private int personId;
 
-    public CalenderModel() {
+    public CalenderEventModel() {
     }
 
-    public CalenderModel(Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+    public CalenderEventModel(int id, Time startTime, Time stopTime, Date startDate, Date stopDate, String subject, String freeText, Integer referenceNumber, Integer personId) {
+        setId(id);
         setStartTime(startTime);
         setStopTime(stopTime);
         setStartDate(startDate);
@@ -108,7 +107,7 @@ public class CalenderModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CalenderModel that = (CalenderModel) o;
+        CalenderEventModel that = (CalenderEventModel) o;
 
         if (id != that.id) return false;
         if (referenceNumber != that.referenceNumber) return false;
