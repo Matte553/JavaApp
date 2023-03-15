@@ -1,12 +1,11 @@
 package api.controller;
 //API
 import api.model.CalenderEventModel;
+import api.model.PersonModel;
 import api.service.CalenderEventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -30,4 +29,10 @@ public class CalenderEventController {
     CalenderEventModel addCalenderEvent(@RequestBody CalenderEventModel calenderEvent) throws ParseException {
         return service.addCalenderEvent(calenderEvent);
     }
+
+    @DeleteMapping("/calender/delete")
+    Integer deleteCalenderEvent(@RequestParam Integer id) throws Exception{
+        return service.deleteCalendarEvent(id);
+    }
+
 }

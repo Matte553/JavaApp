@@ -4,6 +4,8 @@ package api.service;
 import Entities.CalendarEventEntity;
 import EntityController.EntityController;
 import api.model.CalenderEventModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -69,5 +71,11 @@ public class CalenderEventService {
                 event.getReferenceNumber(),
                 event.getPersonId());
         return this.convertCalenderEntity(eventEntity);
+    }
+
+    public Integer deleteCalendarEvent(Integer id) {
+        System.out.println("Not here either " + id);
+        ec.removeCalenderEvent(id);
+        return 200;
     }
 }
