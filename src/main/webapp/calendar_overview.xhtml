@@ -19,18 +19,18 @@
 <h:body>
     <ui:include src="header.xhtml"/>
         <h1 align="center">Boka</h1>
-        <div class="overview">
-            <div class="row">
-                <ui:param name="currentYear" value="#{calendarHandler.currentYear}" />
-                <ui:param name="currentDay" value="#{calendarHandler.currentDay}"/>
-                <ui:param name="currentMonth" value="#{calendarHandler.currentMonth}" />
-                <ui:param name="nextMonth" value="#{calendarHandler.currentMonth+1}" />
-                <ui:param name="nextNextMonth" value="#{calendarHandler.currentMonth+2}" />
+    <!--<div class="overview">
+        <div class="row">
+            <ui:param name="currentYear" value="#{calendarHandler.currentYear}" />
+            <ui:param name="currentDay" value="#{calendarHandler.currentDay}"/>
+            <ui:param name="currentMonth" value="#{calendarHandler.currentMonth}" />
+            <ui:param name="nextMonth" value="#{calendarHandler.currentMonth+1}" />
+            <ui:param name="nextNextMonth" value="#{calendarHandler.currentMonth+2}" />-->
 
                 <!--
                 *** FIRST MONTH **
                 -->
-                <div class="column">
+                <!--<div class="column">
                     <a class="title" href="calendar_month.xhtml?monthID=#{currentMonth}">#{calendarHandler.months[currentMonth-1].name} #{currentYear}</a> <br />
                     <ul class="weekdays">
                         <li>Mån</li>
@@ -84,12 +84,12 @@
                             </c:when>
                         </c:choose>
                     </ul>
-                </div>
+                </div>-->
 
                 <!--
                 *** SECOND MONTH **
                 -->
-                <div class="column">
+                <!--<div class="column">
                     <a class="title" href="calendar_month.xhtml?monthID=#{nextMonth}">#{calendarHandler.months[nextMonth-1].name} #{currentYear}</a> <br />
                     <ul class="weekdays">
                         <li>Mån</li>
@@ -143,13 +143,13 @@
                             </c:when>
                         </c:choose>
                     </ul>
-                </div>
+                </div>-->
 
 
                 <!--
                 *** THIRD MONTH **
                 -->
-                <div class="column">
+                <!--<div class="column">
                     <a class="title" href="calendar_month.xhtml?monthID=#{nextNextMonth}">#{calendarHandler.months[nextNextMonth-1].name} #{currentYear}</a> <br />
                     <ul class="weekdays">
                         <li>Mån</li>
@@ -205,7 +205,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>-->
 
 </h:body>
 </html>

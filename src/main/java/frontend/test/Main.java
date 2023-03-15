@@ -9,8 +9,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Persons pe = new Persons();
-        System.out.println("\nSize: " + pe.getSize());
-        for (Person p : pe.getList()) {
+        for (Person p : pe.getCustomers()) {
             System.out.println("id: " + p.getId() + ": " + p.getFirstName() + " " + p.getLastName() + " <" + p.getPhoneNumber() + ">");
         }
 

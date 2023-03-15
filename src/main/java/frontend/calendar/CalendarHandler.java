@@ -104,9 +104,9 @@ public class CalendarHandler implements Serializable {
     public void addEvent(Month m, Day d, Service s) throws Exception {
         EntityController ec = new EntityController();
         Time startTime = Service.intToTime(s.getStartTime());
-        Time endTime = Service.intToTime(s.getEndTime());
+        Time stopTime = Service.intToTime(s.getEndTime());
         java.sql.Date date = Month.intToDate(this.currentYear, m.getNumber(), d.getNumber());
-        ec.addCalendarEvent(startTime, endTime, date, date, s.getType(), s.getDescription(), s.getReferenceNumber(), s.getCustomer().getId());
+        ec.addCalendarEvent(startTime, stopTime, date, date, s.getType(), s.getDescription(), s.getReferenceNumber(), s.getCustomer().getId());
     }
 
     public void removeEvent(int id) throws Exception {
