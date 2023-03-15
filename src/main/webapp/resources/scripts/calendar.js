@@ -7,7 +7,7 @@ function moveToWeek(id) {
 
 
 function alterService(id) {
-    let zoom_in = 2;
+    let zoom_in = "1.5";
     let usable_id = "#"+id;
     let check = $(usable_id).css('transform');
     let check_phrase = "matrix("+zoom_in+", 0, 0, "+zoom_in+", 0, 0)"
@@ -23,7 +23,7 @@ function alterService(id) {
                                 '-webkit-transform': 'scale('+zoom_in+')',
         });
         $('.description', $(usable_id)).css({ 'visibility': 'visible',
-                                                    'overflow' : 'auto'
+                                                    'overflow' : 'scroll'
         });
         $('.type', $(usable_id)).css({ 'visibility': 'visible',
 
@@ -40,7 +40,8 @@ function alterService(id) {
                                 'min-height' : 'auto',
                                 'min-width' : 'auto',
                                 'position' : 'initial',
-                                'margin-left': '8px'
+                                'margin-left': '8px',
+                                'margin-right': '8px'
         });
         $('.description', $(usable_id)).css({ 'visibility' : 'collapse',
                                                     'overflow' : 'hidden'

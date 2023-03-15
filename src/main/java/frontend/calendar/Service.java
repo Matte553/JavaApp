@@ -2,11 +2,15 @@ package frontend.calendar;
 
 import Entities.CalendarEventEntity;
 import EntityController.EntityController;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.sql.Time;
 
 @Named
+@ViewScoped
 public class Service implements Serializable {
     private int id;
     private int startTime;
@@ -16,6 +20,9 @@ public class Service implements Serializable {
     private String description;
     private String type;
     private int referenceNumber;
+
+    @Inject
+    EntityController entityController;
 
     public Service() {
     }
@@ -43,13 +50,12 @@ public class Service implements Serializable {
     }
 
     public Service(CalendarEventEntity ce) throws Exception {
-        EntityController ec = new EntityController();
         this.id             = ce.getId();
         this.startTime      = ceTimeToInt(ce.getStartTime());
         this.endTime        = ceTimeToInt(ce.getStopTime());
         this.cost           = 150;
         this.type           = ce.getSubject().toLowerCase();
-        this.customer       = new Person(ec.getPersonWithID(ce.getPersonId()));
+        this.customer       = new Person(entityController.getPersonWithID(ce.getPersonId()));
         this.description    = ce.getFreeText();
         this.referenceNumber= ce.getReferenceNumber();
     }
@@ -83,6 +89,10 @@ public class Service implements Serializable {
 
     public void setCustomer(Person customer) {
         this.customer = customer;
+    }
+
+    public void setCustomer(int id) {
+        customer = new Person(entityController.getPersonWithID(id));
     }
 
     public String getDescription() {
@@ -131,8 +141,6 @@ public class Service implements Serializable {
     }
 
     public static Time intToTime(int time) {
-        //Time result = new Time(time, 00, 00);
-
         return new Time(time, 0, 0);
     }
 

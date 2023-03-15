@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h:head>
+   <title>Add Event</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <h:outputStylesheet library="css" name="style.css"/>
+   <h:outputScript library="scripts" name="jquery-3.6.3.min.js"/>
+   <h:outputScript library="scripts" name="script.js"/>
+</h:head>
+<h:body>
+   <ui:decorate template="template/layout/admin-header.xhtml"/>
+   <input type="hidden" value="log" id="currentPage"/>
+   <div jsf:id="log-container" class="main-container">
+      <div class="add-instruments bokning-container">
+         <h:form id="form" enctype="multipart/form-data">
+            <div>
+               <h3>Lägg till händelse på kalendern</h3>
+            </div>
+         <div>
+            <h:outputLabel for="customerID" styleClass="input-lables">Id</h:outputLabel>
+            <h:inputText
+                    id="customerID"
+                    value=""
+                    a:placeholder="Skriv in kundens ID"
+                    required="true"
+                    requiredMessage="Fyll i kundens ID">
+            </h:inputText>
+            <h:message for="customerID" id="m_customerID" errorClass="error"/>
+            </div>
+            <div>
+               <h:outputLabel for="eventStart" styleClass="input-lables">Start tid</h:outputLabel>
+               <h:inputText
+                       id="eventStart"
+                       value="#{addCalendarEvent.service.startTime}"
+                       required="true"
+                       requiredMessage="Fyll i händelsens start tid"
+                       a:placeholder="Skriv in händelsens start tid">
+               </h:inputText>
+               <h:message for="eventStart" id="m_eventStart" errorClass="error"/>
+            </div>
+            <div>
+               <h:outputLabel for="eventStop" styleClass="input-lables">Stopp tid</h:outputLabel>
+               <h:inputText
+                       id="eventStop"
+                       value=""
+                       required="true"
+                       requiredMessage="Fyll i händelsens stopp tid"
+                       a:placeholder="Skriv in händelsens stopp tid">
+               </h:inputText>
+               <h:message for="eventStop" id="m_eventStop" errorClass="error"/>
+            </div>
+            <div>
+               <h:outputLabel for="eventType" styleClass="input-lables">Typ</h:outputLabel>
+               <h:inputText
+                       id="eventType"
+                       value=""
+                       required="true"
+                       requiredMessage="Fyll i händelsens typ"
+                       a:placeholder="Skriv in händelsens typ">
+               </h:inputText>
+               <h:message for="eventType" id="m_eventType" errorClass="error"/>
+            </div>
+            <div>
+               <h:outputLabel for="eventPrice" styleClass="input-lables">Pris</h:outputLabel>
+               <h:inputText
+                       id="eventPrice"
+                       value=""
+                       a:placeholder="Skriv in pris"
+                       required="true"
+                       requiredMessage="Fyll i pris"
+                       converterMessage="Endast siffror">
+                  <f:convertNumber type="number" for="eventPrice"/>
+               </h:inputText>
+               <h:message for="eventPrice" id="m_eventPrice" errorClass="error"/>
+            </div>
+            <div>
+               <h:outputLabel for="description" styleClass="input-lables">Beskrivning</h:outputLabel>
+               <h:inputTextarea
+                       id="description"
+                       value=""
+                       required="true"
+                       a:placeholder="Skriv in beskrivning"
+                       onfocus="clearErrorMessages('#form\\:description')"
+                       requiredMessage="Fyll i beskrivning"/>
+               <h:message for="description" id="m_description" errorClass="error"/>
+            </div>
+            <div>
+               <h:commandButton
+                       id="submit"
+                       value="Skicka"
+                       action="#{addCalendarEvent.save}"
+                       styleClass="btn success">
+                  <f:ajax
+                          execute="@form"
+                          render="m_customerID m_eventStart m_eventStop m_eventType m_eventPrice m_description"/>
+               </h:commandButton>
+            </div>
+         </h:form>
+      </div>
+      <div jsf:id="subject-container">
+         <div class="customer-lists">
+            <h3>Kund lista</h3>
+            <!--<input type="text" id="Search-customer" placeholder="Sök" onkeyup="searchCustomer()"/>-->
+         </div>
+         <h:form id="subject-list-container">
+            <ul id="subject-list">
+               <c:forEach items="#{persons.customers}" var="customer">
+                  <li>
+
+               <h:commandLink
+                       value="#{customer.id}# #{customer.firstName} #{customer.lastName}"
+                       action="#{logManager.setPersonId(customer.id)}">
+                  <f:ajax render=":message-container " execute="@this"/>
+               </h:commandLink>
+            </li>
+         </c:forEach>
+            </ul>
+         </h:form>
+      </div>
+   </div>
+</h:body>
+</html>

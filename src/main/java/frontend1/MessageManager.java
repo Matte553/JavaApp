@@ -13,6 +13,7 @@ import jakarta.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 @Named
@@ -40,6 +41,33 @@ public class MessageManager implements Serializable {
 
     @Inject
     private EntityController entityController;
+
+    private ArrayList<MessageEntity> getAllCustomerMessages() {
+        ArrayList<MessageEntity> messages = new ArrayList<>();
+        ArrayList<MessageEntity> reparations = entityController.getMessagesWithSubject(
+                sender.getId(), "Reparation");
+        ArrayList<MessageEntity> reservations = entityController.getMessagesWithSubject(
+                sender.getId(), "Reservation");
+        ArrayList<MessageEntity> boknings = entityController.getMessagesWithSubject(
+                sender.getId(), "Bookning");
+        ArrayList<MessageEntity> others = entityController.getMessagesWithSubject(
+                sender.getId(), "Other");
+
+        if (reparations != null) {
+            messages.addAll(reparations);
+        }
+        if (reservations != null) {
+            messages.addAll(reservations);
+        }
+        if (boknings != null) {
+            messages.addAll(boknings);
+        }
+        if (others != null) {
+            messages.addAll(others);
+        }
+        messages.sort(Comparator.comparing(MessageEntity::getMessageTimestamp));
+        return messages;
+    }
 
     public FileUpload getFile() {
         return file;
@@ -97,7 +125,7 @@ public class MessageManager implements Serializable {
             if (SessionManager.getValue("customer") == null) {
                 return entityController.getMessagesWithSubject(receiver.getId(), subject);
             } else {
-                return entityController.getMessagesWithSubject(sender.getId(), subject);
+                return getAllCustomerMessages();
             }
         }
         return new ArrayList<>();
@@ -107,7 +135,7 @@ public class MessageManager implements Serializable {
         if (instrumentID != null && SessionManager.getValue("customer") != null) {
             EntityController controller = new EntityController();
             String url = "http://localhost:8080/test-1.0-SNAPSHOT/instrument.xhtml?instrumentID=";
-            message.setText("Hejsan!" + sender.getFirstname() + " du har reserverat instrument: " + url + instrumentID);
+            message.setText("Hejsan " + sender.getFirstname() + " ! du har reserverat instrument: " + url + instrumentID);
             String img = controller.getImagesFromInstrumentId(this.instrumentID).get(0);
             controller.addMessage(
                     receiver.getId(), sender.getId(), this.subject, message.getText(), img);
