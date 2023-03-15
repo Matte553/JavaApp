@@ -13,16 +13,13 @@ import java.sql.Time;
 @ViewScoped
 public class Service implements Serializable {
     private int id;
-    private int startTime;
-    private int endTime;
-    private double cost;
+    private Integer startTime;
+    private Integer endTime;
+    private Double cost;
     private Person customer;
     private String description;
     private String type;
     private int referenceNumber;
-
-    @Inject
-    EntityController entityController;
 
     public Service() {
     }
@@ -31,7 +28,7 @@ public class Service implements Serializable {
         this.id             = 0;
         this.startTime      = startTime;
         this.endTime        = endTime;
-        this.cost           = 0;
+        this.cost           = 0.0;
         this.type           = "noType";
         this.customer       = new Person();
         this.description    = "Vi testar med en mycket längre description än tidigare och ser vad som händer";
@@ -50,24 +47,25 @@ public class Service implements Serializable {
     }
 
     public Service(CalendarEventEntity ce) throws Exception {
+        EntityController entityController = new EntityController();
         this.id             = ce.getId();
         this.startTime      = ceTimeToInt(ce.getStartTime());
         this.endTime        = ceTimeToInt(ce.getStopTime());
-        this.cost           = 150;
+        this.cost           = 150.0;
         this.type           = ce.getSubject().toLowerCase();
         this.customer       = new Person(entityController.getPersonWithID(ce.getPersonId()));
         this.description    = ce.getFreeText();
         this.referenceNumber= ce.getReferenceNumber();
     }
-    public int getStartTime() {
+    public Integer getStartTime() {
         return startTime;
     }
 
     public void setStartTime(int startTime) {
-        this.startTime = startTime;
+            this.startTime = startTime;
     }
 
-    public int getEndTime() {
+    public Integer getEndTime() {
         return endTime;
     }
 
@@ -75,7 +73,7 @@ public class Service implements Serializable {
         this.endTime = endTime;
     }
 
-    public double getCost() {
+    public Double getCost() {
         return cost;
     }
 
@@ -91,7 +89,8 @@ public class Service implements Serializable {
         this.customer = customer;
     }
 
-    public void setCustomer(int id) {
+    public void setCustomer(int id) throws Exception {
+        EntityController entityController = new EntityController();
         customer = new Person(entityController.getPersonWithID(id));
     }
 

@@ -24,14 +24,17 @@ public class Main {
         }
 
         CalendarHandler ch = new CalendarHandler();
-        Person peter = new Person("Peter", "Stegeby", "0737271341", "peter.stegeby@gmail.com");
+        Person peter = new Person(4,"Peter", "Stegeby", "0737271341", "peter.stegeby@gmail.com");
         String subject = "Reservation";
         //ec.addCustomer(Person.personToPersonEntity(peter), subject);
 
-        ArrayList<InstrumentEntity> list3 = ec.getInstruments();
-        for( InstrumentEntity ie : list3) {
-            System.out.println(ie.getId() + " " + ie.getPrice() + " " + ie.getName());
-        }
+        /*addCalendarEvent test1 = new addCalendarEvent();
+        Service s = new Service(8, 10, 200, subject, peter, "Testar, testar", 2234);
+        test1.setMonth(3);
+        test1.setDay(15);
+        test1.setService(s);
+        test1.save();*/
+
 
         /*Month m = new Month(2, 2023, 3);
         Day d = m.getDays().get(12);

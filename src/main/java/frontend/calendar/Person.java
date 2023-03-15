@@ -44,7 +44,7 @@ public class Person implements Serializable {
         this.mail       = pe.getMail();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

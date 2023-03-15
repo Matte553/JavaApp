@@ -25,15 +25,39 @@
                <h3>Lägg till händelse på kalendern</h3>
             </div>
          <div>
+            <!-- m_eventPrice m_description -->
+            #{customerID} #{eventMonth} #{eventDay} #{eventStart} #{eventStop} #{eventType}
             <h:outputLabel for="customerID" styleClass="input-lables">Id</h:outputLabel>
             <h:inputText
                     id="customerID"
-                    value=""
+                    value="#{addCalendarEvent.customerID}"
                     a:placeholder="Skriv in kundens ID"
                     required="true"
                     requiredMessage="Fyll i kundens ID">
             </h:inputText>
             <h:message for="customerID" id="m_customerID" errorClass="error"/>
+            </div>
+            <div>
+               <h:outputLabel for="eventMonth" styleClass="input-lables">Månad</h:outputLabel>
+               <h:inputText
+                       id="eventMonth"
+                       value="#{addCalendarEvent.month}"
+                       required="true"
+                       requiredMessage="Fyll i vilken månad händelsens tar plats"
+                       a:placeholder="Skriv in vilken månad händelsens tar plats">
+               </h:inputText>
+               <h:message for="eventMonth" id="m_eventMonth" errorClass="error"/>
+            </div>
+            <div>
+               <h:outputLabel for="eventDay" styleClass="input-lables">Dag</h:outputLabel>
+               <h:inputText
+                       id="eventDay"
+                       value="#{addCalendarEvent.day}"
+                       required="true"
+                       requiredMessage="Fyll i vilken dag händelsens tar plats"
+                       a:placeholder="Skriv in vilken dag händelsens tar plats">
+               </h:inputText>
+               <h:message for="eventDay" id="m_eventDay" errorClass="error"/>
             </div>
             <div>
                <h:outputLabel for="eventStart" styleClass="input-lables">Start tid</h:outputLabel>
@@ -50,7 +74,7 @@
                <h:outputLabel for="eventStop" styleClass="input-lables">Stopp tid</h:outputLabel>
                <h:inputText
                        id="eventStop"
-                       value=""
+                       value="#{addCalendarEvent.service.endTime}"
                        required="true"
                        requiredMessage="Fyll i händelsens stopp tid"
                        a:placeholder="Skriv in händelsens stopp tid">
@@ -61,7 +85,7 @@
                <h:outputLabel for="eventType" styleClass="input-lables">Typ</h:outputLabel>
                <h:inputText
                        id="eventType"
-                       value=""
+                       value="#{addCalendarEvent.service.type}"
                        required="true"
                        requiredMessage="Fyll i händelsens typ"
                        a:placeholder="Skriv in händelsens typ">
@@ -72,7 +96,7 @@
                <h:outputLabel for="eventPrice" styleClass="input-lables">Pris</h:outputLabel>
                <h:inputText
                        id="eventPrice"
-                       value=""
+                       value="#{addCalendarEvent.service.cost}"
                        a:placeholder="Skriv in pris"
                        required="true"
                        requiredMessage="Fyll i pris"
@@ -85,7 +109,7 @@
                <h:outputLabel for="description" styleClass="input-lables">Beskrivning</h:outputLabel>
                <h:inputTextarea
                        id="description"
-                       value=""
+                       value="#{addCalendarEvent.service.description}"
                        required="true"
                        a:placeholder="Skriv in beskrivning"
                        onfocus="clearErrorMessages('#form\\:description')"
@@ -100,7 +124,7 @@
                        styleClass="btn success">
                   <f:ajax
                           execute="@form"
-                          render="m_customerID m_eventStart m_eventStop m_eventType m_eventPrice m_description"/>
+                          render="m_customerID m_eventMonth m_eventDay m_eventStart m_eventStop m_eventType m_eventPrice m_description"/>
                </h:commandButton>
             </div>
          </h:form>
@@ -124,6 +148,7 @@
          </c:forEach>
             </ul>
          </h:form>
+
       </div>
    </div>
 </h:body>

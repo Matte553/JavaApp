@@ -13,13 +13,10 @@ public class addCalendarEvent implements Serializable {
 
     private Service service = new Service();
 
-    @Inject
-    private CalendarHandler calendarHandler;
+    private Integer day = null;
+    private Integer month = null;
 
-    private int day = 1;
-    private int month = 1;
-
-    public int getDay() {
+    public Integer getDay() {
         return day;
     }
 
@@ -27,7 +24,7 @@ public class addCalendarEvent implements Serializable {
         this.day = day;
     }
 
-    public int getMonth() {
+    public Integer getMonth() {
         return month;
     }
 
@@ -43,15 +40,29 @@ public class addCalendarEvent implements Serializable {
         this.service = service;
     }
 
-    public void assignCustomer(int id) {
+    public void setCustomerID(int id) throws Exception {
         this.service.setCustomer(id);
     }
 
+    public Integer getCustomerID() {
+        return this.service.getCustomer().getId();
+    }
+
+    private void clear() {
+        this.service = new Service();
+        this.month = null;
+        this.day = null;
+    }
+
     public void save() throws Exception {
+        CalendarHandler calendarHandler = new CalendarHandler();
         int currentYear = calendarHandler.getCurrentYear();
         int firstWeekDay = calendarHandler.getFirstDaysEachMonth().get(getMonth()-1);
-        Month temp_month = new Month(currentYear, getMonth(), firstWeekDay);
-        Day temp_day = temp_month.getDays().get(getDay());
+        System.out.println("currentYear: " + currentYear);
+        System.out.println("firstWeekDay: " + firstWeekDay);
+        Month temp_month = new Month(getMonth(), currentYear, firstWeekDay);
+        Day temp_day = temp_month.getDays().get(getDay()-1);
         calendarHandler.addEvent(temp_month, temp_day, service);
+        this.clear();
     }
 }
