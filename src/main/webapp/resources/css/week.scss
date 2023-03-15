@@ -1,6 +1,6 @@
 :root {
     --numDays: 5;
-    --numHours: 10;
+    --numHours: 8;
     --timeHeight: 60px;
     --calBgColor: #22aaff;
     --eventBorderColor: #2244ff;
@@ -53,81 +53,62 @@
 }
 
 // Place on Timeline
-.start-8 {
- grid-row-start: 1;
-}
-
-.end-8 {
-    grid-row-end: 1;
-}
-
-.start-9 {
-    grid-row-start: 2;
-}
-
-.end-9 {
-    grid-row-end: 2;
-}
 
 .start-10 {
-    grid-row-start: 3;
-}
-
-.end-10 {
-    grid-row-end: 3;
+    grid-row-start: 1;
 }
 
 .start-11 {
-    grid-row-start: 4;
+    grid-row-start: 2;
 }
 
 .end-11 {
-    grid-row-end: 4;
+    grid-row-end: 2;
 }
 
 .end-12 {
-    grid-row-end: 5;
+    grid-row-end: 3;
 }
 
 .start-13 {
-    grid-row-start: 6;
+    grid-row-start: 4;
 }
 
 .end-13 {
-    grid-row-end: 6;
+    grid-row-end: 4;
 }
 
 .start-14 {
-    grid-row-start: 7;
+    grid-row-start: 5;
 }
 
 .end-14 {
-    grid-row-end: 7;
+    grid-row-end: 5;
 }
 
 .start-15 {
-    grid-row-start: 8;
+    grid-row-start: 6;
 }
 .end-15 {
-    grid-row-end: 8;
+    grid-row-end: 6;
 }
 
 .start-16 {
-    grid-row-start: 9;
+    grid-row-start: 7;
 }
 .end-16 {
-    grid-row-end: 9;
+    grid-row-end: 7;
 }
 
 .start-17 {
-    grid-row-start: 10;
+    grid-row-start: 8;
 }
 .end-17 {
-    grid-row-end: 10;
+    grid-row-end: 8;
 }
 
 .end-18 {
-    grid-row-end: 11;
+    grid-row-end: 9;
 }
 
 // Event
